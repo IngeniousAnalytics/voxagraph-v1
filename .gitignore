@@ -12,6 +12,10 @@ node_modules
 
 # Public folder
 /public
+
+# Other files
+my_git_cmd.md
+
 # IDEs and editors
 /.idea
 .project
