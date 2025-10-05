@@ -1,0 +1,548 @@
+{
+  "name": "voxagraph_ui",
+  "type": "dir",
+  "children": [
+    {
+      "name": ".babelrc",
+      "type": "file"
+    },
+    {
+      "name": ".gitignore",
+      "type": "file"
+    },
+    {
+      "name": ".prettierignore",
+      "type": "file"
+    },
+    {
+      "name": ".prettierrc",
+      "type": "file"
+    },
+    {
+      "name": "e2e",
+      "type": "dir",
+      "children": [
+        {
+          "name": "cypress.config.ts",
+          "type": "file"
+        },
+        {
+          "name": "eslint.config.mjs",
+          "type": "file"
+        },
+        {
+          "name": "project.json",
+          "type": "file"
+        },
+        {
+          "name": "src",
+          "type": "dir",
+          "children": [
+            {
+              "name": "e2e",
+              "type": "dir",
+              "children": [
+                {
+                  "name": "app.cy.ts",
+                  "type": "file"
+                }
+              ]
+            },
+            {
+              "name": "fixtures",
+              "type": "dir",
+              "children": [
+                {
+                  "name": "example.json",
+                  "type": "file"
+                }
+              ]
+            },
+            {
+              "name": "support",
+              "type": "dir",
+              "children": [
+                {
+                  "name": "app.po.ts",
+                  "type": "file"
+                },
+                {
+                  "name": "commands.ts",
+                  "type": "file"
+                },
+                {
+                  "name": "e2e.ts",
+                  "type": "file"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "tsconfig.json",
+          "type": "file"
+        }
+      ]
+    },
+    {
+      "name": "eslint.base.config.mjs",
+      "type": "file"
+    },
+    {
+      "name": "eslint.config.mjs",
+      "type": "file"
+    },
+    {
+      "name": "jest.config.ts",
+      "type": "file"
+    },
+    {
+      "name": "jest.preset.js",
+      "type": "file"
+    },
+    {
+      "name": "libs",
+      "type": "dir",
+      "children": [
+        {
+          "name": ".gitkeep",
+          "type": "file"
+        },
+        {
+          "name": "ui",
+          "type": "dir",
+          "children": [
+            {
+              "name": ".babelrc",
+              "type": "file"
+            },
+            {
+              "name": "eslint.config.mjs",
+              "type": "file"
+            },
+            {
+              "name": "project.json",
+              "type": "file"
+            },
+            {
+              "name": "README.md",
+              "type": "file"
+            },
+            {
+              "name": "src",
+              "type": "dir",
+              "children": [
+                {
+                  "name": "EColorPicker",
+                  "type": "dir"
+                },
+                {
+                  "name": "ELoading",
+                  "type": "dir"
+                },
+                {
+                  "name": "ENavbar",
+                  "type": "dir"
+                },
+                {
+                  "name": "ENotify",
+                  "type": "dir"
+                },
+                {
+                  "name": "ETopbar",
+                  "type": "dir"
+                },
+                {
+                  "name": "index.ts",
+                  "type": "file"
+                }
+              ]
+            },
+            {
+              "name": "tsconfig.json",
+              "type": "file"
+            },
+            {
+              "name": "tsconfig.lib.json",
+              "type": "file"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "nx.json",
+      "type": "file"
+    },
+    {
+      "name": "package-lock.json",
+      "type": "file"
+    },
+    {
+      "name": "package.json",
+      "type": "file"
+    },
+    {
+      "name": "postcss.config.cjs",
+      "type": "file"
+    },
+    {
+      "name": "project.json",
+      "type": "file"
+    },
+    {
+      "name": "projectbrefie.txt",
+      "type": "file"
+    },
+    {
+      "name": "README.md",
+      "type": "file"
+    },
+    {
+      "name": "src",
+      "type": "dir",
+      "children": [
+        {
+          "name": "app",
+          "type": "dir",
+          "children": [
+            {
+              "name": "components",
+              "type": "dir",
+              "children": [
+                {
+                  "name": "ChangeConnectionPassword.tsx",
+                  "type": "file"
+                },
+                {
+                  "name": "ChangeToLiveDb.tsx",
+                  "type": "file"
+                },
+                {
+                  "name": "ChangeUserPassword.tsx",
+                  "type": "file"
+                },
+                {
+                  "name": "ConnectDB.tsx",
+                  "type": "file"
+                },
+                {
+                  "name": "SwitchDB.tsx",
+                  "type": "file"
+                }
+              ]
+            },
+            {
+              "name": "hooks",
+              "type": "dir",
+              "children": [
+                {
+                  "name": "useApp.ts",
+                  "type": "file"
+                }
+              ]
+            },
+            {
+              "name": "index.scss",
+              "type": "file"
+            },
+            {
+              "name": "index.tsx",
+              "type": "file"
+            }
+          ]
+        },
+        {
+          "name": "assets",
+          "type": "dir",
+          "children": [
+            {
+              "name": ".gitkeep",
+              "type": "file"
+            },
+            {
+              "name": "fonts",
+              "type": "dir",
+              "children": [
+                {
+                  "name": "MonaSans-Bold.woff",
+                  "type": "file"
+                },
+                {
+                  "name": "MonaSans-Bold.woff2",
+                  "type": "file"
+                },
+                {
+                  "name": "MonaSans-Regular.woff",
+                  "type": "file"
+                },
+                {
+                  "name": "MonaSans-Regular.woff2",
+                  "type": "file"
+                },
+                {
+                  "name": "MonaSans-SemiBold.woff",
+                  "type": "file"
+                },
+                {
+                  "name": "MonaSans-SemiBold.woff2",
+                  "type": "file"
+                }
+              ]
+            },
+            {
+              "name": "icons",
+              "type": "dir",
+              "children": [
+                {
+                  "name": "ResizeIcon.tsx",
+                  "type": "file"
+                }
+              ]
+            },
+            {
+              "name": "img",
+              "type": "dir",
+              "children": [
+                {
+                  "name": "logo-blue.png",
+                  "type": "file"
+                },
+                {
+                  "name": "logo.png",
+                  "type": "file"
+                },
+                {
+                  "name": "logo.svg",
+                  "type": "file"
+                },
+                {
+                  "name": "logo_only.ico",
+                  "type": "file"
+                },
+                {
+                  "name": "powerlogo.png",
+                  "type": "file"
+                },
+                {
+                  "name": "powerlogo.svg",
+                  "type": "file"
+                },
+                {
+                  "name": "powerlogo1.png",
+                  "type": "file"
+                },
+                {
+                  "name": "voxagraphlogo.svg",
+                  "type": "file"
+                }
+              ]
+            },
+            {
+              "name": "styles",
+              "type": "dir",
+              "children": [
+                {
+                  "name": "grid.css",
+                  "type": "file"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "enum",
+          "type": "dir",
+          "children": [
+            {
+              "name": "index.ts",
+              "type": "file"
+            }
+          ]
+        },
+        {
+          "name": "favicon.ico",
+          "type": "file"
+        },
+        {
+          "name": "helpers",
+          "type": "dir",
+          "children": [
+            {
+              "name": "chartOptions.ts",
+              "type": "file"
+            }
+          ]
+        },
+        {
+          "name": "index.html",
+          "type": "file"
+        },
+        {
+          "name": "json",
+          "type": "dir",
+          "children": [
+            {
+              "name": "navItems.ts",
+              "type": "file"
+            }
+          ]
+        },
+        {
+          "name": "main.tsx",
+          "type": "file"
+        },
+        {
+          "name": "pages",
+          "type": "dir",
+          "children": [
+            {
+              "name": "Dashboard",
+              "type": "dir",
+              "children": [
+                {
+                  "name": "components",
+                  "type": "dir"
+                },
+                {
+                  "name": "hooks",
+                  "type": "dir"
+                },
+                {
+                  "name": "index.scss",
+                  "type": "file"
+                },
+                {
+                  "name": "index.tsx",
+                  "type": "file"
+                },
+                {
+                  "name": "styles",
+                  "type": "dir"
+                }
+              ]
+            },
+            {
+              "name": "Login",
+              "type": "dir",
+              "children": [
+                {
+                  "name": "hooks",
+                  "type": "dir"
+                },
+                {
+                  "name": "index.scss",
+                  "type": "file"
+                },
+                {
+                  "name": "index.tsx",
+                  "type": "file"
+                }
+              ]
+            },
+            {
+              "name": "Registration",
+              "type": "dir",
+              "children": [
+                {
+                  "name": "index.tsx",
+                  "type": "file"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "permissions",
+          "type": "dir",
+          "children": [
+            {
+              "name": "index.ts",
+              "type": "file"
+            }
+          ]
+        },
+        {
+          "name": "redux",
+          "type": "dir",
+          "children": [
+            {
+              "name": "hooks.ts",
+              "type": "file"
+            },
+            {
+              "name": "store.ts",
+              "type": "file"
+            }
+          ]
+        },
+        {
+          "name": "services",
+          "type": "dir",
+          "children": [
+            {
+              "name": "index.ts",
+              "type": "file"
+            },
+            {
+              "name": "instance.ts",
+              "type": "file"
+            }
+          ]
+        },
+        {
+          "name": "styles.scss",
+          "type": "file"
+        },
+        {
+          "name": "types",
+          "type": "dir",
+          "children": [
+            {
+              "name": "index.ts",
+              "type": "file"
+            }
+          ]
+        },
+        {
+          "name": "utils",
+          "type": "dir",
+          "children": [
+            {
+              "name": "index.ts",
+              "type": "file"
+            }
+          ]
+        },
+        {
+          "name": "_mixins.scss",
+          "type": "file"
+        }
+      ]
+    },
+    {
+      "name": "tsconfig.app.json",
+      "type": "file"
+    },
+    {
+      "name": "tsconfig.base.json",
+      "type": "file"
+    },
+    {
+      "name": "tsconfig.json",
+      "type": "file"
+    },
+    {
+      "name": "tsconfig.spec.json",
+      "type": "file"
+    },
+    {
+      "name": "voxatree.txt",
+      "type": "file"
+    },
+    {
+      "name": "webpack.config.js",
+      "type": "file"
+    }
+  ]
+}

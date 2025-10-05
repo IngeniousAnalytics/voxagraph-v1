@@ -1,0 +1,69 @@
+
+.editor-wrapper {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.text-toolbar input[type='range'] {
+  vertical-align: middle;
+  margin: 0 4px;
+}
+
+.text-toolbar button {
+  border: 1px solid #ccc;
+  background: #f7f7f7;
+  cursor: pointer;
+  border-radius: 4px;
+  min-width: 30px;
+  height: 30px;
+}
+
+.text-toolbar button:hover {
+  background-color: #e0e0e0;
+}
+
+.text-area,
+.text-display {
+  // padding: 8px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  // &.text-rotate {white-space: nowrap;}
+}
+
+.text-box {
+  // width: 100%;  
+  // height: 100%;
+  // display: flex;
+  transition: transform 0.3s ease;
+  transform-origin: center center;
+}
+
+.text-toolbar input[type='range'] {
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+.text-toolbar button {
+  border: 1px solid #ccc;
+  background: #f7f7f7;
+  cursor: pointer;
+  border-radius: 4px;
+  min-width: 30px;
+}
+
+.text-toolbar button:hover {
+  background-color: #e0e0e0;
+}
+
+.text-toolbar label {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 4px;
+}
+
+.text-toolbar label input.no-drag-color {
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  height: 100%;
+}

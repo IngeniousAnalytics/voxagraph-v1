@@ -1,0 +1,163 @@
+// .graph-panel {
+//   display: flex;
+//   flex-wrap: wrap;
+//   gap: 16px;
+//   padding: 16px;
+// }
+
+// .graph-panel > * {
+//   transition: transform 0.2s ease-in-out;
+// }
+
+// .graph-panel > *:hover {
+//   transform: scale(1.05);
+// }
+/// //////////////////////////////////////////////////////
+// .react-grid-item {
+//   transition: all 200ms ease;
+//   transition-property: left, top;
+// }
+
+// .react-grid-item.cssTransforms {
+//   transition-property: transform;
+// }
+
+
+
+  .graph-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px;
+}
+
+.graph-panel > * {
+  transition: transform 0.2s ease-in-out;
+}
+
+.graph-panel > *:hover {
+  transform: scale(1.05);
+}
+
+///////grid layout
+
+.react-grid-layout {
+  position: relative;
+  transition: height 200ms ease;
+}
+
+.react-grid-item {
+  transition: all 200ms ease;
+  transition-property: left, top;
+}
+
+.react-grid-item.cssTransforms {
+  transition-property: transform;
+}
+
+.react-grid-item.resizing {
+  z-index: 1;
+  will-change: width, height;
+}
+
+.react-grid-item.react-draggable-dragging {
+  transition: none;
+  z-index: 3;
+  will-change: transform;
+}
+
+.react-grid-item.react-grid-placeholder {
+  background:red;
+  opacity: 0.2;
+  transition-duration: 100ms;
+  z-index: 2;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.react-grid-item > .react-resizable-handle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  bottom: 0;
+  right: 0;
+  cursor: se-resize;
+}
+
+.react-grid-item > .react-resizable-handle::after {
+  content: "";
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  width: 5px;
+  height: 5px;
+  border-right: 2px solid rgba(0, 0, 0, 0.4);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+}
+
+
+//Text Element Re-Styling 28052025
+.react-grid-text {
+  position: relative;
+  .text-display , .mantine-Card-section {
+display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mantine-Card-root {
+    border: 0 !important;
+    box-shadow: none;
+    padding: 0 !important;
+  }
+  .mantine-Card-section {
+    padding: 0 !important;
+    margin: 0;
+    height: 100%;
+    
+  }
+  .text-rotate {white-space: nowrap;}
+}
+//Editing Toolbar Re-Styling 28052025
+.react-grid-item {
+&:has(.text-toolbar){
+  z-index: 3;
+  border-radius: 4px;
+    outline: 3px solid #ddd;
+    }
+}
+.vg-textedit {
+    position: absolute;
+  top: 100%;
+  padding: 3px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  // left: 50%;
+  // transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.4);
+  &--wrap {
+    position: relative;
+    height: 100%;
+    .text-display {
+      width: max-content;
+      height: max-content;
+    }
+    
+  }
+  &--tool {
+    display: flex;
+    gap: 3px;
+    label {
+      color: #fff;
+      display: flex;
+      gap:6px;
+      align-items: center;
+    }
+    * {white-space: nowrap;}
+  }
+
+}

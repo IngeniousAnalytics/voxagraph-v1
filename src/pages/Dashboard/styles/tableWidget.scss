@@ -1,0 +1,40 @@
+.table-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+      margin-bottom: 8px;
+    
+  }
+//   .table-wrapper {
+//   overflow: hidden;
+//   border: 1px solid #ddd;
+// }
+
+.table-title {
+  margin-bottom: 8px;
+}
+
+
+.table-wrapper {
+  .table-head{
+    display: flex;
+    color: white;
+   flex-wrap: nowrap;
+     overflow: hidden;
+  border: 1px solid #ddd;
+  }
+ .table-body {
+  width:100%;
+ }
+}
+
+.tb-widget-color-down{
+  display: flex;
+}
+
+.table-header-cel{
+  position: sticky;
+  top: 0;
+  z-index: 10;      /* so it sits above the body rows */
+  background: inherit; 
+}

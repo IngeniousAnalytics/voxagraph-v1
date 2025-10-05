@@ -1,0 +1,115 @@
+@use '../../../../src/mixins';
+@use '../../../../src/assets/styles/grid.css';
+
+.header {
+  background-color: #374d63;
+
+  &-menus {
+    @include mixins.flexbox($ai: center, $gap: 30px);
+    &--actions {
+      @include mixins.flexbox($ai: center, $gap: 8px);
+    }
+
+    &--toggle {
+      .mantine-Burger {
+        &-burger {
+          background-color: white;
+          &:before,
+          &:after {
+            background-color: white;
+          }
+          &[data-opened='true'] {
+            background-color: transparent;
+          }
+        }
+      }
+    }
+
+    &--logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      font-size: 21px;
+      color: #fff;
+      font-weight: 600;
+    }
+  }
+
+  &-actions {
+    @include mixins.flexbox($ai: center, $gap: 30px);
+
+    &--items {
+      @extend .position-relative;
+      &:not(:last-of-type) {
+        &:before {
+          content: '';
+          @extend .position-absolute, .h-75, .top-50, .translate-middle-y;
+          right: -15px;
+          width: 1px;
+          background-color: var(--bs-secondary-bg);
+        }
+      }
+    }
+    &--dbinfo {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.7); // Muted white
+      margin-left: 25px;
+      &--db {
+        &--text {
+          color: rgb(215, 226, 215);
+          font-size: 14px;
+          font-weight: 600;
+        }
+      }
+
+      p {
+        margin: 0;
+      }
+    }
+    &--dt {
+      &--text {
+        @include mixins.flexbox($ai: center, $gap: 8px);
+        min-width: 175px;
+        color: white;
+      }
+    }
+
+    &--notify {
+      @extend .position-relative;
+      span {
+        @extend .rounded-circle,
+          .bg-danger,
+          .d-inline-block,
+          .position-absolute;
+        height: 8px;
+        width: 8px;
+        top: 4px;
+        right: -1px;
+      }
+      &-dd {
+        .th-color {
+          &--modes {
+            @include mixins.flexbox($ai: center, $gap: 10px);
+          }
+          &--themes {
+          }
+        }
+      }
+    }
+
+    &--profile {
+      &--link {
+        @include mixins.flexbox($ai: center, $gap: 10px);
+        @extend .border, .border-light-subtle, .rounded-2, .p-1;
+        color: var(--bs-gray);
+        &:hover {
+          @extend .text-decoration-none;
+        }
+      }
+    }
+  }
+}

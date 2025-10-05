@@ -1,0 +1,127 @@
+// Media Queries
+@mixin responsive($type, $value, $value2: 0) {
+  @if $type == 'range' {
+    @media (min-width: $value) and (max-width: $value2) {
+      @content;
+    }
+  } @else {
+    @media (#{$type}-width:$value) {
+      @content;
+    }
+  }
+}
+
+// To apply custom width according to breakpoints
+@mixin customwidth($breakpoint) {
+  @if $breakpoint == 'xl' {
+    @media only screen and (min-width: 1200px) {
+      @content;
+    }
+  }
+  @if $breakpoint == 'lg' {
+    @media only screen and (min-width: 992px) {
+      @content;
+    }
+  }
+}
+
+// To add position to any element
+@mixin positions(
+  $pos: null,
+  $top: null,
+  $bottom: null,
+  $left: null,
+  $right: null
+) {
+  @if ($pos != null) {
+    position: $pos;
+  }
+  @if ($top != null) {
+    top: $top;
+  }
+  @if ($bottom != null) {
+    bottom: $bottom;
+  }
+  @if ($left != null) {
+    left: $left;
+  }
+  @if ($right != null) {
+    right: $right;
+  }
+}
+
+// Flexbox having all basic properties
+@mixin flexbox(
+  $ai: null,
+  $jc: null,
+  $wrap: wrap,
+  $direction: row,
+  $gap: null,
+  $grow: null
+) {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  @if ($ai != null) {
+    align-items: $ai;
+  }
+  @if ($jc != null) {
+    justify-content: $jc;
+  }
+  @if ($wrap != wrap) {
+    flex-wrap: $wrap;
+  }
+  @if ($direction != row) {
+    flex-direction: $direction;
+  }
+  @if ($gap != null) {
+    gap: $gap;
+  }
+  @if ($grow != null) {
+    flex-grow: $grow;
+  }
+}
+
+// To create an equal dimensions shape
+@mixin square(
+  $dimensions,
+  $type: null,
+  $bgcolor: null,
+  $textcolor: null,
+  $zindex: null
+) {
+  width: $dimensions;
+  height: $dimensions;
+  background-color: $bgcolor;
+  color: $textcolor;
+  @if ($type == 'circle') {
+    border-radius: 50%;
+  }
+  @if ($type == 'rounded') {
+    border-radius: 6px;
+  }
+  @if ($zindex != null) {
+    z-index: $zindex;
+  }
+}
+
+// Apply font weight to any text
+@mixin fontweight($weight) {
+  @if ($weight == 'medium') {
+    font-weight: 500;
+  }
+  @if ($weight == 'semibold') {
+    font-weight: 600;
+  }
+  @if ($weight == 'bold') {
+    font-weight: bold;
+  }
+  @if ($weight == 'black') {
+    font-weight: 900;
+  }
+  else {
+    font-weight: normal;
+  }
+}

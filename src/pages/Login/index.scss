@@ -1,0 +1,83 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100svh;
+  background: #4950573b;
+  padding: 2rem;
+}
+
+.login-card {
+  display: flex;
+  width: 920px;
+  max-width: 100%;
+  min-height: 520px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.16);
+  overflow: hidden;
+}
+
+.login-left {
+  flex: 0.95;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(1.5rem, 3vw, 3rem);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+}
+
+.login-title {
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-weight: 800;
+  color: #1f2937;
+}
+
+.google-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 42px;
+}
+
+.login-right {
+  flex: 1;
+  background: linear-gradient(135deg, #2f6d9c, #8fc0e6);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: clamp(1.25rem, 3vw, 2rem);
+
+  h2 {
+    font-size: clamp(20px, 2.2vw, 28px);
+    font-weight: 800;
+    letter-spacing: 0.2px;
+  }
+
+  p {
+    font-size: 15px;
+    margin-top: 10px;
+    opacity: 0.92;
+    max-width: 32ch;
+  }
+}
+
+/* Small screens */
+@media (max-width: 860px) {
+  .login-card { flex-direction: column; min-height: auto; }
+  .login-right { order: -1; }
+}
+
+/* Tiny screens */
+@media (max-width: 380px) {
+  .login-left { padding: 1rem; }
+}

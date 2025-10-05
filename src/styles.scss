@@ -1,0 +1,75 @@
+@use './assets/styles/grid.css';
+@use './mixins';
+
+:root {
+  --theme-gradient: linear-gradient(#081d2d, #085984);
+}
+
+@font-face {
+  font-family: 'Mona Sans';
+  src: local('Mona Sans Bold'), local('MonaSans-Bold'),
+    url('./assets/fonts/MonaSans-Bold.woff2') format('woff2'),
+    url('./assets/fonts/MonaSans-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mona Sans';
+  src: local('Mona Sans SemiBold'), local('MonaSans-SemiBold'),
+    url('./assets/fonts/MonaSans-SemiBold.woff2') format('woff2'),
+    url('./assets/fonts/MonaSans-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mona Sans';
+  src: local('Mona Sans Regular'), local('MonaSans-Regular'),
+    url('./assets/fonts/MonaSans-Regular.woff2') format('woff2'),
+    url('./assets/fonts/MonaSans-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+html,
+body {
+  height: 100%;
+}
+html {
+  font-size: 0.875rem;
+}
+body {
+  font-family: var(--bs-font-sans-serif);
+  color: var(--bs-gray-600);
+}
+
+.th-anchor-color {
+  color: var(--bs-gray-600);
+}
+
+.mantine-Menu-dropdown {
+  .mantine-Menu {
+    &-label {
+      color: var(--bs-gray-700);
+
+      .th-mediaobject {
+        &--content {
+          p {
+            color: var(--bs-gray-700);
+          }
+        }
+      }
+    }
+    &-item {
+      color: var(--bs-gray-600);
+    }
+  }
+}
+
+.card-overflow-visible.mantine-Card-root {
+  @extend .overflow-visible;
+}

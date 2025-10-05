@@ -1,0 +1,49 @@
+# Front-end Brief
+
+## App purpose (1–2 lines)
+- Example: AI dashboard (VoxaGraph) for login/registration, role-based UI, analytics from csv,xls, RDBMS, noslq.
+
+## Domain vocabulary (5–10 key terms)
+- Example: Dataset, Dashboard,Graphs, Card, Grid, Report, Role, Feature, Permission.
+
+## User roles (front-end relevant)
+- admin, developer, designer, public (etc.)
+
+## Top user flows (front-end)
+- Sign In → token saved in localStorage:"authToken"
+- Registration → POST /emailregisteration/email-signin/ with {email}
+- Google login (if applicable) → (TBD)
+- Landing → dashboards list
+- Dashboard → charts, grids, graph (just list them)
+
+## Routes & pages (or entry points)
+- /login → src/pages/Login/index.tsx
+- /registration → (in-login toggle or separate page?)
+- /dashboards → src/pages/Dashboard
+- /servics -> src/services/instance (BaseURL), src/servics/index.ts all api referencs 
+
+## State management & data layer
+- Global state? (Redux/Zustand/Context/None)
+- Forms: mantine/form? custom?
+- Data fetch: Axios instance at src/services/instance.ts (baseURL http://127.0.0.1:8000)
+- Interceptors: adds Authorization if authToken exists
+
+## Design system & theming
+- Mantine v7
+-- hooks
+- Theme provider file: <path>
+- SCSS/CSS convention: <brief> (e.g., page-level .scss per page)
+
+## Reusable components (where & what)
+- libs/ui/* (e.g., ENavbar, ENotify)
+- Common layout components: src/app/components
+- Charts lib: <if any>
+
+## Auth (front-end)
+- Where token saved: localStorage.authToken
+- Login success handler: useLogin(handleConnect) → sets token? navigates? (1 line)
+- Protected route logic (if any): <file>
+
+## Env & config (front-end only)
+- .env keys actually used in UI: e.g., VITE_API_BASE, VITE_GOOGLE_CLIENT_ID (if any)
+- Build tool: Nx + Webpack? (5.1.4)

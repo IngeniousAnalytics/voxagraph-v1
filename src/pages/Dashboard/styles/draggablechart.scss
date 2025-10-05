@@ -1,0 +1,28 @@
+.draggable-chart {
+  position: relative;
+}
+
+.chart-content {
+  text-align: center;
+}
+
+.action-wrappers {
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.input-box {
+  width: 50%;
+}
+
+.send-button {
+  cursor: pointer;
+  padding: 5px;
+}
+
+.resize-handle {
+  right: 0;
+  bottom: 0;
+  color: gray;
+}
