@@ -19,42 +19,40 @@ import useRegistration from './hooks/useRegistration';
 import useGoogleAuth from './hooks/useGoogleAuth';
 import './index.scss';
 
-// small helper to read env from process.env or window.*
-const env = (k: string): string =>
-  ((typeof process !== 'undefined' && (process as any).env && (process as any).env[k]) ||
-    (typeof window !== 'undefined' && (window as any)[k]) ||
-    '') as string;
 
-// preferred keys:
-//  - REACT_APP_GOOGLE_CLIENT_ID_DEV / REACT_APP_GOOGLE_CLIENT_ID_PROD (optional split)
-//  - REACT_APP_GOOGLE_CLIENT_ID (single id for all)
-//  - NX_GOOGLE_CLIENT_ID (if you use NX_* prefix)
-const isDevHost =
-  location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-
-const CLIENT_ID =
-  (isDevHost
-    ? env('REACT_APP_GOOGLE_CLIENT_ID_DEV') || env('NX_GOOGLE_CLIENT_ID_DEV')
-    : env('REACT_APP_GOOGLE_CLIENT_ID_PROD') || env('NX_GOOGLE_CLIENT_ID_PROD')) ||
-  env('REACT_APP_GOOGLE_CLIENT_ID') ||
-  env('NX_GOOGLE_CLIENT_ID'); // final fallback
 
 const Login = ({ handleConnect }: ILogin) => {
-  const [mode, setMode] = useState<'signin' | 'registration'>('signin');
+  const devClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+  const prodClientId = 'YOUR_PROD_CLIENT_ID.apps.googleusercontent.com';
 
-  // Sign In (your existing hook)
+  if (
+    (location.hostname === 'localhost' || location.hostname === '127.0.0.1') &&
+    !devClientId
+  ) {
+    console.error('Missing REACT_APP_GOOGLE_CLIENT_ID in .env');
+    // Or show a UI error, but don't crash the whole app in production
+  }
+
+  const clientId =
+    location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+      ? devClientId || 'MISSING'
+      : prodClientId;
+
+  useGoogleAuth(handleConnect, {
+    clientId,
+    buttonContainerId: 'g_id_signin',
+  });
+
+  const [mode, setMode] = useState<'signin' | 'registration'>('signin');
+  // Sign In (existing hook)
   const { handleUserLogin, form: loginForm } = useLogin(handleConnect);
 
-  // Registration (email-only) – switches back to Sign In on success
+  // Registration (email-only)
   const { handleEmailRegistration, form: regForm } = useRegistration(() => {
     setMode('signin');
   });
 
-  // Google Sign-In using client id from .env (or window fallback)
-  useGoogleAuth(handleConnect, {
-    clientId: CLIENT_ID,
-    buttonContainerId: 'g_id_signin',
-  });
+
 
   return (
     <div className="login-container">
@@ -63,7 +61,9 @@ const Login = ({ handleConnect }: ILogin) => {
           onSubmit={
             mode === 'signin'
               ? loginForm.onSubmit((values) => handleUserLogin(values))
-              : regForm.onSubmit((values) => handleEmailRegistration(values as any))
+              : regForm.onSubmit((values) =>
+                  handleEmailRegistration(values as any)
+                )
           }
           className="login-left"
         >
@@ -94,7 +94,6 @@ const Login = ({ handleConnect }: ILogin) => {
                   <Button type="submit">Login</Button>
                 </Group>
 
-                {/* Divider ONLY in Sign In */}
                 <Divider my="lg" label="or" labelPosition="center" />
               </>
             ) : (
@@ -110,11 +109,10 @@ const Login = ({ handleConnect }: ILogin) => {
                 <Group grow mt={16}>
                   <Button type="submit">Submit</Button>
                 </Group>
-                {/* No Divider in Registration */}
               </>
             )}
 
-            {/* Keep Google mount point ALWAYS in the DOM; just hide during Registration */}
+            {/* Keep Google Sign-In mount point always in DOM */}
             <div
               id="g_id_signin"
               style={{
@@ -127,7 +125,9 @@ const Login = ({ handleConnect }: ILogin) => {
               {mode === 'signin' ? (
                 <>
                   New here?{' '}
-                  <Anchor onClick={() => setMode('registration')}>Registration</Anchor>
+                  <Anchor onClick={() => setMode('registration')}>
+                    Registration
+                  </Anchor>
                 </>
               ) : (
                 <>
@@ -140,13 +140,15 @@ const Login = ({ handleConnect }: ILogin) => {
         </form>
 
         <div className="login-right">
-          <Image src={'./../../assets/img/logo.svg'} w={240} alt="Voxagraph logo" />
+          <Image
+            src={'./../../assets/img/logo.svg'}
+            w={240}
+            alt="Voxagraph logo"
+          />
           <Space h={30} />
-          <Title order={2}>{mode === 'signin' ? '' : ''}</Title>
+          <Title order={2}></Title>
           <Text>
-            {mode === 'signin'
-              ? 'Empowering Decision-Makers. Turn questions into smart analytics.'
-              : 'Empowering Decision-Makers. Turn questions into smart analytics.'}
+            Empowering Decision-Makers. Turn questions into smart analytics.
           </Text>
         </div>
       </div>
