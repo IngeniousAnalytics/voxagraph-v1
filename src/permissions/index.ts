@@ -1,3 +1,4 @@
+//src/permissions/index.ts
 import { useAppSelector } from 'src/redux/hooks';
 
 interface IUser {

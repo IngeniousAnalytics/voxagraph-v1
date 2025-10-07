@@ -17,13 +17,17 @@ export const userLogin = createAsyncThunk(
   async (payload: any, { rejectWithValue, dispatch }) => {
     try {
       const response = await dashApiInstance.post(`/admin/login/`, payload);
+      
       const { access_token, user_id, username, roles, permissions, db_access } =
         response.data;
+
       const payl = { Action: 'ext0003', Data: { user_id: user_id } };
       dispatch(getDbConnection(payl));
+      
       localStorage.setItem('authToken', access_token);
 
       const userInfo = { user_id, username, roles, permissions, db_access };
+      
       localStorage.setItem('userInfo', JSON.stringify(userInfo));
 
       setTimeout(() => {

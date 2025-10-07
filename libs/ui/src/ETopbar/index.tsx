@@ -1,3 +1,4 @@
+//libs/ui/src/ETopbar/index.tsx
 import { Fragment, useEffect, useState } from 'react';
 import moment from 'moment';
 import {
@@ -220,7 +221,7 @@ export function ETopbar({
           </div>
           <h2 style={{color:"white",fontSize:15,fontWeight:700}}>{dashboardId?.dashboard_name}</h2>
           <div className="header-actions">
-            {graphs?.length > 0 && I_PERMIT.i_save_or_update ? (
+            { I_PERMIT.i_save_or_update ? (
               <Group>
                 <Button color="green" onClick={handleInsertUpdate}>
                   {templateID ?
