@@ -1,115 +1,220 @@
-@use '../../../../src/mixins';
-@use '../../../../src/assets/styles/grid.css';
+/* Design refresh for ETopbar — visuals only, no functionality changes */
 
-.header {
-  background-color: #374d63;
+.header, /* legacy selector kept (if used elsewhere) */
+.etopbar {
+  --etopbar-height: 64px;
+  --etopbar-bg: linear-gradient(180deg, rgba(28,31,36,0.85) 0%, rgba(28,31,36,0.78) 100%);
+  --etopbar-border: rgba(255,255,255,0.08);
+  --etopbar-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  --text-muted: rgba(255,255,255,0.72);
 
-  &-menus {
-    @include mixins.flexbox($ai: center, $gap: 30px);
-    &--actions {
-      @include mixins.flexbox($ai: center, $gap: 8px);
-    }
+  height: var(--etopbar-height);
+  background: var(--etopbar-bg);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--etopbar-border);
+  box-shadow: var(--etopbar-shadow);
+  position: sticky;
+  top: 0;
+  z-index: 30;
 
-    &--toggle {
-      .mantine-Burger {
-        &-burger {
-          background-color: white;
-          &:before,
-          &:after {
-            background-color: white;
-          }
-          &[data-opened='true'] {
-            background-color: transparent;
-          }
-        }
-      }
-    }
+  .mantine-Group-root.etopbar__inner {
+    gap: 12px;
+  }
+}
 
-    &--logo {
-      display: flex;
-      align-items: center;
-      gap: 15px;
+/* Left cluster: toggles + brand */
+.etopbar__left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
-      font-size: 21px;
+.etopbar__toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  .ghost-icon-btn {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--text-muted);
+    transition: all .18s ease;
+    cursor: pointer;
+
+    &:hover {
+      background: rgba(255,255,255,0.06);
       color: #fff;
+      border-color: rgba(255,255,255,0.16);
+    }
+  }
+}
+
+.etopbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .etopbar__beta {
+    transform: translateY(-2px);
+    font-weight: 500;
+    letter-spacing: .2px;
+  }
+}
+
+/* Center title */
+.etopbar__title {
+  min-width: 0; /* truncation */
+  text-align: center;
+
+  .etopbar__titleText {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: .2px;
+    line-height: 1.2;
+    max-width: 520px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* Right cluster */
+.etopbar__right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.etopbar__cta {
+  .mantine-Button-root.primary-cta {
+    border-radius: 10px;
+    padding-inline: 10px;
+    height: 36px;
+
+    .mantine-Button-label {
+      display: grid;
+      place-items: center;
+      gap: 6px;
       font-weight: 600;
     }
   }
 
-  &-actions {
-    @include mixins.flexbox($ai: center, $gap: 30px);
+  .mantine-Button-root {
+    border-radius: 10px;
+    height: 36px;
+  }
+}
 
-    &--items {
-      @extend .position-relative;
-      &:not(:last-of-type) {
-        &:before {
-          content: '';
-          @extend .position-absolute, .h-75, .top-50, .translate-middle-y;
-          right: -15px;
-          width: 1px;
-          background-color: var(--bs-secondary-bg);
-        }
-      }
-    }
-    &--dbinfo {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.2;
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.7); // Muted white
-      margin-left: 25px;
-      &--db {
-        &--text {
-          color: rgb(215, 226, 215);
-          font-size: 14px;
-          font-weight: 600;
-        }
-      }
+.etopbar__divider {
+  height: 22px;
+  border-color: rgba(255,255,255,0.08);
+  margin-inline: 4px;
+}
 
-      p {
-        margin: 0;
-      }
-    }
-    &--dt {
-      &--text {
-        @include mixins.flexbox($ai: center, $gap: 8px);
-        min-width: 175px;
-        color: white;
-      }
-    }
+/* Connected DB label */
+.etopbar__dbinfo {
+  .etopbar__dbpill {
+    display: inline-flex;
+    align-items: center;
+    max-width: 220px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
-    &--notify {
-      @extend .position-relative;
-      span {
-        @extend .rounded-circle,
-          .bg-danger,
-          .d-inline-block,
-          .position-absolute;
-        height: 8px;
-        width: 8px;
-        top: 4px;
-        right: -1px;
-      }
-      &-dd {
-        .th-color {
-          &--modes {
-            @include mixins.flexbox($ai: center, $gap: 10px);
-          }
-          &--themes {
-          }
-        }
-      }
-    }
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    color: #cbd5e1;
+    background: rgba(148,163,184,0.15);
+    border: 1px solid rgba(148,163,184,0.22);
+  }
+}
 
-    &--profile {
-      &--link {
-        @include mixins.flexbox($ai: center, $gap: 10px);
-        @extend .border, .border-light-subtle, .rounded-2, .p-1;
-        color: var(--bs-gray);
-        &:hover {
-          @extend .text-decoration-none;
-        }
-      }
+/* Profile button */
+.etopbar__profile {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--text-muted);
+  transition: all .18s ease;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(255,255,255,0.06);
+    color: #fff;
+    border-color: rgba(255,255,255,0.16);
+  }
+}
+
+.etopbar__username {
+  color: #0b0b0b;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* Dropdown */
+.etopbar__menu {
+  .mantine-Menu-item {
+    font-size: 13px;
+    padding: 8px 10px;
+
+    &:hover {
+      background: rgba(0,0,0,0.04);
+    }
+  }
+}
+
+.etopbar__themeLabel {
+  text-align: center;
+  padding: 8px 0 10px;
+}
+
+.themeToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  small {
+    color: #64748b;
+    font-weight: 600;
+  }
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .etopbar__title { display: none; }
+  .etopbar__divider { display: none; }
+  .etopbar__dbinfo { display: none; }
+  .etopbar__username { display: none; }
+  .etopbar__profile { padding: 4px; }
+}
+
+/* Light theme adjustments */
+:root[data-mantine-color-scheme='light'] {
+  .etopbar {
+    --etopbar-bg: #ffffff;
+    --etopbar-border: rgba(2,6,23,0.08);
+    --text-muted: #334155;
+    box-shadow: 0 4px 12px rgba(2,6,23,0.08);
+
+    .etopbar__titleText { color: #0f172a; }
+    .etopbar__profile { border-color: rgba(2,6,23,0.08); color: #334155;
+      &:hover { background: rgba(2,6,23,0.035); color: #0f172a; border-color: rgba(2,6,23,0.14); }
+    }
+    .etopbar__dbpill {
+      color: #0f172a;
+      background: rgba(15,23,42,0.05);
+      border-color: rgba(15,23,42,0.12);
     }
   }
 }

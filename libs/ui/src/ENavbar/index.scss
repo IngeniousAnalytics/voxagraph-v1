@@ -1,162 +1,272 @@
-.sidebar {
-  background-color: #2c3e50;
-  padding: 8px;
-  height: 100vh;
-  width: 185px;
-  color: #ecf0f1;
+/* libs/ui/src/ENavbar/index.scss
+   Scoped sidebar styles for Mantine AppShell.
+   - Keeps navbar FIXED on the left under the 70px header.
+   - Ensures ScrollArea flexes (no phantom height pushing main down).
+   - No bleed into the topbar or main content.
+*/
+
+/* Base look (applies in both themes) */
+.enavbar {
+  background: #ffffff;
+  border-right: 1px solid rgba(2, 6, 23, 0.08);
+  box-shadow: 2px 0 12px rgba(2, 6, 23, 0.04);
+  position: unset;         /* do NOT override Mantine's fixed positioning */
+  z-index: 12;
+}
+
+/* 🔒 Keep the navbar fixed on the left rail under the header */
+.mantine-AppShell-navbar.enavbar {
+  position: fixed !important;
+  top: var(--app-shell-header-offset, 0rem);
+  bottom: var(--app-shell-footer-offset, 0rem);
+  inset-inline-start: 0;                       /* logical 'left' */
+  width: var(--app-shell-navbar-width);        /* Mantine computes this */
   display: flex;
   flex-direction: column;
-  position: fixed;
-  left: 0;
+  overflow: hidden;                            /* internal scroll only */
+}
+
+/* Sticky tabs header stays inside navbar */
+.enavbar__stickyHeader {
+  position: sticky;
   top: 0;
-  transition: width 0.3s ease;
-  overflow-y: auto;
+  z-index: 1;
+  background: inherit;
+  padding: 6px 0;
+  margin: 0;                                   /* avoid collapsing margins */
+  flex: 0 0 auto;
 }
 
-.menu-group {
-  margin-bottom: 16px;
+/* Scrollable section that flexes correctly */
+.enavbar__scroll {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;                    /* KEY: prevents extra height */
+  overflow: hidden;                            /* ScrollArea manages scroll */
 }
 
-.nav-item {
-  color: #ecf0f1;
-  background-color: #34495e !important;
-  border-radius: 4px;
-  margin-bottom: 8px;
-  padding: 7px 8px;
-  cursor: pointer;
-  transition: background 0.3s, padding 0.3s;
-  font-size: 13px;
-  white-space: nowrap;
+/* Tabs */
+.enavbar__tabs {
+  margin: 2px 0 4px;
+  .mantine-Tabs-tab {
+    border-radius: 10px;
+    font-weight: 600;
+    letter-spacing: .2px;
+    padding: 6px 10px;
+  }
+  .mantine-Tabs-tab[data-active='true'] {
+    background: #0ea5e91a;
+    color: #0ea5e9;
+    box-shadow: 0 0 0 1px #0ea5e933 inset;
+  }
+}
+
+/* Chart groups */
+.enavbar__group.mantine-NavLink-root {
+  background: rgba(2, 6, 23, 0.02);
+  border: 1px solid rgba(2, 6, 23, 0.08);
+  border-radius: 12px;
+  margin-bottom: 10px;
   overflow: hidden;
-  text-overflow: ellipsis;
+
+  .mantine-NavLink-label {
+    color: #0f172a;
+    font-weight: 700;
+    font-size: 13px;
+  }
+
+  &[data-opened='true'] {
+    box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.25) inset;
+    background: linear-gradient(180deg, rgba(99, 102, 241, 0.08), rgba(2, 6, 23, 0.04));
+  }
 }
 
-.nav-item:hover {
-  background-color: #1abc9c !important;
+/* Leaf items */
+.enavbar__item.mantine-NavLink-root {
+  background: transparent;
+  margin: 4px 8px;
+  border-radius: 10px;
+  padding: 2px;
+
+  .mantine-NavLink-label {
+    color: #0f172a;
+    font-weight: 600;
+    font-size: 12.5px;
+  }
+  .mantine-NavLink-leftSection {
+    width: 18px;
+    display: grid;
+    place-items: center;
+    opacity: .9;
+  }
+
+  &:hover { background: rgba(2, 6, 23, 0.04); }
+  &.is-highlighted { background: #22d3ee1a; outline: 1px solid #22d3ee40; }
 }
 
-.submenu-item {
-  background-color: #3c5a72 !important;
-  padding: 4px 10px;
-  margin: 6px 0;
-  border-radius: 4px;
-  cursor: grab;
-  font-size: 12px;
-  transition: background 0.3s;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+/* Search input */
+.enavbar input[type='text'] {
+  background: rgba(2, 6, 23, 0.02);
+  border-color: rgba(2, 6, 23, 0.12);
+  color: #0f172a;
+  &::placeholder { color: #64748b; }
+  &:focus { border-color: #0ea5e9; box-shadow: 0 0 0 1px #0ea5e966 inset; }
 }
 
-.submenu-item:hover {
-  background-color: #16a085 !important;
-}
-
-.draft-list {
+/* Template rows */
+.enavbar__template {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #684f1c;
-  color: #ecf0f1;
-  border-radius: 6px;
-  padding: 8px 12px;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-  margin-top: 8px;
-
-  p {
-    margin: 0;
-    font-size: 13px;
-    font-weight: 500;
-    color: #ecf0f1;
-    transition: color 0.3s;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  p:hover {
-    color: black;
-  }
-
-  svg {
-    cursor: pointer;
-    transition: color 0.3s, transform 0.3s;
-    width: 20px;
-    height: 20px;
-    color: #ecf0f1;
-  }
-
-  svg:hover {
-    color: #e74c3c;
-    transform: scale(1.1);
-  }
-
-  .ellipsis-icon {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  
-  &:hover .ellipsis-icon {
-    opacity: 1;
-  }
-}
-
-.draft-list:hover {
-  background-color: #9f7725;
-}
-
-
-
-
-
-.sidebar::-webkit-scrollbar {
-  width: 6px;
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-}
-
-.submenu-item.highlighted {
-  background-color: #888456 !important;
-  color: #fff;
-}
-
-.mantine-Tabs-list {
-  display: flex;
   gap: 8px;
-  margin-bottom: 16px;
-}
-
-.mantine-Tabs-tab {
-  background-color: #34495e;
-  color: #ecf0f1;
-  padding: 6px 12px;
-  border-radius: 4px;
-  font-size: 13px;
+  color: #0f172a;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  border-radius: 12px;
+  background: rgba(2, 6, 23, 0.03);
+  border: 1px solid rgba(2, 6, 23, 0.08);
+  transition: transform .12s ease, background .12s ease, border-color .12s ease;
   cursor: pointer;
-  transition: background 0.3s, color 0.3s;
-}
 
-.mantine-Tabs-tab:hover {
-  background-color: #1abc9c;
-  color: #ffffff;
-}
+  &:hover { background: rgba(2, 6, 23, 0.06); border-color: rgba(2, 6, 23, 0.16); transform: translateY(-1px); }
 
-.mantine-Tabs-tab[data-active='true'] {
-  background-color: #1abc9c;
-  color: #ffffff;
-  font-weight: bold;
-}
-
-.footer{
-  &-wrapper{
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    position: relative;
-    justify-content: center;
+  input {
+    background: rgba(2, 6, 23, 0.02);
+    border-color: rgba(2, 6, 23, 0.12);
+    color: #0f172a;
+    height: 30px;
   }
+}
+
+.enavbar__more { opacity: .7; &:hover { opacity: 1; } }
+
+/* ────────────────────────────────────────────────────────────── */
+/* ────────────────────────────────────────────────────────────── */
+/* Dark theme (high-contrast, better alignment, smoother hover) */
+:root[data-mantine-color-scheme='dark'] .enavbar {
+  background: linear-gradient(180deg, #0f172a 0%, #0a0f1a 100%);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.4);
+
+  /* Tabs */
+  .enavbar__tabs .mantine-Tabs-tab {
+    color: #cbd5e1;                            /* default text */
+    font-weight: 600;
+    &:hover { color: #f1f5f9; }
+  }
+  .enavbar__tabs .mantine-Tabs-tab[data-active='true'] {
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+    box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.4) inset;
+  }
+
+  /* Group headers */
+  .enavbar__group.mantine-NavLink-root {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.06);
+    margin-bottom: 8px;
+    border-radius: 10px;
+
+    .mantine-NavLink-label {
+      color: #e2e8f0;                          /* brightened */
+      font-weight: 700;
+      font-size: 13px;
+      line-height: 1.2;                        /* tightened vertical alignment */
+      padding-top: 1px;
+    }
+
+    &[data-opened='true'] {
+      background: linear-gradient(
+        180deg,
+        rgba(99, 102, 241, 0.18),
+        rgba(17, 24, 39, 0.12)
+      );
+      box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.25) inset;
+    }
+  }
+
+  /* Child items */
+  .enavbar__item.mantine-NavLink-root {
+    margin: 4px 8px;
+    border-radius: 8px;
+    padding: 3px 6px;
+
+    .mantine-NavLink-label {
+      color: #cbd5e1;
+      font-size: 13px;
+      line-height: 1.4;
+      transform: translateY(-0.5px);           /* optical alignment fix */
+    }
+    .mantine-NavLink-leftSection {
+      width: 18px;
+      display: grid;
+      place-items: center;
+      opacity: 0.85;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.06);
+      .mantine-NavLink-label { color: #f1f5f9; }
+    }
+
+    &.is-highlighted {
+      background: rgba(34, 197, 94, 0.18);
+      outline: 1px solid rgba(34, 197, 94, 0.4);
+      .mantine-NavLink-label { color: #22c55e; }
+    }
+  }
+
+  /* Search input */
+  input[type='text'] {
+    background: rgba(15, 23, 42, 0.7);
+    border-color: rgba(148, 163, 184, 0.3);
+    color: #f1f5f9;
+    height: 34px;
+    &::placeholder { color: #64748b; }
+    &:focus {
+      border-color: #22c55e;
+      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.4) inset;
+    }
+  }
+
+  /* Template items */
+  .enavbar__template {
+    background: rgba(31, 41, 55, 0.6);
+    border-color: rgba(255, 255, 255, 0.05);
+    padding: 8px 10px;
+    border-radius: 10px;
+    transition: background 0.15s ease, transform 0.1s ease;
+    .mantine-NavLink-label { line-height: 1.2; }
+    &:hover {
+      background: rgba(55, 65, 81, 0.8);
+      border-color: rgba(255, 255, 255, 0.12);
+      transform: translateY(-1px);
+    }
+    input {
+      background: rgba(15, 23, 42, 0.7);
+      border-color: rgba(148, 163, 184, 0.3);
+      color: #f1f5f9;
+    }
+  }
+
+  /* Three-dot icon */
+  .enavbar__more {
+    opacity: 0.7;
+    color: #cbd5e1;
+    &:hover { opacity: 1; color: #22c55e; }
+  }
+}
+
+
+
+/* Tighten spacing between ETopbar and AppShell Main */
+.mantine-AppShell-main {
+  /* Mantine adds padding-top = var(--app-shell-header-offset, 0) + var(--app-shell-padding);
+     We reset that so only a minimal gap remains. */
+  padding-top: calc(var(--app-shell-header-offset, 0rem) -62px) !important;
+  margin-top: 0 !important;
+}
+
+/* Optional: tighten the navbar alignment with topbar visually */
+.mantine-AppShell-navbar.enavbar {
+  top: calc(var(--app-shell-header-offset, 0rem) + 1px) !important;
 }

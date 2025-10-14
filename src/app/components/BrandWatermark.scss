@@ -1,0 +1,18 @@
+.brand-watermark {
+  background: color-mix(in srgb, #0b1220 78%, transparent);
+
+
+  small {
+    color: #eceff2;
+    font-weight: 100;
+    letter-spacing: .2px;
+    opacity: .9;
+  }
+}
+
+:root[data-mantine-color-scheme='light'] .brand-watermark {
+  background: rgba(255, 255, 255, .92);
+  border-color: rgba(2, 6, 23, .08);
+
+  small { color: #0f172a; }
+}

@@ -13,6 +13,7 @@ import './index.scss';
 import ChangeUserPassword from './components/ChangeUserPassword';
 import ChangeConnectionPassword from './components/ChangeConnectionPassword';
 import ChangeToLiveDb from './components/ChangeToLiveDb';
+import BrandWatermark from './components/BrandWatermark';
 
 const theme = createTheme({});
 
@@ -205,6 +206,8 @@ export function App() {
                     <IoColorPaletteOutline size={30} />
                   </div>
                 )}
+                {/* Mount watermark outside the grid wrapper */}
+                {/* <BrandWatermark /> */}
               </AppShell.Main>
             </AppShell>
           )}

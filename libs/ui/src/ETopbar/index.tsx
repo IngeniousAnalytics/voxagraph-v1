@@ -13,8 +13,8 @@ import {
   Badge,
   Box,
   Text,
-  Anchor,
-  Tooltip
+  Tooltip,
+  Divider
 } from '@mantine/core';
 import './index.scss';
 import { IETopbar } from 'src/types';
@@ -31,6 +31,7 @@ import AddTemplate from './components/AddTemplate';
 import Logo from './../../../../src/assets/img/logo.svg';
 import { getPermissions } from 'src/permissions';
 import { FiSave ,FiEdit,FiPlusCircle  } from 'react-icons/fi';
+
 export function ETopbar({
   mobileOp,
   mobileTog,
@@ -64,14 +65,6 @@ export function ETopbar({
   const toggleColorScheme = () => {
     setDarkMode((prev) => !prev);
   };
-
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     setCurrentTime(moment());
-  //   }, 1000);
-
-  //   return () => clearInterval(intervalId);
-  // }, []);
 
   useEffect(() => {
     const htmlElement = document.documentElement;
@@ -164,7 +157,6 @@ export function ETopbar({
       (Array.isArray(item.data.plot) && item.data.plot.length > 0)
   );
 
-
   const capitalizeWords = (str = '') => {
     return str
       .toLowerCase()
@@ -175,166 +167,137 @@ export function ETopbar({
 
   return (
     <Fragment>
-      <AppShell.Header
-        style={{ backgroundColor: '#757b81ff' }}
-        className="header"
-      >
-        <Group h="100%" px="md" justify="space-between">
-          <div className="header-menus">
-            <div className="header-menus--toggle">
+      <AppShell.Header className="etopbar">
+        <Group h="100%" px="md" justify="space-between" className="etopbar__inner">
+          {/* Left: nav + logo */}
+          <div className="etopbar__left">
+            <div className="etopbar__toggle">
               <Burger
+                aria-label="Toggle mobile sidebar"
                 opened={mobileOp}
                 onClick={mobileTog}
                 hiddenFrom="sm"
                 size="sm"
               />
-              <Group>
+              <Group gap="xs" visibleFrom="sm">
                 {deskOp && (
                   <Burger
+                    aria-label="Toggle desktop sidebar"
                     opened={!deskOp}
                     onClick={deskTog}
-                    visibleFrom="sm"
                     size="sm"
                   />
                 )}
                 {!deskOp && (
-                  <FaAngleRight size={24} color="white" onClick={deskTog} />
+                  <button className="ghost-icon-btn" aria-label="Open sidebar" onClick={deskTog}>
+                    <FaAngleRight size={20} />
+                  </button>
                 )}
               </Group>
             </div>
-            <div className="header-menus--logo">
-              <Image src={Logo} h={50} w={150} />
-              <Box component="div">
-                {' '}
-                <sup>
-                  <Badge
-                    color="yellow"
-                    size="xs"
-                    variant="outline"
-                    className="fw-normal text-capitalize"
-                  >
-                    Beta
-                  </Badge>
-                </sup>
-              </Box>
+
+            <div className="etopbar__brand">
+              <Image src={Logo} h={40} w="auto" alt="Logo" />
+              <Badge color="yellow" size="xs" variant="outline" className="etopbar__beta">Beta</Badge>
             </div>
           </div>
-          <h2 style={{color:"white",fontSize:15,fontWeight:700}}>{dashboardId?.dashboard_name}</h2>
-          <div className="header-actions">
+
+          {/* Center: title */}
+          <div className="etopbar__title">
+            <Text component="h2" className="etopbar__titleText" title={dashboardId?.dashboard_name}>
+              {dashboardId?.dashboard_name}
+            </Text>
+          </div>
+
+          {/* Right actions */}
+          <div className="etopbar__right">
             { I_PERMIT.i_save_or_update ? (
-              <Group>
-                <Button color="green" onClick={handleInsertUpdate}>
-                  {templateID ?
-                   <Tooltip label="Update Dashboard" withArrow>
-                  <FiEdit  size={20}/>
-                  </Tooltip> :  <Tooltip label="Save Dashboard" withArrow><FiSave size={20} /></Tooltip>}
-                </Button>
+              <Group gap="xs" className="etopbar__cta">
+                <Tooltip label={templateID ? "Update Dashboard" : "Save Dashboard"} withArrow>
+                  <Button
+                    aria-label={templateID ? "Update Dashboard" : "Save Dashboard"}
+                    className="primary-cta"
+                    color={templateID ? "blue" : "green"}
+                    onClick={handleInsertUpdate}
+                  >
+                    {templateID ? <FiEdit size={18}/> : <FiSave size={18}/>}
+                  </Button>
+                </Tooltip>
 
                 {templateID && (
                   <Tooltip label="Create New Dashboard" withArrow>
-                  <Button
-                    color="gray"
-                    onClick={onCreateNew}
-                    disabled={!hasAllPlots}
-                  >
-                    
-                   <FiPlusCircle size={20}/>
-                
-                  </Button>
-                     </Tooltip>
+                    <Button
+                      aria-label="Create New Dashboard"
+                      color="gray"
+                      variant="light"
+                      onClick={onCreateNew}
+                      disabled={!hasAllPlots}
+                    >
+                      <FiPlusCircle size={18}/>
+                    </Button>
+                  </Tooltip>
                 )}
               </Group>
-            ) : (
-              <></>
-            )}
-            <div className="header-actions--dbinfo">
-              <p className="header-actions--dbinfo--db--text">
-                {I_CONNECT_WITH?.name}
-              </p>
+            ) : null}
+
+            <Divider orientation="vertical" className="etopbar__divider" />
+
+            <div className="etopbar__dbinfo" title={getPermissions()?.I_CONNECT_WITH?.name}>
+              <span className="etopbar__dbpill">{I_CONNECT_WITH?.name}</span>
             </div>
-            <div className="header-actions--profile">
-              <Menu
-                shadow="md"
-                width={250}
-                withArrow
-                position="bottom-end"
-                transitionProps={{ transition: 'fade-up', duration: 150 }}
-              >
-                <Menu.Target>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <Avatar
-                      src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-7.png"
-                      alt="it's me"
-                      size={45}
+
+            <Menu
+              shadow="md"
+              width={260}
+              withArrow
+              position="bottom-end"
+              transitionProps={{ transition: 'fade', duration: 120 }}
+            >
+              <Menu.Target>
+                <button className="etopbar__profile" aria-label="Open profile menu">
+                  <Avatar
+                    src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-7.png"
+                    alt="User avatar"
+                    size={36}
+                    radius="xl"
+                  />
+                  <Text className="etopbar__username">{capitalizeWords(userInfo?.username)}</Text>
+                </button>
+              </Menu.Target>
+
+              <Menu.Dropdown className="etopbar__menu">
+                <Menu.Item leftSection={<FaRegUserCircle size={16} />}>My Profile</Menu.Item>
+                <Menu.Item leftSection={<RiLockPasswordLine size={16} />} onClick={handleShowChangePassword}>
+                  Change Password
+                </Menu.Item>
+                <Menu.Item leftSection={<RiLockPasswordLine size={16} />} onClick={handleShowChangeConnectionPassword}>
+                  Connect Updated Database Password
+                </Menu.Item>
+                <Menu.Item leftSection={<LuDatabaseZap size={16} />} onClick={() => setIsUpdateDB(true)}>
+                  Switch Database
+                </Menu.Item>
+                <Menu.Item onClick={handleLogout} leftSection={<RiLogoutCircleLine size={16} />}>
+                  Logout
+                </Menu.Item>
+
+                <Menu.Divider />
+
+                <Menu.Label className="etopbar__themeLabel">
+                  <div className="themeToggle">
+                    <small>Light</small>
+                    <Switch
+                      color={darkMode ? 'dark.4' : 'gray.3'}
+                      size="md"
+                      onLabel={<CiLight size={16} />}
+                      offLabel={<MdDarkMode size={16} />}
+                      checked={darkMode}
+                      onChange={toggleColorScheme}
                     />
-                    <Text style={{ color: 'white' }}>
-                      {capitalizeWords(userInfo?.username)}
-                    </Text>
+                    <small>Dark</small>
                   </div>
-                </Menu.Target>
-
-                <Menu.Dropdown className="header-actions--notify-dd">
-                  <Menu.Item leftSection={<FaRegUserCircle size={16} />}>
-                    My Profile
-                  </Menu.Item>
-
-                  <Menu.Item
-                    leftSection={<RiLockPasswordLine size={16} />}
-                    onClick={handleShowChangePassword}
-                  >
-                    Change Password
-                  </Menu.Item>
-
-                  <Menu.Item
-                    leftSection={<RiLockPasswordLine size={16} />}
-                    onClick={handleShowChangeConnectionPassword}
-                  >
-                    Connect Updated Database Password
-                  </Menu.Item>
-
-                  <Menu.Item
-                    leftSection={<LuDatabaseZap size={16} />}
-                    onClick={() => setIsUpdateDB(true)}
-                  >
-                    Switch Database
-                  </Menu.Item>
-
-                  <Menu.Item
-                    onClick={handleLogout}
-                    leftSection={<RiLogoutCircleLine size={16} />}
-                  >
-                    Logout
-                  </Menu.Item>
-
-                  <Menu.Divider />
-
-                  <Menu.Label style={{ textAlign: 'center' }}>
-                    <div className="th-color">
-                      <div className="th-color--modes">
-                        <small>Light</small>
-                        <Switch
-                          color={darkMode ? 'dark.4' : 'light.4'}
-                          size="md"
-                          onLabel={
-                            <CiLight size={16} color="var(--bs-warning)" />
-                          }
-                          offLabel={
-                            <MdDarkMode
-                              size={16}
-                              color="var(--bs-link-color)"
-                            />
-                          }
-                          checked={darkMode}
-                          onChange={toggleColorScheme}
-                        />
-                        <small>Dark</small>
-                      </div>
-                      <div className="th-color--themes"></div>
-                    </div>
-                  </Menu.Label>
-                </Menu.Dropdown>
-              </Menu>
-            </div>
+                </Menu.Label>
+              </Menu.Dropdown>
+            </Menu>
           </div>
         </Group>
       </AppShell.Header>
