@@ -43,7 +43,7 @@ const SearchQuestion = ({
       centered
       size="lg"
       className="search-modal"
-      title="Search your question to plot the graph"
+      title="Question to plot the graph/grid"
       opened={show}
       onClose={() => {
         setShow(false);

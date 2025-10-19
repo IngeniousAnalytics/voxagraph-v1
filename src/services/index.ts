@@ -1,4 +1,4 @@
-// index.ts
+// sc/services/index.ts
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { dashApiInstance } from './instance';
 
@@ -86,6 +86,41 @@ export const fetchAskedQuestionResponse = createAsyncThunk(
   }
 );
 
+// ✅ 1) Check CSV/Excel uploaded?
+export const fetchUserCsvUpload = createAsyncThunk(
+  'dashboardAPI/fetchUserCsvUpload',
+  async (payload: any) => {
+    // If your endpoint is `/uploadcsv-upload`, just change the path below.
+    const res = await dashApiInstance.get(`/usercsv-upload`,payload);
+    // normalize: support {has_upload:true} or {result:true} or boolean
+    const data = res.data;
+    const hasUpload = Boolean(
+      data?.has_upload === true ||
+      data?.result === true ||
+      data?.status === 'true' ||
+      data === true
+    );
+    return { hasUpload };
+  }
+);
+
+// ✅ 2) Call /query 
+export const fetchQueryResponse = createAsyncThunk(
+  'dashboardAPI/fetchQueryResponse',
+  async (payload: any, { rejectWithValue }) => {
+     try {
+    const response = await dashApiInstance.post(
+            `/query`,
+            payload
+          );
+          return response.data;
+        } catch (err: any) {
+      return rejectWithValue(err.response?.data || 'Running Query Failed /query');
+    }
+  }
+);
+
+
 export const fetchExecutedSQLResponse = createAsyncThunk(
   'dashboardAPI/fetchExecutedSQLResponse',
   async (payload: any) => {
@@ -137,4 +172,5 @@ export const AIDashboardSlice = createSlice({
 });
 
 export const { setLoader, logout } = AIDashboardSlice.actions;
+
 export default AIDashboardSlice.reducer;

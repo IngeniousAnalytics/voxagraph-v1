@@ -1,3 +1,4 @@
+// src/pages/Dashboard/components/CardWidget.tsx
 import { Fragment } from 'react';
 import { Text, TextInput } from '@mantine/core';
 import '../styles/cardWidget.scss';
