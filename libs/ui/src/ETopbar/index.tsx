@@ -1,5 +1,7 @@
 //libs/ui/src/ETopbar/index.tsx
 import { Fragment, useEffect, useState } from 'react';
+
+
 import moment from 'moment';
 import {
   AppShell,
@@ -28,6 +30,8 @@ import { ENotify } from '../ENotify';
 import { FaAngleRight } from 'react-icons/fa';
 import { LuDatabaseZap } from 'react-icons/lu';
 import AddTemplate from './components/AddTemplate';
+import FileUploadModal from './components/FileUploadModal';
+
 import Logo from './../../../../src/assets/img/logo.svg';
 import { getPermissions } from 'src/permissions';
 import { FiSave ,FiEdit,FiPlusCircle  } from 'react-icons/fi';
@@ -48,6 +52,7 @@ export function ETopbar({
   showTemplate,
   setShowTemplate,
   setShowConnectDB,
+
   setIsUpdateDB,
   I_PERMIT,
   handleShowChangePassword,
@@ -59,8 +64,10 @@ export function ETopbar({
   const userInfo = useAppSelector(
     (state: any) => state.dashboardServices.userInfo
   );
+
   const [currentTime, setCurrentTime] = useState(moment());
   const [darkMode, setDarkMode] = useState(false);
+  const [uploadOpen, setUploadOpen] = useState(false);
 
   const toggleColorScheme = () => {
     setDarkMode((prev) => !prev);
@@ -256,7 +263,7 @@ export function ETopbar({
               <Menu.Target>
                 <button className="etopbar__profile" aria-label="Open profile menu">
                   <Avatar
-                    src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-7.png"
+                    src="avatar-7.png"
                     alt="User avatar"
                     size={36}
                     radius="xl"
@@ -270,6 +277,7 @@ export function ETopbar({
                 <Menu.Item leftSection={<RiLockPasswordLine size={16} />} onClick={handleShowChangePassword}>
                   Change Password
                 </Menu.Item>
+                <Menu.Item leftSection={<FaRegUserCircle size={16} />} onClick={() => setUploadOpen(true)}> File Upload</Menu.Item>
                 <Menu.Item leftSection={<RiLockPasswordLine size={16} />} onClick={handleShowChangeConnectionPassword}>
                   Connect Updated Database Password
                 </Menu.Item>
@@ -301,7 +309,7 @@ export function ETopbar({
           </div>
         </Group>
       </AppShell.Header>
-
+      <FileUploadModal opened={uploadOpen} onClose={() => setUploadOpen(false)} />
       {showTemplate && (
         <AddTemplate
           show={showTemplate}

@@ -12,6 +12,68 @@ const initialState: any = {
   isLoading: false,
 };
 
+// ---------- File status ----------
+export type FileStatus = {
+  has_file: boolean;
+  file_name?: string;
+  size_bytes?: number;
+  updated_at?: string; // server returns a string/number; keep as string to display
+};
+
+export const getUserFileStatus = async (): Promise<FileStatus> => {
+  const res = await dashApiInstance.get<FileStatus>('/files/status');
+  return res.data;
+};
+
+// ---------- Upload with optional replace flag ----------
+export const uploadUserDataFile = (
+  file: File,
+  onProgress?: (pct: number) => void,
+  replace: boolean = false
+) => {
+  const formData = new FormData();
+  // FastAPI expects "f: UploadFile = File(...)"
+  formData.append('f', file);
+
+  const url = replace ? '/files/upload?replace=true' : '/files/upload';
+
+  return dashApiInstance.post(url, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+    onUploadProgress: (e) => {
+      if (!e.total) return;
+      const pct = Math.round((e.loaded * 100) / e.total);
+      onProgress?.(pct);
+    },
+  });
+};
+
+// ---------- Delete current user's file ----------
+// NOTE: adjust the path if your backend uses a different route.
+export const deleteUserDataFile = async () => {
+  // prefer HTTP DELETE if available; change to your actual endpoint:
+  return dashApiInstance.delete('/files/delete');
+};
+
+// ---------- OPTIONAL: thunk variant if you prefer dispatchable ----------
+export const uploadUserDataFileThunk = createAsyncThunk(
+  'dashboardAPI/uploadUserDataFile',
+  async (
+    payload: { file: File },
+    { rejectWithValue }
+  ) => {
+    try {
+      const formData = new FormData();
+      formData.append('f', payload.file);
+      const res = await dashApiInstance.post('/upload', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      return res.data;
+    } catch (err: any) {
+      return rejectWithValue(err?.response?.data || 'Upload failed');
+    }
+  }
+);
+
 export const userLogin = createAsyncThunk(
   'dashboardAPI/userLogin',
   async (payload: any, { rejectWithValue, dispatch }) => {
