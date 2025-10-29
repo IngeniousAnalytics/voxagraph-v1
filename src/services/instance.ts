@@ -5,8 +5,8 @@ import axios, { AxiosInstance } from 'axios';
 // Create instances
 const dashApiClient = axios.create({
   //baseURL: 'http://80.225.200.22:1312' // with docker image
-    baseURL: 'http://127.0.0.1:8000',
-   // baseURL: 'http://80.225.200.22/api' // without docker image
+   // baseURL: 'http://127.0.0.1:8000',
+    baseURL: 'http://80.225.200.22/api' // without docker image
 });
 
 // Function to get token from localStorage
