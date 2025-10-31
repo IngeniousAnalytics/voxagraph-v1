@@ -1,0 +1,520 @@
+:root {
+    --navy: #0F172A;
+    --electric-blue: #3B82F6;
+    --teal: #06B6D4;
+    --light-gray: #F8FAFC;
+    --dark-gray: #64748B;
+    --white: #FFFFFF;
+}
+
+/* ===========================
+   Global Styles
+   =========================== */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: var(--navy);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+/* ===========================
+   Container
+   =========================== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 16px;
+    }
+}
+
+/* ===========================
+   Header (Basic - extended in header.css)
+   =========================== */
+header {
+    background-color: var(--white);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    max-width: 1280px;
+    margin: 0 auto;
+
+}
+
+
+
+@media (max-width: 768px) {
+    .header-container {
+        padding: 12px 16px;
+    }
+}
+
+/* ===========================
+   Logo
+   =========================== */
+.logo {
+    font-size: clamp(1.25rem, 4vw, 1.5rem);
+    font-weight: 700;
+    color: #FF8C1A;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #FFB347 0%, #FF8C1A 50%, #FFD580 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.logo span {
+    color: var(--electric-blue);
+}
+
+.logo-img {
+    height: clamp(50px, 8vw, 65px);
+    width: auto;
+    margin-right: 10px;
+}
+
+/* ===========================
+   Navigation
+   =========================== */
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: clamp(20px, 3vw, 30px);
+    margin: 0;
+    padding: 0;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--navy);
+    font-weight: 500;
+    transition: color 0.3s;
+    font-size: clamp(0.875rem, 2vw, 1rem);
+}
+
+nav a:hover {
+    color: var(--electric-blue);
+}
+
+/* Mobile Navigation Toggle */
+.nav-toggle {
+    display: none;
+    background: transparent;
+    border: 0;
+    padding: 8px;
+    cursor: pointer;
+    z-index: 101;
+}
+
+.nav-toggle .nav-bar {
+    display: block;
+    width: 25px;
+    height: 2px;
+    background: var(--navy);
+    margin: 5px 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    border-radius: 2px;
+}
+
+/* Animated hamburger */
+.nav-toggle.active .nav-bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.nav-toggle.active .nav-bar:nth-child(2) {
+    opacity: 0;
+}
+
+.nav-toggle.active .nav-bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+@media (max-width: 960px) {
+    .nav-toggle {
+        display: inline-flex;
+        flex-direction: column;
+    }
+
+    .main-nav {
+        position: fixed;
+        right: -100%;
+        top: 0;
+        height: 100vh;
+        width: min(300px, 80vw);
+        background: var(--white);
+        box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+        padding: 80px 20px 20px;
+        transition: right 0.3s ease;
+        overflow-y: auto;
+    }
+
+    .main-nav.open {
+        right: 0;
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .main-nav li {
+        width: 100%;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .main-nav a {
+        display: block;
+        padding: 16px 12px;
+        font-size: 1rem;
+    }
+
+    .main-nav a::after {
+        display: none;
+    }
+}
+
+/* ===========================
+   CTA Button
+   =========================== */
+.cta-button {
+    background: linear-gradient(135deg, #4285f4, #007bff);
+    color: var(--white) !important;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    transition: all 0.3s ease;
+    border: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.cta-button:hover {
+    background: linear-gradient(135deg, #007bff, #00b4d8);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+}
+
+@media (max-width: 960px) {
+    .main-nav .cta-button {
+        margin-top: 12px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .cta-button {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+}
+
+/* ===========================
+   Secondary Button
+   =========================== */
+.secondary-button {
+    background-color: transparent;
+    color: var(--electric-blue);
+    border: 2px solid var(--electric-blue);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.secondary-button:hover {
+    background-color: var(--electric-blue);
+    color: var(--white);
+}
+
+@media (max-width: 480px) {
+    .secondary-button {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+}
+
+/* ===========================
+   Section Headers
+   =========================== */
+.section-header {
+    text-align: center;
+    margin-bottom: clamp(40px, 8vw, 60px);
+}
+
+.section-header h2 {
+    font-size: clamp(1.75rem, 5vw, 2.25rem);
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--navy);
+}
+
+.section-header p {
+    color: var(--dark-gray);
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: clamp(1rem, 2.5vw, 1.125rem);
+    line-height: 1.6;
+}
+
+/* ===========================
+   Features Section
+   =========================== */
+.features {
+    padding: clamp(60px, 10vw, 100px) 0;
+    background-color: var(--light-gray);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: clamp(20px, 3vw, 30px);
+}
+
+@media (max-width: 640px) {
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+.feature-card {
+    background-color: var(--white);
+    border-radius: 10px;
+    padding: clamp(24px, 4vw, 30px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+    font-size: clamp(28px, 5vw, 32px);
+    margin-bottom: 20px;
+    color: var(--electric-blue);
+}
+
+.feature-card h3 {
+    font-size: clamp(1.125rem, 3vw, 1.25rem);
+    margin-bottom: 15px;
+    color: var(--navy);
+}
+
+.feature-card p {
+    color: var(--dark-gray);
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    line-height: 1.6;
+}
+
+/* ===========================
+   Testimonials
+   =========================== */
+.testimonials {
+    padding: clamp(60px, 10vw, 80px) 0;
+    text-align: center;
+    background-color: var(--white);
+}
+
+.logos {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: clamp(20px, 4vw, 40px);
+    margin: clamp(30px, 6vw, 50px) 0;
+    opacity: 0.6;
+}
+
+.logo-placeholder {
+    padding: 20px 30px;
+    background: var(--light-gray);
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.testimonials blockquote {
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: clamp(1rem, 3vw, 1.125rem);
+    font-style: italic;
+    color: var(--dark-gray);
+    line-height: 1.8;
+    padding: 0 20px;
+}
+
+/* ===========================
+   Footer
+   =========================== */
+footer {
+    background-color: var(--navy);
+    color: var(--white);
+    padding: clamp(40px, 8vw, 60px) 0 30px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: clamp(30px, 5vw, 40px);
+    margin-bottom: clamp(30px, 6vw, 50px);
+}
+
+@media (max-width: 640px) {
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}
+
+.footer-column h3 {
+    font-size: clamp(1rem, 2.5vw, 1.125rem);
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-column li {
+    margin-bottom: 12px;
+}
+
+.footer-column a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-size: clamp(0.875rem, 2vw, 1rem);
+}
+
+.footer-column a:hover {
+    color: var(--white);
+}
+
+.copyright {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: clamp(0.813rem, 2vw, 0.875rem);
+}
+
+/* ===========================
+   Utility Classes
+   =========================== */
+.text-center {
+    text-align: center;
+}
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+
+.p-1 { padding: 0.5rem; }
+.p-2 { padding: 1rem; }
+.p-3 { padding: 1.5rem; }
+.p-4 { padding: 2rem; }
+
+/* ===========================
+   Accessibility
+   =========================== */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Focus styles */
+a:focus,
+button:focus {
+    outline: 2px solid var(--electric-blue);
+    outline-offset: 2px;
+}
+
+/* ===========================
+   Print Styles
+   =========================== */
+@media print {
+    header,
+    footer,
+    .nav-toggle,
+    .cta-button,
+    .secondary-button {
+        display: none;
+    }
+
+    body {
+        color: #000;
+        background: #fff;
+    }
+
+    .container {
+        max-width: 100%;
+    }
+}

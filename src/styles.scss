@@ -1,9 +1,6 @@
 @use './assets/styles/grid.css';
 @use './mixins';
 
-:root {
-  --theme-gradient: linear-gradient(#081d2d, #085984);
-}
 
 @font-face {
   font-family: 'Mona Sans';
@@ -36,16 +33,20 @@
 }
 
 html,
-body {
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
   height: 100%;
+  overflow-x: hidden;
+  font-family: 'Inter', 'Roboto', 'Segoe UI', Arial, sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #fff;
 }
-html {
-  font-size: 0.875rem;
-}
-body {
-  font-family: var(--bs-font-sans-serif);
-  color: var(--bs-gray-600);
-}
+
 
 .th-anchor-color {
   color: var(--bs-gray-600);

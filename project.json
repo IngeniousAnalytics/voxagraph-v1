@@ -13,6 +13,7 @@
         "webpackConfig": "webpack.config.js"
       }
     },
+    
     "serve": {
       "executor": "@nx/webpack:dev-server",
       "options": {

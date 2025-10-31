@@ -1,3 +1,4 @@
+// src/types/index.ts
 import { IconType } from 'react-icons';
 
 export interface INavItems {
