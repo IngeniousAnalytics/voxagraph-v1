@@ -1,3 +1,4 @@
+// src/app/index.tsx
 import { Fragment, useEffect, useState } from 'react';
 import { AppShell, createTheme, MantineProvider } from '@mantine/core';
 import { ETopbar, ENavbar, ELoading, EColorPicker } from '@ai-dashboard/ui';

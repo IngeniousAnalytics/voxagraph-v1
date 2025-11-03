@@ -77,6 +77,7 @@ a {
 
 .section-header {
   margin-bottom: 60px;
+  margin: 0 auto 40px;
 }
 
 .section-header h2 {
