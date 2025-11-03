@@ -1,0 +1,100 @@
+/* ===========================
+   USE CASES PAGE STYLES
+   =========================== */
+
+.use-cases-page {
+  background: #fff;
+  color: #1c1c40;
+  font-family: "Inter", sans-serif;
+}
+
+/* Hero Section */
+.use-cases-hero {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #fff;
+  padding: clamp(70px, 10vw, 120px) 20px;
+  text-align: center;
+}
+
+.use-cases-hero h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.use-cases-hero p {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  max-width: 750px;
+  margin: 0 auto;
+  opacity: 0.95;
+  line-height: 1.6;
+}
+
+/* Section header reused */
+.section-header h2 {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 600;
+  color: #1c1c40;
+  margin-bottom: 1rem;
+}
+
+.section-header p {
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto 40px;
+}
+
+/* CTA Section */
+.use-cases-cta {
+  background: #f9fafb;
+  text-align: center;
+  padding: clamp(60px, 8vw, 100px) 20px;
+}
+
+.use-cases-cta h2 {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  color: #1c1c40;
+  margin-bottom: 1rem;
+}
+
+.use-cases-cta p {
+  color: #555;
+  font-size: 1.1rem;
+  max-width: 650px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+}
+
+.use-cases-cta .cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.use-cases-cta .btn {
+  padding: 14px 32px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.use-cases-cta .btn-primary {
+  background: #059669;
+  color: #fff;
+}
+
+.use-cases-cta .btn-primary:hover {
+  background: #047857;
+}
+
+.use-cases-cta .btn-outline-secondary {
+  border: 2px solid #059669;
+  color: #059669;
+}
+
+.use-cases-cta .btn-outline-secondary:hover {
+  background: #059669;
+  color: #fff;
+}

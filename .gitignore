@@ -11,8 +11,8 @@ node_modules
 .env
 
 # Public folder
-/public/assets/videos/*
-/src/assets/videos/*
+/public../assets/videos/*
+/src../assets/videos/*
 
 # Other files
 my_git_cmd.md
