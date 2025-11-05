@@ -13,7 +13,10 @@ const Contact: React.FC = () => {
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
+  const GOOGLE_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbzq985xvaNitdQMoqW-gUGZvIJ4qAsgKoCBBj-ajH379zgEbvotGEz2oKxNTsdDBtskeA/exec"; // replace with yours
 
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -23,82 +26,86 @@ const Contact: React.FC = () => {
     const newErrors: Record<string, string> = {};
     if (!formData.email.trim()) newErrors.email = "Email is required.";
     if (!formData.country.trim()) newErrors.country = "Country is required.";
-    if (formData.remarks.trim().split(" ").length < 20)
-      newErrors.remarks = "Remarks must be at least 20 words.";
+    if (formData.remarks.trim().split(" ").length < 11)
+      newErrors.remarks = "Remarks must be at least 10 words.";
     return newErrors;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
+const handleSubmit = (e: React.FormEvent) => {
+  e.preventDefault();
+  const validationErrors = validate();
+  if (Object.keys(validationErrors).length > 0) {
+    setErrors(validationErrors);
+    return;
+  }
+
+  const params = new URLSearchParams({
+    name: formData.name,
+    email: formData.email,
+    phone: formData.phone,
+    country: formData.country,
+    remarks: formData.remarks,
+    callback: 'voxaCallback' // request JSONP callback
+  });
+
+  // create a global callback function to receive response
+  (window as any).voxaCallback = function (resp: any) {
+    if (resp.status === 'success') {
+      setSubmitted(true);
+    } else {
+      alert('Submission failed: ' + resp.message);
     }
-    setErrors({});
-    setSubmitted(true);
-    // TODO: send data to your backend or email service
-    console.log("Form submitted:", formData);
+    // cleanup
+    delete (window as any).voxaCallback;
+    const existing = document.getElementById('voxa-jsonp');
+    if (existing) existing.remove();
   };
+
+  // create script tag (JSONP)
+  const script = document.createElement('script');
+  script.src = GOOGLE_SCRIPT_URL + '?' + params.toString();
+  script.id = 'voxa-jsonp';
+  document.body.appendChild(script);
+};
 
   return (
     <AppLayout>
       <main className="contact-page">
         {/* Hero Section */}
-        <section className="contact-hero">
-          <div className="container">
-            <h1>Contact Us</h1>
-            <p>
-              We’d love to hear from you. Whether you’re a potential partner,
-              customer, or just curious about Voxagraph, feel free to reach out.
-            </p>
-          </div>
-        </section>
+       {/* Hero Section */}
+<section className="contact-hero split-layout">
+  <div className="container-inner">
+    <div className="hero-left">
+      <h1>Contact Us</h1>
+      <p>
+        We’d love to hear from you. Whether you’re a potential partner,
+        customer, or just curious about Voxagraph, feel free to reach out.
+      </p>
+    </div>
+        <img
+                src="../assets/images/namaste.png"
+                alt="Namaste"
+                className="hero-image"
+              />
+    <div className="hero-right">
+      <div className="offices-grid">
+        <div className="office-card">
+          <h3>Head Office (India)</h3>
+          <p>Ingenious Analytics</p>
+          <p>Chandigarh, India</p>
+          <p>
+            <a href="mailto:info@ingeniousanalytics.com">
+              info@ingeniousanalytics.com
+            </a>
+          </p>
+          <p>Business Hours: Mon–Sat, 9:30–18:30 IST</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        {/* Offices Section */}
-        <section className="office-section">
-          <div className="container offices-grid">
-            <div className="office-card">
-              <h3>Head Office (India)</h3>
-              <p>Ingenious Analytics</p>
-              <p>Chandigarh, India</p>
-              <p>
-                <a href="mailto:info@ingeniousanalytics.com">
-                  info@ingeniousanalytics.com
-                </a>
-              </p>
-              <p>Business Hours: Mon–Sat, 9:30–18:30 IST</p>
-            </div>
-
-            <div className="office-card">
-              <h3>United States</h3>
-              <p>
-                <a href="mailto:us@ingeniousanalytics.com">
-                  us@ingeniousanalytics.com
-                </a>
-              </p>
-            </div>
-
-            <div className="office-card">
-              <h3>Australia</h3>
-              <p>
-                <a href="mailto:australia@ingeniousanalytics.com">
-                  australia@ingeniousanalytics.com
-                </a>
-              </p>
-            </div>
-
-            <div className="office-card">
-              <h3>Canada</h3>
-              <p>
-                <a href="mailto:canada@ingeniousanalytics.com">
-                  canada@ingeniousanalytics.com
-                </a>
-              </p>
-            </div>
-          </div>
-        </section>
-
+    
         {/* Contact Form Section */}
         <section className="form-section">
           <div className="container">
@@ -137,7 +144,7 @@ const Contact: React.FC = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      placeholder="+91 9876543210"
+                      placeholder="+91 XXXXXXXXXX"
                     />
                   </div>
 
@@ -157,7 +164,7 @@ const Contact: React.FC = () => {
                   </div>
 
                   <div className="form-group full-width">
-                    <label>Remarks (minimum 20 words)</label>
+                    <label>Remarks (minimum 10 words)</label>
                     <textarea
                       name="remarks"
                       rows={6}

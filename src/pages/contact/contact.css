@@ -55,13 +55,13 @@
 }
 
 .office-card h3 {
-  color: #1c1c40;
+  color: #fff;
   margin-bottom: 10px;
   font-weight: 600;
 }
 
 .office-card a {
-  color: #4f46e5;
+  color: #fff;
   text-decoration: none;
   font-weight: 500;
 }
@@ -158,4 +158,102 @@
   color: #059669;
   font-size: 1.75rem;
   margin-bottom: 10px;
+}
+
+/* Align hero section with navbar container width */
+.contact-hero.split-layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 20px 0;
+  background: linear-gradient(135deg, #8587e6 0%, #8b5cf6 100%);
+  color: #fff;
+  flex-wrap: nowrap;
+}
+
+/* limit content to match header width */
+.contact-hero .container-inner {
+  width: 100%;
+  max-width: 1200px; /* align with AppLayout container width */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem; /* match navbar horizontal padding */
+  box-sizing: border-box;
+      flex-wrap: nowrap;
+}
+
+/* left & right side adjustments */
+.hero-left {
+  flex: 1 1 45%;
+  max-width: 480px;
+}
+
+.hero-right {
+  flex: 1 1 50%;
+}
+
+.hero-left h1 {
+  font-size: clamp(2.5rem, 5vw, 3rem);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.hero-left p {
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+/* office cards */
+.hero-right .offices-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+
+}
+
+.hero-right .office-card {
+
+  border-radius: 12px;
+  padding: 24px 20px;
+  text-align: center;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
+    background: linear-gradient(135deg, #8587e6 0%, #8b5cf6 100%);
+  color: #fff;
+}
+
+.hero-image {
+  display: block;
+  max-width: 220px;
+  width: 100%;
+  height: auto;
+  margin: 30px auto 0;
+  border-radius: 50%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+}
+
+.hero-image:hover {
+  transform: scale(1.05);
+}
+
+/* If you’re using Option B (between columns), center it vertically */
+.split-layout .hero-image {
+  flex: 0 0 200px;
+  margin: 0 40px;
+}
+.contact-hero .hero-image {
+  opacity: 1 !important;
+  transform: none !important;
+  max-width: 220px;
+  display: block;
+  margin: 20px auto;
+
 }
