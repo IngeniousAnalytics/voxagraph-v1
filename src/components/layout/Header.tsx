@@ -1,60 +1,47 @@
+// src/components/layout/Header.tsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../../assets/images/logo1.png";
 import "./layout.css";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-  const handleToggle = () => setMenuOpen(!menuOpen);
-
   return (
     <header className="site-header">
       <div className="container header-container">
+        {/* Logo */}
         <button
           className="logo-btn"
-          aria-label="Voxagraph Home"
           onClick={() => navigate("/")}
+          aria-label="Go to home"
         >
-          <img src={logo} alt="Voxagraph Logo" className="logo-img" />
+          <img
+            src="/assets/images/logo1.png"
+            alt="VoxaGraph Logo"
+            className="logo-img"
+          />
         </button>
 
-        {/* Mobile Menu Button */}
+        {/* ✅ Hamburger Button */}
         <button
           className={`nav-toggle ${menuOpen ? "open" : ""}`}
+          onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle navigation"
-          aria-expanded={menuOpen}
-          onClick={handleToggle}
         >
           <span className="nav-bar"></span>
           <span className="nav-bar"></span>
           <span className="nav-bar"></span>
         </button>
 
-        {/* Navigation */}
+        {/* ✅ Nav Menu */}
         <nav className={`main-nav ${menuOpen ? "open" : ""}`}>
           <ul>
-            <li>
-              <button onClick={() => navigate("/features")}>Features</button>
-            </li>
-            <li>
-              <button onClick={() => navigate("/use-cases")}>Use Cases</button>
-            </li>
-            <li>
-              <button onClick={() => navigate("/pricing")}>Pricing</button>
-            </li>
-            <li>
-              <button onClick={() => navigate("/documentation")}>Documentation</button>
-            </li>
-            <li>
-              <button
-                className="cta-button"
-                onClick={() => navigate("/login")}
-              >
-                Sign-in
-              </button>
-            </li>
+            <li><button onClick={() => navigate("/features")}>Features</button></li>
+            <li><button onClick={() => navigate("/use-cases")}>Use Cases</button></li>
+            <li><button onClick={() => navigate("/pricing")}>Pricing</button></li>
+            <li><button onClick={() => navigate("/documentation")}>Documentation</button></li>
+            <li><button className="cta-button" onClick={() => navigate("/login")}>Sign In</button></li>
           </ul>
         </nav>
       </div>

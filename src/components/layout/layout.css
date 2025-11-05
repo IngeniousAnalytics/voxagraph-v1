@@ -1,7 +1,8 @@
-/* -------------------------------
-   Shared Layout Styles (Header/Footer)
--------------------------------- */
+/* ==================================
+   Layout Styles (Header + Footer)
+================================== */
 
+/* Header */
 .site-header {
   background: #fff;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
@@ -15,14 +16,27 @@
   justify-content: space-between;
   align-items: center;
   padding: 14px 0;
+
 }
 
 .logo-img {
-    height: clamp(50px, 8vw, 65px);
-    width: auto;
-    margin-right: 10px;
+  height: clamp(50px, 8vw, 65px);
+  width: auto;
+  margin-right: 10px;
 }
 
+.logo-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.logo-btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Navigation */
 .main-nav ul {
   list-style: none;
   display: flex;
@@ -62,7 +76,7 @@
   color: #fff !important;
 }
 
-/* Mobile menu */
+/* Hamburger */
 .nav-toggle {
   display: none;
   flex-direction: column;
@@ -72,28 +86,19 @@
   background: none;
   border: none;
   cursor: pointer;
-}
-
-/* --- Logo Fix --- */
-.logo-btn {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-}
-
-.logo-btn:focus {
-  outline: none;
-  box-shadow: none;
+  position: relative;
+  z-index: 9999;
 }
 
 .nav-bar {
   width: 100%;
   height: 3px;
   background: #111;
-  transition: all 0.3s;
+  border-radius: 2px;
+  transition: all 0.3s ease;
 }
 
+/* Transform when open */
 .nav-toggle.open .nav-bar:nth-child(1) {
   transform: rotate(45deg) translateY(8px);
 }
@@ -104,7 +109,7 @@
   transform: rotate(-45deg) translateY(-8px);
 }
 
-/* Responsive nav */
+/* Responsive Nav */
 @media (max-width: 768px) {
   .main-nav ul {
     flex-direction: column;
@@ -119,12 +124,13 @@
     background: #fff;
     padding: 20px 0;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
+    text-align: center;
   }
   .main-nav.open {
     display: block;
   }
   .nav-toggle {
-    display: flex;
+    display: flex !important;
   }
 }
 
@@ -169,6 +175,12 @@
   color: #007bff;
 }
 
+.footer-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .footer-column .cta-button {
   background: #007bff;
   color: #fff;
@@ -180,9 +192,22 @@
   background: #0056d1;
 }
 
+.footer-column .contact-btn {
+  background: #10b981;
+  color: #fff !important;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s;
+}
+.footer-column .contact-btn:hover {
+  background: #059669;
+}
+
 .copyright {
   text-align: center;
-  color: #555;
+  color: #eee;
   font-size: 0.9rem;
   margin-top: 20px;
 }

@@ -4,6 +4,7 @@ import Features from "./pages/features/Features";
 import UseCases from "./pages/use-cases/UseCases";
 import Pricing from "./pages/pricing/Pricing";
 import Documentation from "./pages/documentation/Documentation";
+import Contact from "./pages/contact/Contact";
 
 function AppPublic() {
   return (
@@ -13,6 +14,7 @@ function AppPublic() {
       <Route path="/use-cases" element={<UseCases />} />
       <Route path="/pricing" element={<Pricing />} />
       <Route path="/documentation" element={<Documentation />} />
+      <Route path="/contact" element={<Contact />} />
     </Routes>
   );
 }
