@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Modal, Button } from "@mantine/core";
 import AppLayout from "../../components/layout/AppLayout";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../../assets/css/home.css";
+import "./home.css";
 
 // image imports
 import heroImg from "../../assets/images/hero.png";
@@ -37,14 +37,14 @@ const Home: React.FC = () => {
               </p>
                     <div className="hero-buttons">
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-contact"
                       onClick={() => navigate("/login?mode=registration")}
                     >
                       Try Now
                     </button>
 
                     <button
-                      className="btn btn-outline"
+                      className="btn btn-contact"
                       onClick={() => setOpened(true)}
                     >
                       Demo Video

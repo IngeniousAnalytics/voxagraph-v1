@@ -314,11 +314,12 @@ a {
   justify-content: center;
   align-items: center;
   gap: 4px;
-
+  padding: 5px px;
   margin-top: 2rem;
   flex-direction: row;
   flex-wrap: nowrap;
 }
+
 
 /* Base button styling */
 .btn {
@@ -326,12 +327,24 @@ a {
   border: none;
   border-radius: 8px;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 1200;
   cursor: pointer;
   transition: all 0.3s ease;
   line-height: 1.2;
   min-width: 140px;
 }
+
+.hero-buttons .btn:hover {
+  background: #4bd8b7;
+}
+
+.hero-buttons .btn {
+
+
+  text-align: center;
+  justify-content: center;
+}
+
 
 /* Try Now */
 .btn-primary {
@@ -339,6 +352,7 @@ a {
   color: #fff;
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
 }
+
 .btn-primary:hover {
   background: #1d4ed8;
 }
@@ -361,6 +375,7 @@ a {
   border: none;
   box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
 }
+
 .btn-contact:hover {
   background: #047857;
 }
@@ -375,12 +390,7 @@ a {
 
 }
 
-.hero-buttons .btn {
 
-  padding: 12px 14px;
-  text-align: center;
-  justify-content: center;
-}
 
 .youtube-wrapper {
   position: relative;

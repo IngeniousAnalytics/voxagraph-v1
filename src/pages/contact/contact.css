@@ -229,7 +229,7 @@
   color: #fff;
 }
 
-.hero-image {
+.hero_c-image {
   display: block;
   max-width: 220px;
   width: 100%;
@@ -240,7 +240,7 @@
   transition: transform 0.3s ease;
 }
 
-.hero-image:hover {
+.hero_c-image:hover {
   transform: scale(1.05);
 }
 

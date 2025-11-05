@@ -49,9 +49,9 @@
 .main-nav ul li a {
   background: none;
   border: none;
-  color: #111;
-  font-weight: 500;
-  font-size: 1rem;
+  color: #555252;
+  font-weight: 600;
+  font-size: 1.20rem;
   cursor: pointer;
   transition: color 0.3s;
 }
@@ -61,20 +61,7 @@
   color: #007bff;
 }
 
-/* CTA Button */
-.cta-button {
-  background: #bdd2e9;
-  color: #080808 !important;
-  border: none;
 
-  border-radius: 6px;
-
-  transition: background 0.3s;
-}
-.cta-button:hover {
-  background: #0056d1;
-  color: #fff !important;
-}
 
 /* Hamburger */
 .nav-toggle {
@@ -169,8 +156,9 @@
 .footer-column a {
   color: #333;
   text-decoration: none;
-  transition: color 0.3s;
+
 }
+
 .footer-column a:hover {
   color: #007bff;
 }
@@ -181,26 +169,31 @@
   gap: 10px;
 }
 
-.footer-column .cta-button {
-  background: #007bff;
-  color: #fff;
+
+/* CTA Button */
+.cta-button {
+
+  color: #080808 !important;
+  border: none;
+  border-radius: 6px;
+  transition: background 0.3s;
+}
+.cta-button:hover {
+  background: #0056d1;
+  color: #fff !important;
+}
+
+.footer-column .cta-button .contact-btn {
   border-radius: 8px;
   text-decoration: none;
   font-weight: 600;
 }
+
 .footer-column .cta-button:hover {
   background: #0056d1;
 }
 
-.footer-column .contact-btn {
-  background: #10b981;
-  color: #fff !important;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-  transition: background 0.3s;
-}
+
 .footer-column .contact-btn:hover {
   background: #059669;
 }
