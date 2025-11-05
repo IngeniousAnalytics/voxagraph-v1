@@ -30,25 +30,35 @@ const Home: React.FC = () => {
         <div className="container py-5">
           <div className="row align-items-center">
             <div className="col-lg-6">
-              <h1 className="hero-title">AI Insights with Human Confidence</h1>
+              <h1 className="hero-title">AI Dashbaord Insights with Human Confidence</h1>
               <p className="hero-sub">
                 The intelligent dashboard that combines AI power with human
                 oversight for reliable decision-making.
               </p>
-                    <div className="mt-4">
+                    <div className="hero-buttons">
                     <button
-                        className="btn btn-primary me-2"
-                        onClick={() => navigate("/login?mode=registration")}
+                      className="btn btn-primary"
+                      onClick={() => navigate("/login?mode=registration")}
                     >
-                        Try Now
+                      Try Now
                     </button>
+
                     <button
-                        className="btn btn-outline-secondary"
-                        onClick={() => setOpened(true)}
+                      className="btn btn-outline"
+                      onClick={() => setOpened(true)}
                     >
-                        Demo Video
+                      Demo Video
                     </button>
-                    </div>
+
+                    <button
+                      className="btn btn-contact"
+                      onClick={() => navigate("/contact")}
+                    >
+                      Contact Us
+                    </button>
+                  </div>
+
+
 
             </div>
 
@@ -64,49 +74,54 @@ const Home: React.FC = () => {
       </section>
 
     {/* ---------- Modern Large Video Modal ---------- */}
-    <Modal
-    opened={opened}
-    onClose={() => setOpened(false)}
-    centered
-    withCloseButton={true}
-    size="xl"
-    overlayProps={{ opacity: 0.7, blur: 6 }}
-    styles={{
-        content: {
-        background: "rgba(0,0,0,0.85)",
-        borderRadius: "14px",
-        boxShadow: "0 8px 40px rgba(0,0,0,0.4)",
-        padding: "0",
-        overflow: "hidden",
-        width: "80vw",
-        maxWidth: "1000px",
-        },
-        body: { padding: 0 },
-    }}
-    >
-    <div className="video-modal-container">
-        <video
-            controls
-            autoPlay
-            playsInline
-            preload="metadata"
-            className="video-player"
-        >
-        <source src="/assets/videos/VoxaBeta_Dashboard.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-        </video>
-
-        <div className="video-footer">
-
-  <button
-    className="btn btn-outline-light"
-    onClick={() => setOpened(false)}
-  >
-    Close
-  </button>
-        </div>
+    {/* ---------- Modern Large YouTube Video Modal ---------- */}
+<Modal
+  opened={opened}
+  onClose={() => setOpened(false)}
+  centered
+  withCloseButton={true}
+  size="xl"
+  overlayProps={{ opacity: 0.7, blur: 6 }}
+  styles={{
+    content: {
+      background: "rgba(0,0,0,0.85)",
+      borderRadius: "14px",
+      boxShadow: "0 8px 40px rgba(0,0,0,0.4)",
+      padding: "0",
+      overflow: "hidden",
+      width: "80vw",
+      maxWidth: "1000px",
+    },
+    body: { padding: 0 },
+  }}
+>
+  <div className="video-modal-container">
+    <div className="youtube-wrapper">
+     <iframe
+       width="100%"
+       height="540"
+        src="https://www.youtube.com/embed/Cn3X_gGFn5I?si=sQR90xcvpCpRWrwJ"
+        title="VoxaGraph Demo Video"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+  style={{
+    border: "none",
+    borderRadius: "10px",
+  }}
+></iframe>
     </div>
-    </Modal>
+
+    <div className="video-footer">
+      <button
+        className="btn btn-outline-light"
+        onClick={() => setOpened(false)}
+      >
+        Close
+      </button>
+    </div>
+  </div>
+</Modal>
+
 
 
       {/* ---------- Features Section ---------- */}
