@@ -36,21 +36,26 @@ const Footer = () => {
               <a
                 href="/login"
                 className="cta-button"
-                style={{
-                  display: "inline-block",
-                  marginBottom: "10px",
-                }}
               >
                 Sign Up Free
               </a>
+              <a
+                href="/contact"
+                className="cta-button"
+               >
+                Contact Us
+              </a>
 
-              {/* ✅ New Contact Us Button */}
+              {/* ✅ New Contact Us Button
               <button
-                className="cta-button contact-btn"
+                className="cta-button " style={{
+                  display: "inline-block",
+                  marginBottom: "10px",
+                }}
                 onClick={() => navigate("/contact")}
               >
                 Contact Us
-              </button>
+              </button> */}
             </div>
 
             <p style={{ marginTop: "16px" }}>

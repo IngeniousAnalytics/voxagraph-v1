@@ -85,7 +85,7 @@ const handleSubmit = (e: React.FormEvent) => {
         <img
                 src="../assets/images/namaste.png"
                 alt="Namaste"
-                className="hero-image"
+                className="hero_c-image"
               />
     <div className="hero-right">
       <div className="offices-grid">
