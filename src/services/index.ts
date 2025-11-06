@@ -153,7 +153,7 @@ export const fetchUserCsvUpload = createAsyncThunk(
   'dashboardAPI/fetchUserCsvUpload',
   async (payload: any) => {
     // If your endpoint is `/uploadcsv-upload`, just change the path below.
-    const res = await dashApiInstance.get(`/usercsv-upload`,payload);
+    const res = await dashApiInstance.get(`/files/usercsv-upload`,payload);
     // normalize: support {has_upload:true} or {result:true} or boolean
     const data = res.data;
     const hasUpload = Boolean(
@@ -162,6 +162,7 @@ export const fetchUserCsvUpload = createAsyncThunk(
       data?.status === 'true' ||
       data === true
     );
+    console.log('fetchUserCsvUpload - hasUpload:', hasUpload);
     return { hasUpload };
   }
 );
