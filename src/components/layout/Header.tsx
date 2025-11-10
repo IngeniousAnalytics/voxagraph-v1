@@ -17,7 +17,7 @@ const Header = () => {
           aria-label="Go to home"
         >
           <img
-            src="/assets/images/logo1.png"
+            src="/assets/img/logo.svg"
             alt="VoxaGraph Logo"
             className="logo-img"
           />
