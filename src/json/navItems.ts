@@ -290,7 +290,7 @@ export const NAV_ITEM: INavItems[] = [
       {
         id: 101,
         type: 'table',
-        label: 'Table Chart',
+        label: 'Table/Grid Chart',
         icon: MdGridOn,
       },
       {
@@ -302,7 +302,7 @@ export const NAV_ITEM: INavItems[] = [
        {
         id: 103,
         type: 'text',
-        label: 'Text',
+        label: 'Hearder',
         icon: MdGridOn,
       },
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactECharts from 'echarts-for-react';
 import { getChartOptions } from 'src/helpers/chartOptions';
+import { parseDynamicJSON } from 'src/helpers/chartOptions';
 import { IChartWidget, IGraph } from 'src/types';
 import { parseChartData } from 'src/utils';
 import '../styles/chartWidget.scss';
@@ -47,6 +48,8 @@ const ChartWidget: React.FC<any> = ({
       : '';
   };
 
+
+
   if (inputData?.plot?.length === 0 && !inputData.title) {
     return (
       <div className="empty-msg">
@@ -68,12 +71,22 @@ const ChartWidget: React.FC<any> = ({
     );
   }
 
-  const parsedData = parseChartData(
-    inputData?.plot,
-    isChartTitleChange ? '' : inputData?.title,
-    type,
-    variant,
-  );
+  const rawData = inputData?.data || inputData?.plot || [];
+
+  const parsedData = parseDynamicJSON(
+  rawData,
+  isChartTitleChange ? '' : inputData?.title
+);
+
+
+
+  // const parsedData = parseChartData(
+  //   inputData?.plot,
+  //   isChartTitleChange ? '' : inputData?.title,
+  //   type,
+  //   variant,
+  // );
+  
   if (!parsedData.isCompatible) {
     return (
       <div>This graph is not compatible with the data you are querying</div>
