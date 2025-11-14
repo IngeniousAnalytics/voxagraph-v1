@@ -10,6 +10,7 @@ import * as RiIcons from 'react-icons/ri';
 import Draggable from 'react-draggable';
 import CardWidget from './CardWidget';
 import ChartWidget from './ChartWidget';
+import DynamicCard from './cards/DynamicCard';
 import SearchQuestion from './SearchQuestion';
 import AddQuery from './AddQuery';
 import {
@@ -213,15 +214,25 @@ const DraggableChart: React.FC<IDraggableChart> = ({
   const renderItem = () => {
     switch (type) {
       case 'card':
-        return <CardWidget inputData={data} type={type} 
-        isChartTitleChange={isChartTitleChange}
-        setIsChartTitleChange={setIsChartTitleChange}
-        isPublished={isPublished}
-        defaultColor={defaultColor}
-        setGraphs={setGraphs}
-        code={code}
-        />;
-      case 'table':
+        // return <CardWidget inputData={data} type={type} 
+        // isChartTitleChange={isChartTitleChange}
+        // setIsChartTitleChange={setIsChartTitleChange}
+        // isPublished={isPublished}
+        // defaultColor={defaultColor}
+        // setGraphs={setGraphs}
+        // code={code}
+        // />;
+
+      case "metric":
+      case "summary":
+        return (
+          <DynamicCard
+            inputData={data}
+            setGraphs={setGraphs}
+            code={code}
+          />
+        );        
+        case 'table':
         return (
           <TableWidget
             inputData={data}

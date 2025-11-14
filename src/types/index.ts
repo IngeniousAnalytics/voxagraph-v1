@@ -21,6 +21,7 @@ export interface IChartType {
   radius?: string[];
   roseType?: string;
   angular?: boolean;
+  layoutType?: string;
 }
 
 export interface IENavbar {
@@ -105,7 +106,7 @@ export interface IDashboard {
     db: number;
     user_id: number;
 }
-setGraphs: (graphs: IGraph[]) => void;
+setGraphs: React.Dispatch<React.SetStateAction<IGraph[]>>
 }
 
 export interface IChartWidget {
@@ -150,7 +151,7 @@ export interface IDraggableChart {
     db: number;
     user_id: number;
   };
-  setGraphs: (graphs: IGraph[]) => void;
+  setGraphs: React.Dispatch<React.SetStateAction<IGraph[]>>;
   setChartCode:(chartCode:any)=>void;
   setTextTilteData:(textTilteData:any)=>void
   setIsEditing:any
