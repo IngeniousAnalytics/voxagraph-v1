@@ -40,6 +40,7 @@ export function ENavbar({
   const [showTemplateName, setShowTemplateName] = useState<string>('');
   const dispatch = useAppDispatch();
 
+ 
   const userInfo = useAppSelector((state: any) => state.dashboardServices.userInfo);
 
   const handleToggle = (index: number) => {
@@ -153,11 +154,20 @@ export function ENavbar({
                     >
                       {menu.charts.map((submenu, subIndex) => {
                         const shouldHighlight = isMatch(submenu.label);
+
+                        // const dragData = JSON.stringify({
+                        //   graphType: submenu.type,
+                        //   graphId: submenu.id,
+                        //   variant: submenu.variant,
+                        // });
+
                         const dragData = JSON.stringify({
-                          graphType: submenu.type,
-                          graphId: submenu.id,
-                          variant: submenu.variant,
-                        });
+                        graphType: submenu.type,
+                        graphId: submenu.id,
+                        variant: submenu.variant,
+                        layoutType: submenu.layoutType || "card" // e.g., default layout type
+                      });
+                                              
 
                         return (
                           <Tooltip key={subIndex} label={submenu.label} withArrow>

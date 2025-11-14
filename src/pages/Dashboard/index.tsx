@@ -108,7 +108,7 @@ const Dashboard: React.FC<IDashboard> = ({
           const rowCountForText =
             chart.type === "text" ? baseRows / 2 : baseRows;
           const colCount = chart.width ? Math.ceil(chart.width / 100) : 4;
-
+          
           return (
             <div
               key={chart.code}

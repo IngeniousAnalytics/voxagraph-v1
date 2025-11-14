@@ -24,7 +24,7 @@ import {
   MdRadar,
   MdViewCarousel,
   MdViewModule,
-  MdOutlineDonutLarge,
+  MdOutlineDonutLarge
   
 } from 'react-icons/md';
 import { BsGrid3X2Gap } from 'react-icons/bs';
@@ -297,8 +297,25 @@ export const NAV_ITEM: INavItems[] = [
         id: 102,
         type: 'card',
         label: 'Card',
+        layoutType: "card",
         icon: MdViewCarousel,
       },
+      // {
+      //   id: 104,
+      //   label: "Metric Card",
+      //   type: "card",
+      //   layoutType: "card",
+      //   icon: MdViewCarousel,
+      // },
+      // {
+      //   id: 105,
+      //   label: "Summary Card",
+      //   type: "card",
+      //   layoutType: "summary",
+      //   icon: MdViewCarousel,
+      // },
+
+
        {
         id: 103,
         type: 'text',
