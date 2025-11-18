@@ -212,7 +212,7 @@ const handleEdit = () => {
         position: "relative",
       }}
       title="Click ✏️ to edit"
-      onClick={setGraphs ? handleEdit : undefined} // ✅ single click opens modal
+     // onClick={setGraphs ? handleEdit : undefined} // ✅ single click opens modal
     >
       <div>
         {/* Title */}
@@ -252,9 +252,8 @@ const handleEdit = () => {
     <div
         className="edit-zone"
         onClick={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setTimeout(() => handleEdit(), 0);
+          e.stopPropagation();
+          handleEdit();  // Direct, immediate call
         }}
         title="Click to edit"
     >

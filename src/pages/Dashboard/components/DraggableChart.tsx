@@ -213,7 +213,7 @@ const DraggableChart: React.FC<IDraggableChart> = ({
 
   const renderItem = () => {
     switch (type) {
-      case 'card':
+     case 'card':
         // return <CardWidget inputData={data} type={type} 
         // isChartTitleChange={isChartTitleChange}
         // setIsChartTitleChange={setIsChartTitleChange}
