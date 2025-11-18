@@ -22,10 +22,14 @@ export interface CardDesign {
 
 interface Props {
   design?: CardDesign;
-  onChange?: (d: CardDesign) => void; // immediate
-  onSave?: (d: CardDesign) => void; // on final Save
+  onChange?: (d: CardDesign) => void;
+  onSave?: (d: CardDesign) => void;
   onClose?: () => void;
+
+  initialX?: number;
+  initialY?: number;
 }
+
 
 const FONT_FAMILIES = [
   { id: "Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial", label: "Inter" },
@@ -46,6 +50,11 @@ const SHADOWS: Record<string, string> = {
 
 export default function CardStyleEditor({ design = {}, onChange, onSave, onClose }: Props) {
   const [local, setLocal] = useState<CardDesign>({ ...design });
+  
+  // Drag state
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
 
   useEffect(() => setLocal({ ...design }), [design]);
 
@@ -75,10 +84,67 @@ export default function CardStyleEditor({ design = {}, onChange, onSave, onClose
     onClose?.();
   };
 
+  // Drag handlers
+  const handleMouseDown = (e: React.MouseEvent) => {
+    // Don't start drag if clicking on interactive elements
+    const target = e.target as HTMLElement;
+    const tagName = target.tagName.toLowerCase();
+    const isInteractive = ['button', 'input', 'select', 'label', 'a', 'svg', 'path'].includes(tagName);
+    const hasClickableClass = target.closest('.ce-btn, .ce-select, .ce-size, .ce-color, .ce-iconwrap, .ce-radius');
+    
+    if (isInteractive || hasClickableClass) {
+      return; // Don't start drag, let the element handle the click
+    }
+    
+    setIsDragging(true);
+    setDragStart({
+      x: e.clientX - position.x,
+      y: e.clientY - position.y,
+    });
+  };
+
+  const handleMouseMove = (e: MouseEvent) => {
+    if (!isDragging) return;
+    setPosition({
+      x: e.clientX - dragStart.x,
+      y: e.clientY - dragStart.y,
+    });
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  // Add/remove event listeners
+  useEffect(() => {
+    if (isDragging) {
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+    }
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isDragging, dragStart]);
+
+useEffect(() => {
+  const content = document.querySelector(".draggable-modal-content") as HTMLElement;
+  if (content) {
+    content.style.position = "absolute";
+    content.style.top = "0";
+    content.style.left = "0";
+    content.style.transform = `translate(${position.x}px, ${position.y}px)`;
+    content.style.transition = "none";
+    content.style.zIndex = "9999";
+  }
+}, [position]);
+
+
+
+
   return (
-    <div className="card-editor-root" role="dialog" aria-label="Card style editor">
-      {/* Compact ribbon top (32px height) */}
-      <div className="ce-ribbon">
+   <div className="card-editor-root">      {/* Compact ribbon top (32px height) */}
+      <div className="ce-ribbon" onMouseDown={handleMouseDown} style={{ cursor: isDragging ? "grabbing" : "grab" }}>
         {/* Fonts group */}
         <div className="ce-group">
           <select
@@ -199,7 +265,7 @@ export default function CardStyleEditor({ design = {}, onChange, onSave, onClose
         </div>
       </div>
 
-      {/* Live preview (compact) */}
+      {/* Live preview (compact) 
       <div className="ce-preview" style={{
         background: local.background || "#fff",
         color: local.color || "#2E3A59",
@@ -209,11 +275,11 @@ export default function CardStyleEditor({ design = {}, onChange, onSave, onClose
         borderRadius: local.borderRadius || "0px",
         textShadow: local.textShadow || "none",
       }}>
-        <div className="ce-preview-inner" style={{ flexDirection: local.layoutMode === "inline" ? "row" : "column" }}>
+         <div className="ce-preview-inner" style={{ flexDirection: local.layoutMode === "inline" ? "row" : "column" }}>
           <div className="ce-preview-title">Total DVDs</div>
           <div className="ce-preview-value">{formatPreviewValue(4581, local)}</div>
-        </div>
-      </div>
+        </div> 
+      </div>*/}
     </div>
   );
 }

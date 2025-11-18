@@ -13,10 +13,7 @@ interface DynamicCardProps {
 }
 
 const DynamicCard: React.FC<DynamicCardProps> = ({ inputData, setGraphs, code }) => {
-  // Unique localStorage key for persistence
   const localKey = `card_design_${code}`;
-  /* inside component scope */
-  
 
   const savedDesign = (() => {
     try {
@@ -29,14 +26,12 @@ const DynamicCard: React.FC<DynamicCardProps> = ({ inputData, setGraphs, code })
 
   const [currentDesign, setCurrentDesign] = useState(savedDesign || inputData.design || {});
 
-  // ✅ Sync design with localStorage
   useEffect(() => {
     if (code && currentDesign) {
       localStorage.setItem(localKey, JSON.stringify(currentDesign));
     }
   }, [code, currentDesign]);
 
-  // ✅ Extract card display data
   const dataArray =
     Array.isArray(inputData?.data) && inputData.data.length > 0
       ? inputData.data
@@ -48,7 +43,6 @@ const DynamicCard: React.FC<DynamicCardProps> = ({ inputData, setGraphs, code })
   const entries: [string, any][] = record ? Object.entries(record) : [];
   const [displayKey, displayValue] = entries.length > 0 ? entries[0] : ["No Data", "—"];
 
-  // ✅ Format values safely
   const safeValue =
     typeof displayValue === "number"
       ? displayValue.toLocaleString()
@@ -56,125 +50,48 @@ const DynamicCard: React.FC<DynamicCardProps> = ({ inputData, setGraphs, code })
       ? displayValue
       : "—";
 
-  // ✅ Live style application helper
-  const applyStyleToCard = (style: Record<string, any>) => {
-    const card = document.getElementById(`card-${code}`);
-    if (!card) return;
-    Object.entries(style).forEach(([key, value]) => {
-      if (value !== undefined && value !== null && value !== "") {
-        (card.style as any)[key] = value;
-      }
-    });
-  };
-  // 🔧 Apply live styles directly to card DOM element
-const applyDesignToDOM = (design: any) => {
-  if (!code) return;
+  const handleEdit = () => {
+    console.log('handleEdit called'); // Debug log
+    
+    openModal({
+  title: null,
+  size: "lg",
+  withCloseButton: false,
+  classNames: {
+  content: "draggable-modal-content"
+},
+  overlayProps: {
+    blur: 2,
+    opacity: 0.35,
+  },
+  children: (
+    <CardStyleEditor
+      design={currentDesign}
+      onChange={(d) => {
+        setCurrentDesign(d);
+        if (code && setGraphs) {
+          setGraphs((prev) =>
+            prev.map((g) => (g.code === code ? { ...g, design: d } : g))
+          );
+        }
+      }}
+      onSave={(d) => {
+        setCurrentDesign(d);
+        if (code && setGraphs) {
+          setGraphs((prev) =>
+            prev.map((g) => (g.code === code ? { ...g, design: d } : g))
+          );
+        }
+        localStorage.setItem(localKey, JSON.stringify(d));
+        closeAllModals();
+      }}
+      onClose={() => closeAllModals()}
+    />
+  ),
+});
 
-  const el = document.getElementById(`card-${code}`);
-  if (!el) return;
-
-  const {
-    background,
-    color,
-    fontSize,
-    fontWeight,
-    fontStyle,
-    fontFamily,
-    textShadow,
-    borderRadius,
-    alignX,
-    alignY,
-  } = design;
-
-  // Apply safe CSS
-  el.style.background = background || "";
-  el.style.color = color || "";
-  el.style.fontSize = fontSize ? `${fontSize}px` : "";
-  el.style.fontWeight = fontWeight || "";
-  el.style.fontStyle = fontStyle || "";
-  el.style.fontFamily = fontFamily || "";
-  el.style.textShadow = textShadow || "";
-  el.style.borderRadius = borderRadius || "0px";
-
-  // Alignment (flexbox)
-  el.style.display = "flex";
-  el.style.flexDirection = "column";
-  el.style.justifyContent =
-    alignY === "top"
-      ? "flex-start"
-      : alignY === "bottom"
-      ? "flex-end"
-      : "center";
-
-  el.style.alignItems =
-    alignX === "left"
-      ? "flex-start"
-      : alignX === "right"
-      ? "flex-end"
-      : "center";
-};
-  // ✅ Handle design changes from modal
-  const handleDesignChange = (newDesign: any) => {
-    setCurrentDesign(newDesign);
-
-    // Update card live
-    applyStyleToCard({
-      background: newDesign.background,
-      color: newDesign.color,
-      fontSize: `${newDesign.fontSize}px`,
-      fontWeight: newDesign.fontWeight,
-      fontStyle: newDesign.fontStyle,
-      fontFamily: newDesign.fontFamily,
-      textShadow: newDesign.textShadow,
-    });
-
-    // Update parent graphs
-    if (setGraphs && code) {
-      setGraphs((prev) =>
-        prev.map((g) => (g.code === code ? { ...g, design: newDesign } : g))
-      );
-    }
-
-    // Persist in localStorage
-    if (code) localStorage.setItem(localKey, JSON.stringify(newDesign));
   };
 
-// open modal to edit
-const handleEdit = () => {
-  openModal({
-    title: null,
-    size: "lg",
-    withCloseButton: false,
-    overlayProps: {
-      blur: 2,
-      opacity: 0.35,
-    },
-    children: (
-      <CardStyleEditor
-        design={currentDesign}
-        onChange={(d) => {
-          // immediate preview
-          setCurrentDesign(d);
-          applyDesignToDOM(d); // your existing function that applies style
-        }}
-        onSave={(d) => {
-          // finalize: persist and update parent graphs
-          setCurrentDesign(d);
-          applyDesignToDOM(d);
-          if (code && setGraphs) {
-            setGraphs((prev) => prev.map((g) => (g.code === code ? { ...g, design: d } : g)));
-          }
-          localStorage.setItem(`card_design_${code}`, JSON.stringify(d));
-          closeAllModals();
-        }}
-        onClose={() => closeAllModals()}
-      />
-    ),
-  });
-};
-
-
-  // ✅ Extract style values
   const {
     color = "#2E3A59",
     background = "#FFFFFF",
@@ -193,12 +110,10 @@ const handleEdit = () => {
       className="dynamic-card"
       style={{
         background,
-       borderRadius: currentDesign.borderRadius || "0px",
-
+        borderRadius: currentDesign.borderRadius || "0px",
         padding: "16px",
         boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
-            cursor: "default", // ✅ prevents hand cursor on the whole card
-
+        cursor: "default",
         userSelect: "none",
         color,
         fontFamily,
@@ -211,11 +126,8 @@ const handleEdit = () => {
         height: "100%",
         position: "relative",
       }}
-      title="Click ✏️ to edit"
-     // onClick={setGraphs ? handleEdit : undefined} // ✅ single click opens modal
     >
       <div>
-        {/* Title */}
         <div style={{ display: "flex", alignItems: "center", marginBottom: "6px" }}>
           <h3
             style={{
@@ -234,7 +146,6 @@ const handleEdit = () => {
           </h3>
         </div>
 
-        {/* Value */}
         <div
           style={{
             fontSize: fontSize + 8,
@@ -248,22 +159,55 @@ const handleEdit = () => {
         </div>
       </div>
 
-    {setGraphs && (
-    <div
-        className="edit-zone"
-        onClick={(e) => {
-          e.stopPropagation();
-          handleEdit();  // Direct, immediate call
-        }}
-        title="Click to edit"
-    >
-        <Icon icon="mdi:pencil" width={18} height={18} />
-
-    </div>
-    )}
-
-
-
+      {setGraphs && (
+        <div
+          className="edit-zone-button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Edit button clicked!'); // Debug log
+            handleEdit();
+          }}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
+          style={{
+            position: 'absolute',
+            top: '8px',
+            right: '8px',
+            zIndex: 999999,
+            background: 'rgba(255, 255, 255, 0.95)',
+            border: '1px solid rgba(0, 0, 0, 0.15)',
+            borderRadius: '8px',
+            padding: '8px 12px',
+            cursor: 'pointer',
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            fontSize: '14px',
+            fontWeight: '500',
+            color: '#333',
+            transition: 'all 0.2s ease',
+            userSelect: 'none',
+            pointerEvents: 'auto'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'white';
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
+            e.currentTarget.style.transform = 'scale(1.05)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.95)';
+            e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.15)';
+            e.currentTarget.style.transform = 'scale(1)';
+          }}
+        >
+          <Icon icon="mdi:pencil" width={16} height={16} />
+          
+        </div>
+      )}
     </div>
   );
 };

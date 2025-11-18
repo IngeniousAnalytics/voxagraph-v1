@@ -13,35 +13,39 @@
     right: 6px;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 4px;
-    padding: 5px 8px;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 6px;
+    padding: 8px 10px;
+    min-width: 36px;
+    min-height: 36px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 8px;
     font-size: 12px;
-    color: #090000;
-    cursor: pointer;
-    opacity: 0.6;
+    color: #2E3A59;
+    cursor: pointer !important;
+    opacity: 0.9;
     z-index: 9999 !important;
-    pointer-events: auto;
+    pointer-events: auto !important;
     user-select: none;
     transform: scale(1);
     transform-origin: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition:
-      background 0.25s ease,
-      opacity 0.25s ease,
-      transform 0.25s ease,
-      box-shadow 0.25s ease;
+      all 0.15s ease;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.98);
       opacity: 1;
-      transform: scale(1.15);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      transform: scale(1.08);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+      border-color: rgba(0, 0, 0, 0.2);
     }
 
     &:active {
-      transform: scale(1.1);
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset;
+      transform: scale(1.0);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+      background: rgba(255, 255, 255, 1);
     }
 
     svg, path {
@@ -63,8 +67,22 @@
     &::before {
       content: "";
       position: absolute;
-      inset: -6px;
+      inset: -8px;
       z-index: -1;
+      pointer-events: auto;
     }
   }
+}
+
+.modal-draggable-body {
+  position: relative !important;
+  will-change: transform;
+}
+
+.draggable-modal-content {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  will-change: transform;
+  z-index: 999999 !important;
 }
