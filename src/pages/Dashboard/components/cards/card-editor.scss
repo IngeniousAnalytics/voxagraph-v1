@@ -1,3 +1,18 @@
+/* DRAGGABLE EDITOR ROOT */
+.card-editor-root {
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  user-select: none; /* Prevent text selection while dragging */
+  transition: box-shadow 0.2s ease;
+  
+  &:active {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  }
+}
+
 /* RIBBON LAYOUT — FIXED SIZE, NO SCROLL */
 .ce-ribbon {
   display: flex;
@@ -21,6 +36,10 @@
   background: transparent;
   border: 1px solid transparent;
   cursor: pointer;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 10;
   padding: 0;
   transition: all 0.18s ease;
   color: #333;
@@ -65,3 +84,150 @@
   align-items: center;
   gap: 8px;
 }
+
+/* DRAGGABLE RIBBON ENHANCEMENT */
+.ce-ribbon {
+  position: relative;
+  
+  &::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 4px;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 2px;
+    pointer-events: none;
+  }
+  
+  &:active {
+    background: #f0f0f0;
+  }
+}
+
+/* PREVIEW AREA */
+.ce-preview {
+  padding: 24px;
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0 0 12px 12px;
+}
+
+.ce-preview-inner {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.ce-preview-title {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.ce-preview-value {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+/* MISC STYLES */
+.ce-right {
+  margin-left: auto;
+}
+
+.ce-divider {
+  width: 1px;
+  height: 24px;
+  background: #ddd;
+  margin: 0 4px;
+}
+
+.ce-radius {
+  width: 60px;
+}
+
+.ce-iconwrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  
+  .ce-color {
+    position: absolute;
+    opacity: 0;
+  }
+}
+
+.ce-btn.primary {
+  background: #0066ff;
+  color: white;
+  border-color: #0052cc;
+  
+  &:hover {
+    background: #0052cc;
+  }
+}
+
+.ce-btn.secondary {
+  background: #f5f5f5;
+  
+  &:hover {
+    background: #e8e8e8;
+  }
+}
+
+/* Ensure all interactive elements are clickable */
+.ce-select, .ce-size, .ce-radius, .ce-color, .ce-iconwrap {
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 10;
+  cursor: pointer !important;
+}
+
+/* Make sure ribbon doesn't interfere with children */
+.ce-ribbon {
+  * {
+    pointer-events: auto;
+  }
+  
+  /* But allow dragging on empty space */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: auto;
+  }
+}
+
+/* --------------------------------------------- */
+/* 🔥 FIX #2 — The actual draggable modal container */
+/* --------------------------------------------- */
+/* These styles allow the modal to freely resize and position
+   near the edit button exactly as expected. */
+.draggable-modal-content {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+
+  width: max-content !important;
+  height: max-content !important;
+
+  max-width: unset !important;
+  max-height: unset !important;
+
+  overflow: visible !important;
+  display: block !important;
+  flex: none !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  z-index: 999999 !important;
+  pointer-events: auto !important;
+}
+

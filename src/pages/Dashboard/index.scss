@@ -163,3 +163,56 @@ display: flex;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;700&family=Open+Sans:wght@400;600&family=Montserrat:wght@400;700&family=Lato:wght@400;700&family=Times+New+Roman&family=Georgia&family=Courier+New&display=swap');
+
+/* ======================================
+   DYNAMIC CARD FIX - EDIT-ZONE SUPPORT
+   ====================================== */
+
+/* Ensure DynamicCard is not blocked by parent containers */
+.dynamic-card {
+  position: relative !important;
+  z-index: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* Edit-zone must be above everything */
+.edit-zone {
+  position: absolute !important;
+  z-index: 10000 !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* Prevent Mantine Card from blocking edit-zone */
+.mantine-Card-root {
+  position: relative;
+  
+  .mantine-Card-section {
+    position: relative;
+    pointer-events: auto;
+  }
+}
+
+/* Ensure react-grid-item doesn't block edit-zone */
+.react-grid-item {
+  /* Edit-zone must always be above and clickable */
+  .edit-zone {
+    pointer-events: auto !important;
+    z-index: 10000 !important;
+  }
+}
+
+/* When not dragging, allow edit-zone clicks */
+.react-grid-item:not(.react-draggable-dragging) {
+  .edit-zone {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+}
+
+/* Disable pointer events on SVG icons to ensure click goes to edit-zone */
+.edit-zone svg,
+.edit-zone path {
+  pointer-events: none !important;
+}
+
