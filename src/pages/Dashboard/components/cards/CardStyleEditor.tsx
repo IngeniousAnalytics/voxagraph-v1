@@ -1,5 +1,5 @@
 // src/pages/Dashboard/components/cards/CardStyleEditor.tsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Icon } from "@iconify/react";
 import { closeAllModals } from "@mantine/modals";
 import "./card-editor.scss";
@@ -58,7 +58,7 @@ export default function CardStyleEditor({ design = {}, onChange, onSave, onClose
 
   useEffect(() => setLocal({ ...design }), [design]);
 
-  const update = (k: keyof CardDesign, v: any) => {
+  const update = (k: keyof CardDesign, v: string | number | boolean | undefined) => {
     const next = { ...local, [k]: v };
     setLocal(next);
     onChange?.(next);
@@ -103,17 +103,17 @@ export default function CardStyleEditor({ design = {}, onChange, onSave, onClose
     });
   };
 
-  const handleMouseMove = (e: MouseEvent) => {
+  const handleMouseMove = useCallback((e: MouseEvent) => {
     if (!isDragging) return;
     setPosition({
       x: e.clientX - dragStart.x,
       y: e.clientY - dragStart.y,
     });
-  };
+  }, [isDragging, dragStart]);
 
-  const handleMouseUp = () => {
+  const handleMouseUp = useCallback(() => {
     setIsDragging(false);
-  };
+  }, []);
 
   // Add/remove event listeners
   useEffect(() => {
@@ -125,7 +125,7 @@ export default function CardStyleEditor({ design = {}, onChange, onSave, onClose
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
     };
-  }, [isDragging, dragStart]);
+  }, [isDragging, dragStart, handleMouseMove, handleMouseUp]);
 
 useEffect(() => {
   const content = document.querySelector(".draggable-modal-content") as HTMLElement;
@@ -293,9 +293,4 @@ function subKey(textShadow?: string) {
   if (textShadow.includes("0 16px")) return "mstrong";
   if (textShadow.includes("0 32px")) return "lstrong";
   return "none";
-}
-
-function formatPreviewValue(val: number, design: CardDesign) {
-  // simple thousand separator
-  return (typeof val === "number") ? val.toLocaleString() : String(val);
 }

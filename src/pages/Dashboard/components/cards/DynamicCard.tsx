@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
-import { ICardData } from "src/types/cards";
-import { IGraph } from "src/types";
+import { ICardData } from "../../../../types/cards";
+import { IGraph } from "../../../../types";
 import "./dynamicCard.scss";
 import { openModal, closeAllModals } from "@mantine/modals";
-import CardStyleEditor, { CardDesign } from "./CardStyleEditor";
+import CardStyleEditor from "./CardStyleEditor";
 
 interface DynamicCardProps {
   inputData: ICardData;
@@ -30,7 +30,7 @@ const DynamicCard: React.FC<DynamicCardProps> = ({ inputData, setGraphs, code })
     if (code && currentDesign) {
       localStorage.setItem(localKey, JSON.stringify(currentDesign));
     }
-  }, [code, currentDesign]);
+  }, [code, currentDesign, localKey]);
 
   const dataArray =
     Array.isArray(inputData?.data) && inputData.data.length > 0
@@ -40,7 +40,7 @@ const DynamicCard: React.FC<DynamicCardProps> = ({ inputData, setGraphs, code })
       : [];
 
   const record = dataArray.length > 0 ? dataArray[0] : null;
-  const entries: [string, any][] = record ? Object.entries(record) : [];
+  const entries: [string, unknown][] = record ? Object.entries(record) : [];
   const [displayKey, displayValue] = entries.length > 0 ? entries[0] : ["No Data", "—"];
 
   const safeValue =
