@@ -200,7 +200,20 @@ export default function CardStyleEditor({ design = {}, onChange, onSave, onClose
       </div>
 
       {/* Live preview (compact) */}
-      
+      <div className="ce-preview" style={{
+        background: local.background || "#fff",
+        color: local.color || "#2E3A59",
+        fontFamily: local.fontFamily,
+        fontWeight: local.fontWeight,
+        fontStyle: local.fontStyle,
+        borderRadius: local.borderRadius || "0px",
+        textShadow: local.textShadow || "none",
+      }}>
+        <div className="ce-preview-inner" style={{ flexDirection: local.layoutMode === "inline" ? "row" : "column" }}>
+          <div className="ce-preview-title">Total DVDs</div>
+          <div className="ce-preview-value">{formatPreviewValue(4581, local)}</div>
+        </div>
+      </div>
     </div>
   );
 }
