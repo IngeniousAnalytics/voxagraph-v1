@@ -43,7 +43,8 @@ export default function ChangeConnectionPassword({
   return (
     <Modal
       opened={opened}
-      onClose={()=>onClose.close()}
+      withinPortal={false}
+      onClose={()=>requestAnimationFrame(() => onClose.close())}
       title="Connect Updated Database Password"
       centered
     >

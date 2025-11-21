@@ -44,7 +44,8 @@ const ChangeToLiveDb = ({
         </Text>
       }
       opened={opened}
-      onClose={() => onClose.close()}
+      withinPortal={false}
+      onClose={() => requestAnimationFrame(() => onClose.close())}
       closeOnClickOutside={false}
       withCloseButton={false}
     >
@@ -69,7 +70,7 @@ const ChangeToLiveDb = ({
           <Button type="submit" disabled={!I_PERMIT.i_change_db}>
             Submit
           </Button>
-          <Button color="red" onClick={() => onClose.close()}>
+          <Button color="red" onClick={() => requestAnimationFrame(() => onClose.close())}>
             Cancel
           </Button>
         </Group>

@@ -28,7 +28,8 @@ const AddQuery = ({
       className="search-modal"
       title="Add / Edit a valid SQL Query to plot the graph"
       opened={show}
-      onClose={() => setShow(false)}
+      withinPortal={false}
+      onClose={() => requestAnimationFrame(() => setShow(false))}
       closeOnClickOutside={false}
       withCloseButton={false}
     >
@@ -49,7 +50,7 @@ const AddQuery = ({
             <Button type="submit" disabled={!I_PERMIT?.i_query}>
               Submit
             </Button>
-            <Button variant="light" color="red" onClick={() => setShow(false)}>
+            <Button variant="light" color="red" onClick={() => requestAnimationFrame(() => setShow(false))}>
               Cancel
             </Button>
           </div>

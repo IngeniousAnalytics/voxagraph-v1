@@ -20,28 +20,47 @@ import "./_mixins.scss";
 import "./styles.scss";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
-// Silence ResizeObserver warnings too (sometimes logged as console.warn)
-// ✅ Prevent ResizeObserver warnings (Chrome bug)
+
+// ⚠️ CRITICAL: Hide webpack overlay for ResizeObserver errors BEFORE React mounts
 if (typeof window !== "undefined") {
-  const originalError = window.console.error;
-  const originalWarn = window.console.warn;
-
-  const suppressMessage = (args: any[]) =>
-    args.length === 1 &&
-    typeof args[0] === "string" &&
-    args[0].includes("ResizeObserver loop");
-
-  window.console.error = (...args) => {
-    if (suppressMessage(args)) return;
-    originalError(...args);
+  // Function to hide the webpack dev server overlay
+  const hideOverlay = () => {
+    const overlay = document.getElementById('webpack-dev-server-client-overlay');
+    const overlayDiv = document.getElementById('webpack-dev-server-client-overlay-div');
+    
+    if (overlay) {
+      overlay.style.cssText = 'display: none !important; visibility: hidden !important;';
+    }
+    if (overlayDiv) {
+      overlayDiv.style.cssText = 'display: none !important; visibility: hidden !important;';
+    }
   };
 
-  window.console.warn = (...args) => {
-    if (suppressMessage(args)) return;
-    originalWarn(...args);
+  // Intercept the error before webpack displays it
+  window.onerror = function(msg: any) {
+    const msgStr = String(msg || '');
+    if (msgStr.includes('ResizeObserver')) {
+      // Hide overlay on next tick
+      setTimeout(hideOverlay, 0);
+      return true; // Prevent default error handling
+    }
+    return false;
   };
+
+  // Also continuously monitor and hide the overlay if it appears
+  let checkCount = 0;
+  const checkInterval = setInterval(() => {
+    const overlay = document.getElementById('webpack-dev-server-client-overlay');
+    if (overlay) {
+      const text = overlay.textContent || '';
+      if (text.includes('ResizeObserver')) {
+        hideOverlay();
+      }
+    }
+    checkCount++;
+    if (checkCount > 100) clearInterval(checkInterval); // Stop after 100 checks (10 seconds)
+  }, 100);
 }
-
 
 root.render(
   <StrictMode>

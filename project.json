@@ -17,7 +17,12 @@
     "serve": {
       "executor": "@nx/webpack:dev-server",
       "options": {
-        "buildTarget": "ai-dashboard:build"
+        "buildTarget": "ai-dashboard:build",
+        "devServer": {
+          "client": {
+            "overlay": false
+          }
+        }
       }
     }
   }
