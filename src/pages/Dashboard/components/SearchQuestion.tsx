@@ -45,9 +45,12 @@ const SearchQuestion = ({
       className="search-modal"
       title="Question to plot the graph/grid"
       opened={show}
+      withinPortal={false}
       onClose={() => {
-        setShow(false);
-        dispatch(setLoader(false));
+        requestAnimationFrame(() => {
+          setShow(false);
+          dispatch(setLoader(false));
+        });
       }}
       closeOnClickOutside={false}
       withCloseButton={false}
@@ -90,8 +93,10 @@ const SearchQuestion = ({
               variant="light"
               color="red"
               onClick={() => {
-                setShow(false);
-                dispatch(setLoader(false));
+                requestAnimationFrame(() => {
+                  setShow(false);
+                  dispatch(setLoader(false));
+                });
               }}
             >
               Cancel

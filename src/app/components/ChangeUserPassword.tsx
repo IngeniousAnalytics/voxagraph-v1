@@ -22,7 +22,7 @@ const ChangeUserPassword: React.FC<any> = ({ opened, onClose, onSubmit }:any) =>
     });
 
     return (
-        <Modal opened={opened} onClose={()=>onClose.close()} title="Change User Password" centered>
+        <Modal opened={opened} withinPortal={false} onClose={()=>requestAnimationFrame(() => onClose.close())} title="Change User Password" centered>
             <form
                 onSubmit={form.onSubmit((values) => {
                     onSubmit(values);

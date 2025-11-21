@@ -10,7 +10,7 @@ import {
 } from '@mantine/core';
 import { IConnectDB } from 'src/types';
 import { useAppSelector } from 'src/redux/hooks';
-console.log("SELECT SOURCE:", Select?.displayName || Select?.name, Select);
+
 const schema = Yup.object().shape({
   db_type_id: Yup.string().required('Required.'),
 });
@@ -44,7 +44,11 @@ const SwitchDB = ({
         </Text>
       }
       opened={show}
-      onClose={() => setShow(false)}
+      // render inside the DOM tree to avoid portal-related layout observers
+      withinPortal={false}
+      // defer closing to avoid synchronous layout mutations that can trigger
+      // ResizeObserver loop errors in some browsers
+      onClose={() => requestAnimationFrame(() => setShow(false))}
       closeOnClickOutside={false}
       withCloseButton={false}
     >
@@ -59,8 +63,6 @@ const SwitchDB = ({
                 label: item?.name,
               })) || []
             }
-            
-           // comboboxProps={{ withinPortal: false }}   // ✅ Correct fix for v7
             {...form.getInputProps('db_type_id')}
             disabled={!I_PERMIT.i_change_db}
           />

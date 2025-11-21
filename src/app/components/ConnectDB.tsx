@@ -54,7 +54,8 @@ export const ConnectDB = ({
         </Text>
       }
       opened={show}
-      onClose={() => setShow(false)}
+      withinPortal={false}
+      onClose={() => requestAnimationFrame(() => setShow(false))}
       closeOnClickOutside={false}
       withCloseButton={false}
     >
@@ -122,7 +123,7 @@ export const ConnectDB = ({
           <Button type="submit" disabled={!I_PERMIT.i_connect_db}>
             Connect Now
           </Button>
-          <Button color="red" onClick={() => setShow(!show)}>
+          <Button color="red" onClick={() => requestAnimationFrame(() => setShow(!show))}>
             Cancel
           </Button>
         </Group>

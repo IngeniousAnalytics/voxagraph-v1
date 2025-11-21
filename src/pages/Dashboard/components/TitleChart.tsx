@@ -66,7 +66,10 @@ const TitleChart = ({
   const handleTextEdit = () => {
     setIsEditing(true);
     setChartCode(code);
-    setTextTilteData(inputData);
+    // `setTextTilteData` is optional — guard the call to avoid runtime errors
+    if (typeof setTextTilteData === 'function') {
+      setTextTilteData(inputData);
+    }
   };
   return (
     <>
