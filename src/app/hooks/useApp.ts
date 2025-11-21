@@ -16,6 +16,8 @@ import { getPermissions } from 'src/permissions';
 import { ENotify } from '@ai-dashboard/ui';
 import { getPublishedParams } from 'src/utils';
 
+
+
 const useApp = () => {
   const dispatch = useAppDispatch();
   const { I_SHOW_CONNECT, I_CONNECT_WITH, I_PERMIT } = getPermissions();
@@ -313,7 +315,9 @@ const useApp = () => {
       password: values?.db_password,
       database_name: values?.db_name,
     };
-    const response = await connectDatabase(payload);
+
+
+  const response = await connectDatabase(payload);
     if (response?.data?.success) {
       ENotify('success', response?.data?.message);
       const pay = { Action: 'ext0003', Data: { user_id: userInfo?.user_id } };

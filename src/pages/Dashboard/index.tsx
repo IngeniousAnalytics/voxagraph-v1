@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
-import { IDashboard } from "src/types";
+import { IDashboard } from "../../types";
 import DraggableChart from "./components/DraggableChart";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
@@ -21,7 +21,6 @@ const Dashboard: React.FC<IDashboard> = ({
   setGraphs,
 }) => {
   const [charCode, setChartCode] = useState<number>(0);
-  const [textTiltedata, setTextTilteData] = useState<any>({});
   const [isEditing, setIsEditing] = useState(false);
 
   const generateLayout = () => {
@@ -42,20 +41,19 @@ const Dashboard: React.FC<IDashboard> = ({
       };
     });
   };
-
   const handleDragStop = (
-    layout: any[],
+    layout: any,
     oldItem: any,
     newItem: any,
     placeholder: any,
     _e: any,
     _element: any
   ) => {
-    onUpdatePosition(newItem.i, newItem.x, newItem.y, newItem.h, newItem.w);
+    onUpdatePosition(Number(newItem.i), newItem.x, newItem.y, newItem.h, newItem.w);
   };
 
   const handleResizeStop = (
-    layout: any[],
+    layout: any,
     oldItem: any,
     newItem: any,
     _placeholder: any,
@@ -64,8 +62,8 @@ const Dashboard: React.FC<IDashboard> = ({
   ) => {
     const newWidthPx = newItem.w * 100;
     const newHeightPx = newItem.h * 100;
-    onUpdatePosition(newItem.i, newItem.x, newItem.y, newItem.h, newItem.w);
-    onResize(newItem.i, newWidthPx, newHeightPx);
+    onUpdatePosition(Number(newItem.i), newItem.x, newItem.y, newItem.h, newItem.w);
+    onResize(Number(newItem.i), newWidthPx, newHeightPx);
   };
 
   return (
@@ -116,7 +114,6 @@ const Dashboard: React.FC<IDashboard> = ({
                 publishedParams={publishedParams}
                 setGraphs={setGraphs}
                 setChartCode={setChartCode}
-                setTextTilteData={setTextTilteData}
                 setIsEditing={setIsEditing}
                 isEditing={isEditing}
                 charCode={charCode}
