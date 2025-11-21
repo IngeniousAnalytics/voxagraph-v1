@@ -1,14 +1,9 @@
 // src/pages/Dashboard/components/DraggableChart.tsx
 import React, {
   Fragment,
-  useCallback,
   useEffect,
-  useRef,
   useState,
 } from 'react';
-import * as RiIcons from 'react-icons/ri';
-import Draggable from 'react-draggable';
-import CardWidget from './CardWidget';
 import ChartWidget from './ChartWidget';
 import DynamicCard from './cards/DynamicCard';
 import SearchQuestion from './SearchQuestion';
@@ -19,22 +14,22 @@ import {
   fetchQueryResponse,
   fetchExecutedSQLResponse,
   setLoader,
-} from 'src/services';
+} from '../../../services';
 import { FaQuestionCircle } from 'react-icons/fa';
 import { MdQueryBuilder } from 'react-icons/md';
 import { RxCross2, RxHamburgerMenu } from 'react-icons/rx';
 import { IoColorPaletteOutline } from 'react-icons/io5';
 import { TbRefresh } from 'react-icons/tb';
 import { Card, Group, Menu, Tooltip } from '@mantine/core';
-import { IDraggableChart, IAuthMenuItem } from 'src/types';
+import { IDraggableChart } from '../../../types';
 import { useDisclosure } from '@mantine/hooks';
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { EColorPicker } from '@ai-dashboard/ui';
 import { FaEdit } from 'react-icons/fa';
 import TableWidget from './TableWidget';
 import TextEditor from './TextEditor';
 import '../styles/draggablechart.scss';
-import { getPermissions } from 'src/permissions';
+import { getPermissions } from '../../../permissions';
 import TitleChart from './TitleChart';
 
 const DraggableChart: React.FC<IDraggableChart> = ({
@@ -57,13 +52,12 @@ const DraggableChart: React.FC<IDraggableChart> = ({
   publishedParams,
   setGraphs,
   setChartCode,
-  setTextTilteData,
   setIsEditing,
   isEditing,
   charCode,
 }) => {
   const dispatch = useAppDispatch();
-  const [opened, { toggle }] = useDisclosure();
+  const [, { toggle }] = useDisclosure();
   const isPublished = window.location.hash.startsWith('#/published');
   const [defaultColor, onChange] = useState('');
   const [showSearch, setShowSearch] = useState(false);
@@ -72,17 +66,16 @@ const DraggableChart: React.FC<IDraggableChart> = ({
   const { I_PERMIT, I_CONNECT_WITH } = getPermissions();
   const [isChartTitleChange, setIsChartTitleChange] = useState(false);
 
-  const {
-    dashboardServices: { authMenus },
-  } = useAppSelector((state: any) => state);
+  // Redux selector not currently used but kept for future extensions
+  useAppSelector((state: unknown) => state);
 
-  const handleLoadJson = async (values: any) => {
+  const handleLoadJson = async (values: unknown) => {
   // start loader & close the search box
   dispatch(setLoader(true));
   setShowSearch(false);
 
   try {
-    const QUESTION = values.question?.trim();
+    const QUESTION = (values as Record<string, unknown>)?.question?.toString().trim();
     if (!QUESTION) return;
 
     // you already have I_CONNECT_WITH in this component
@@ -95,9 +88,9 @@ const DraggableChart: React.FC<IDraggableChart> = ({
     // --- STEP 1: check CSV/Excel upload flag ---
     const { payload: { hasUpload } } = (await dispatch(
       fetchUserCsvUpload({ user_id: USER_ID })
-    )) as any;
+    )) as unknown as { payload: { hasUpload: boolean } };
 
-    let resp: any;
+    let resp: Record<string, unknown>;
 
     // --- STEP 2: branch by upload flag ---
     if (hasUpload) {
@@ -113,7 +106,7 @@ const DraggableChart: React.FC<IDraggableChart> = ({
     }
 
     // --- STEP 3: update chart as usual ---
-    const temp = resp?.payload;
+    const temp = resp?.payload as { title: string; query: string; questions: string; plot: unknown };
     onUpdateData(code, temp);
   } catch (err) {
     console.error('Error in handleLoadJson:', err);
@@ -122,7 +115,7 @@ const DraggableChart: React.FC<IDraggableChart> = ({
   }
 };
 
-  const handleUserQuery = (values: any) => {
+  const handleUserQuery = (values: Record<string, unknown>) => {
     dispatch(setLoader(true));
     setShowQuery(false);
 
@@ -133,10 +126,16 @@ const DraggableChart: React.FC<IDraggableChart> = ({
 
     try {
       dispatch(fetchExecutedSQLResponse(payload))
-        .then((response: any) => {
-          const temp = response?.payload;
-
-          onUpdateData(code, { ...temp, sql_query: values?.query });
+        .then((response: Record<string, unknown>) => {
+          const temp = response?.payload as Record<string, unknown> | undefined;
+          if (temp) {
+            const updatePayload: { title: string; query: string; questions: string; plot: unknown; sql_query?: unknown } = { title: '', query: '', questions: '', plot: temp };
+            const query = (values as Record<string, unknown>)?.query;
+            if (query) {
+              updatePayload.sql_query = query;
+            }
+            onUpdateData(code, updatePayload);
+          }
         })
         .finally(() => {
           dispatch(setLoader(false));
@@ -213,16 +212,11 @@ const DraggableChart: React.FC<IDraggableChart> = ({
 
   const renderItem = () => {
     switch (type) {
-     case 'card':
-        // return <CardWidget inputData={data} type={type} 
-        // isChartTitleChange={isChartTitleChange}
-        // setIsChartTitleChange={setIsChartTitleChange}
-        // isPublished={isPublished}
-        // defaultColor={defaultColor}
-        // setGraphs={setGraphs}
-        // code={code}
-        // />;
-
+      case 'card':
+        // Card rendering disabled - keeping for future use
+        // return <CardWidget inputData={data} type={type} ...
+        // Fallthrough to default
+        // eslint-disable-next-line no-fallthrough
       case "metric":
       case "summary":
         return (
@@ -231,8 +225,8 @@ const DraggableChart: React.FC<IDraggableChart> = ({
             setGraphs={setGraphs}
             code={code}
           />
-        );        
-        case 'table':
+        );
+      case 'table':
         return (
           <TableWidget
             inputData={data}
@@ -254,7 +248,6 @@ const DraggableChart: React.FC<IDraggableChart> = ({
             isChartTitleChange={isChartTitleChange}
             setIsChartTitleChange={setIsChartTitleChange}
             setChartCode={setChartCode}
-            setTextTilteData={setTextTilteData}
             setIsEditing={setIsEditing}
             isPublished={isPublished}
           />
@@ -284,13 +277,13 @@ const DraggableChart: React.FC<IDraggableChart> = ({
     } else {
       setShowSearch(false);
     }
-  }, []);
+  }, [activeTab, isPublished, type]);
 
   useEffect(() => {
     if (defaultColor) {
       onChartColor(code, defaultColor);
     }
-  }, [defaultColor]);
+  }, [defaultColor, code, onChartColor]);
 
   return (
     <Fragment>

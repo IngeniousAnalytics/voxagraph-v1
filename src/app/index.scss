@@ -28,3 +28,17 @@
   gap: 12px;
 }
 
+.dashboard-main {
+  background-color: #f9fafb !important;
+
+  background-size: 10px 10px !important;
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+
+  /* ensure full height */
+
+  height: 100%;
+  width: 100%;
+  position: relative;
+}

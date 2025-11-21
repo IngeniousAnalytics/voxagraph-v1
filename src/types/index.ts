@@ -153,7 +153,6 @@ export interface IDraggableChart {
   };
   setGraphs: React.Dispatch<React.SetStateAction<IGraph[]>>;
   setChartCode:(chartCode:any)=>void;
-  setTextTilteData:(textTilteData:any)=>void
   setIsEditing:any
   isEditing:any
   charCode:any

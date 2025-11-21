@@ -1,22 +1,22 @@
 // src/app/index.tsx
-import { Fragment, useEffect, useState } from 'react';
-import { AppShell, createTheme, MantineProvider } from '@mantine/core';
+import {  useEffect, useState } from 'react';
+import { AppShell, MantineProvider } from '@mantine/core';
 import { ETopbar, ENavbar, ELoading, EColorPicker } from '@ai-dashboard/ui';
 import { Notifications } from '@mantine/notifications';
-import { getPublishedParams } from 'src/utils';
+import { getPublishedParams } from '../utils';
 import { IoColorPaletteOutline } from 'react-icons/io5';
-import Dashboard from 'src/pages/Dashboard';
+import Dashboard from '../pages/Dashboard';
 import ConnectDB from './components/ConnectDB';
-import Login from 'src/pages/Login';
+import Login from '../pages/Login';
 import useApp from './hooks/useApp';
 import SwitchDB from './components/SwitchDB';
 import './index.scss';
 import ChangeUserPassword from './components/ChangeUserPassword';
 import ChangeConnectionPassword from './components/ChangeConnectionPassword';
 import ChangeToLiveDb from './components/ChangeToLiveDb';
-import BrandWatermark from './components/BrandWatermark';
+//import BrandWatermark from './components/BrandWatermark';
 
-const theme = createTheme({});
+//const theme = createTheme({});
 
 export function App() {
   const {
@@ -84,15 +84,29 @@ export function App() {
         Number(publishedParams.db)
       );
     }
-  }, [isPublished]);
+  }, [isPublished, publishedParams, fetchTemplateById]);
 
   useEffect(() => {
     if (defaultColor) {
       handleDashColor(defaultColor);
     }
-  }, [defaultColor]);
+  }, [defaultColor, handleDashColor]);
+
+  // Workaround: ignore ResizeObserver loop errors which can be thrown
+  // by some third-party libs during layout/resize events. Harmless in most
+  // cases but noisy; swallow the specific error to avoid breaking the app.
+  useEffect(() => {
+    const onError = (ev: ErrorEvent) => {
+      const msg = ev?.message || '';
+      if (typeof msg === 'string' && msg.includes('ResizeObserver loop')) {
+        ev.stopImmediatePropagation();
+      }
+    };
+    window.addEventListener('error', onError as EventListener);
+    return () => window.removeEventListener('error', onError as EventListener);
+  }, []);
   return (
-    <Fragment>
+
       <div
         className="ai h-100"
         onDragOver={(e) => e.preventDefault()}
@@ -172,7 +186,8 @@ export function App() {
                 handleShowChangeToLiveDB={handleShowChangeToLiveDB.open}
                 setDashboardId={setDashboardId}
               />
-              <AppShell.Main style={{ background: graphs[0]?.dashColor }}>
+              {/* <AppShell.Main style={{ background: graphs[0]?.dashColor }}> */}
+                <AppShell.Main className="dashboard-main">
                 {graphs?.length > 0 ? (
                   <Dashboard
                     graphs={graphs}
@@ -208,8 +223,8 @@ export function App() {
                   </div>
                 )}
                 {/* Mount watermark outside the grid wrapper */}
-                {/* <BrandWatermark /> */}
               </AppShell.Main>
+              {/* <BrandWatermark /> */}
             </AppShell>
           )}
 
@@ -260,7 +275,7 @@ export function App() {
           />
         </MantineProvider>
       </div>
-    </Fragment>
+
   );
 }
 
