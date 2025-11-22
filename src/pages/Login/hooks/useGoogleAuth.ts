@@ -170,16 +170,78 @@ const useGoogleAuth = (handleConnect: () => void, opts: Options) => {
           context: 'signin',
         });
 
-        const el = document.getElementById(buttonContainerId);
+        const renderInto = (targetEl: HTMLElement) => {
+          try {
+            window.google.accounts.id.renderButton(targetEl, {
+              type: 'standard',
+              theme: 'outline',
+              size: 'large',
+              width: 300,
+            });
+            inited.current = true;
+            return true;
+          } catch (err) {
+            // keep trying
+            return false;
+          }
+        };
+
+        const el = document.getElementById(buttonContainerId) as HTMLElement | null;
+        let mo: MutationObserver | null = null;
         if (el) {
-          window.google.accounts.id.renderButton(el, {
-            type: 'standard',
-            theme: 'outline',
-            size: 'large',
-            width: 300,
+          renderInto(el);
+        } else {
+          // If the target element is not yet in the DOM (e.g. modal closed),
+          // observe mutations and render the button when it appears.
+          mo = new MutationObserver((mutations, observer) => {
+            const found = document.getElementById(buttonContainerId) as HTMLElement | null;
+            if (found) {
+              const ok = renderInto(found);
+              if (ok && observer) observer.disconnect();
+            }
           });
+          mo.observe(document.body, { childList: true, subtree: true });
+          // Also attempt one more time after a short delay in case element is added quickly
+          setTimeout(() => {
+            const found = document.getElementById(buttonContainerId) as HTMLElement | null;
+            if (found) {
+              renderInto(found);
+              mo?.disconnect();
+            }
+          }, 200);
         }
-        inited.current = true;
+
+        // Ensure the rendered Google button persists. On zoom/resize some browsers
+        // may remove or reflow the element inserted by Google's script. Watch for
+        // removal and re-render when needed.
+        const ensureButtonPresent = () => {
+          const container = document.getElementById(buttonContainerId) as HTMLElement | null;
+          if (!container) return;
+          // If container has no children or the Google button iframe is missing, re-render
+          const hasChild = container.querySelector('iframe, button');
+          if (!hasChild) {
+            renderInto(container);
+          }
+        };
+
+        const onResize = () => {
+          // Quick check on resize/zoom
+          ensureButtonPresent();
+        };
+
+        window.addEventListener('resize', onResize);
+        window.addEventListener('orientationchange', onResize);
+
+        const removalObserver = new MutationObserver(() => ensureButtonPresent());
+        removalObserver.observe(document.body, { childList: true, subtree: true });
+
+        // Cleanup when effect re-runs or component unmounts
+        return () => {
+          try { mo?.disconnect(); } catch {}
+          try { removalObserver.disconnect(); } catch {}
+          window.removeEventListener('resize', onResize);
+          window.removeEventListener('orientationchange', onResize);
+        };
       } catch {
         ENotify('warning', 'Unable to initialize Google Sign-In (script blocked?).');
       }

@@ -1,4 +1,5 @@
 import React, { use, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import {
@@ -20,6 +21,7 @@ import { getPublishedParams } from 'src/utils';
 
 const useApp = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { I_SHOW_CONNECT, I_CONNECT_WITH, I_PERMIT } = getPermissions();
 
   const publishedParams = getPublishedParams();
@@ -163,7 +165,7 @@ const useApp = () => {
     localStorage.removeItem('userInfo');
     setIsLoggedIn(false);
     window.dispatchEvent(new Event('storage'));
-    window.location.reload();
+    navigate('/');
   };
 
   const reset = () => {

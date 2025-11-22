@@ -4,6 +4,13 @@ import { Icon } from "@iconify/react";
 import { closeAllModals } from "@mantine/modals";
 import "./card-editor.scss";
 
+/**
+ * CardStyleEditor updated:
+ * - Ribbon is draggable (moves the panel via transform on container).
+ * - Compact, fits within 420px height/width constraints (no internal scroll).
+ * - No thick gray lines; visual polish like Figma inspector.
+ */
+
 export interface CardDesign {
   background?: string;
   color?: string;
@@ -30,7 +37,6 @@ interface Props {
   initialY?: number;
 }
 
-
 const FONT_FAMILIES = [
   { id: "Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial", label: "Inter" },
   { id: "Poppins, system-ui, -apple-system, Roboto, Arial", label: "Poppins" },
@@ -50,8 +56,8 @@ const SHADOWS: Record<string, string> = {
 
 export default function CardStyleEditor({ design = {}, onChange, onSave, onClose }: Props) {
   const [local, setLocal] = useState<CardDesign>({ ...design });
-  
-  // Drag state
+
+  // Drag state for entire panel
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
@@ -71,12 +77,11 @@ export default function CardStyleEditor({ design = {}, onChange, onSave, onClose
   const setLayout = (m: CardDesign["layoutMode"]) => update("layoutMode", m);
 
   const cycleShadow = () => {
-  const order = ["none", "subtle", "medium", "strong"];
-  const current = subKey(local.textShadow);
-  const next = order[(order.indexOf(current) + 1) % order.length];
-  update("textShadow", SHADOWS[next]);
-};
-
+    const order = ["none", "subtle", "medium", "strong"];
+    const current = subKey(local.textShadow);
+    const next = order[(order.indexOf(current) + 1) % order.length];
+    update("textShadow", SHADOWS[next]);
+  };
 
   const handleSave = () => {
     onSave?.(local);
@@ -84,69 +89,75 @@ export default function CardStyleEditor({ design = {}, onChange, onSave, onClose
     onClose?.();
   };
 
-  // Drag handlers
+  // ---- Drag handlers (ribbon is the handle) ----
   const handleMouseDown = (e: React.MouseEvent) => {
-    // Don't start drag if clicking on interactive elements
+    // Don't start drag if clicking interactive element
     const target = e.target as HTMLElement;
     const tagName = target.tagName.toLowerCase();
-    const isInteractive = ['button', 'input', 'select', 'label', 'a', 'svg', 'path'].includes(tagName);
-    const hasClickableClass = target.closest('.ce-btn, .ce-select, .ce-size, .ce-color, .ce-iconwrap, .ce-radius');
-    
+    const isInteractive = ["button", "input", "select", "label", "a", "svg", "path"].includes(tagName);
+    const hasClickableClass = !!target.closest(".ce-btn, .ce-select, .ce-size, .ce-color, .ce-iconwrap, .ce-radius");
+
     if (isInteractive || hasClickableClass) {
-      return; // Don't start drag, let the element handle the click
+      return;
     }
-    
+
     setIsDragging(true);
     setDragStart({
       x: e.clientX - position.x,
       y: e.clientY - position.y,
     });
+
+    // prevent text selection while dragging
+    (document.activeElement as HTMLElement)?.blur?.();
   };
 
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    if (!isDragging) return;
-    setPosition({
-      x: e.clientX - dragStart.x,
-      y: e.clientY - dragStart.y,
-    });
-  }, [isDragging, dragStart]);
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      if (!isDragging) return;
+      setPosition({
+        x: e.clientX - dragStart.x,
+        y: e.clientY - dragStart.y,
+      });
+    },
+    [isDragging, dragStart]
+  );
 
   const handleMouseUp = useCallback(() => {
     setIsDragging(false);
   }, []);
 
-  // Add/remove event listeners
   useEffect(() => {
     if (isDragging) {
       document.addEventListener("mousemove", handleMouseMove);
       document.addEventListener("mouseup", handleMouseUp);
+      document.body.style.userSelect = "none";
     }
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
+      document.body.style.userSelect = "";
     };
-  }, [isDragging, dragStart, handleMouseMove, handleMouseUp]);
+  }, [isDragging, handleMouseMove, handleMouseUp]);
 
-useEffect(() => {
-  const content = document.querySelector(".draggable-modal-content") as HTMLElement;
-  if (content) {
-    content.style.position = "absolute";
-    content.style.top = "0";
-    content.style.left = "0";
-    content.style.transform = `translate(${position.x}px, ${position.y}px)`;
-    content.style.transition = "none";
-    content.style.zIndex = "9999";
-  }
-}, [position]);
-
-
-
+  // Apply transform to panel root (so popover content moves visually)
+  useEffect(() => {
+    const el = document.querySelector(".figma-panel") as HTMLElement | null;
+    if (el) {
+      el.style.transform = `translate(${position.x}px, ${position.y}px)`;
+      el.style.transition = isDragging ? "none" : "transform 0.12s ease";
+    }
+  }, [position, isDragging]);
 
   return (
-   <div className="card-editor-root">      {/* Compact ribbon top (32px height) */}
-      <div className="ce-ribbon" onMouseDown={handleMouseDown} style={{ cursor: isDragging ? "grabbing" : "grab" }}>
-        {/* Fonts group */}
-        <div className="ce-group">
+    <div className="card-editor-root" style={{ width: "100%" }}>
+      {/* Ribbon: drag handle */}
+      <div
+        className="ce-ribbon"
+        onMouseDown={handleMouseDown}
+        style={{ cursor: isDragging ? "grabbing" : "grab", WebkitUserSelect: "none" }}
+      >
+        {/* Groups — compact, no heavy dividers */}
+        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
           <select
             className="ce-select"
             value={local.fontFamily || FONT_FAMILIES[0].id}
@@ -168,28 +179,37 @@ useEffect(() => {
             max={80}
             value={local.fontSize ?? 18}
             onChange={(e) => update("fontSize", Number(e.target.value))}
+            style={{ width: 62 }}
           />
-        </div>
 
-        {/* Style group (icons) */}
-        <div className="ce-group">
           <button className={`ce-btn ${local.fontWeight === "700" ? "active" : ""}`} onClick={toggleBold} title="Bold">
-            <Icon icon="mdi:format-bold" width={22} height={22} />
-
+            <Icon icon="mdi:format-bold" width={18} />
           </button>
           <button className={`ce-btn ${local.fontStyle === "italic" ? "active" : ""}`} onClick={toggleItalic} title="Italic">
-            <Icon icon="mdi:format-italic" width={22} height={22}/>
+            <Icon icon="mdi:format-italic" width={18} />
           </button>
-         <button  className="ce-btn"  onClick={cycleShadow}  title="Text shadow">
-            <Icon icon="mdi:text-shadow" width={22} height={22}/>
-            
+          <button className="ce-btn" onClick={cycleShadow} title="Text shadow">
+            <Icon icon="mdi:text-shadow" width={18} />
           </button>
         </div>
+      </div>
 
-        {/* Color & BG */}
-        <div className="ce-group">
+      {/* Compact content area — intentionally minimal to avoid inner scrolling */}
+      <div
+        className="ce-body"
+        style={{
+          padding: "12px 14px 18px 14px",
+          display: "grid",
+          gridTemplateColumns: "1fr",
+          gap: 10,
+          alignItems: "start",
+          background: "transparent",
+        }}
+      >
+        {/* color row */}
+        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
           <label className="ce-iconwrap" title="Text color">
-            <Icon icon="mdi:format-color-text" width={22} height={22}/>
+            <Icon icon="mdi:format-color-text" width={16} />
             <input
               className="ce-color"
               type="color"
@@ -199,7 +219,7 @@ useEffect(() => {
           </label>
 
           <label className="ce-iconwrap" title="Background color">
-            <Icon icon="mdi:format-color-fill" width={22} height={22}/>
+            <Icon icon="mdi:format-color-fill" width={16} />
             <input
               className="ce-color"
               type="color"
@@ -207,10 +227,23 @@ useEffect(() => {
               onChange={(e) => update("background", e.target.value)}
             />
           </label>
+
+          <div>Border</div>
+
+          <input
+            type="number"
+            className="ce-radius"
+            title="Border radius px"
+            min={0}
+            max={60}
+            value={parseInt(local.borderRadius || "0")}
+            onChange={(e) => update("borderRadius", `${e.target.value}px`)}
+            style={{ width: 82 }}
+          />
         </div>
 
-        {/* Alignments */}
-        <div className="ce-group">
+        {/* alignment row */}
+        <div style={{ display: "flex", gap: 8 }}>
           <button className={`ce-btn ${local.alignX === "left" ? "active" : ""}`} onClick={() => setAlignX("left")} title="Align left">
             <Icon icon="mdi:format-align-left" />
           </button>
@@ -221,7 +254,7 @@ useEffect(() => {
             <Icon icon="mdi:format-align-right" />
           </button>
 
-          <div className="ce-divider" />
+          <div style={{ width: 12 }} />
 
           <button className={`ce-btn ${local.alignY === "top" ? "active" : ""}`} onClick={() => setAlignY("top")} title="Align top">
             <Icon icon="mdi:align-vertical-top" />
@@ -234,52 +267,35 @@ useEffect(() => {
           </button>
         </div>
 
-        {/* layout + radius */}
-        <div className="ce-group">
-          <button className={`ce-btn ${local.layoutMode === "stacked" ? "active" : ""}`} onClick={() => setLayout("stacked")} title="Stacked (title above)">
+
+
+        {/* layout controls */}
+        <div style={{ display: "flex", gap: 8 }}>
+          <button className={`ce-btn ${local.layoutMode === "stacked" ? "active" : ""}`} onClick={() => setLayout("stacked")} title="Stacked">
             <Icon icon="mdi:format-wrap-top-bottom" />
           </button>
-          <button className={`ce-btn ${local.layoutMode === "inline" ? "active" : ""}`} onClick={() => setLayout("inline")} title="Inline (title beside)">
+          <button className={`ce-btn ${local.layoutMode === "inline" ? "active" : ""}`} onClick={() => setLayout("inline")} title="Inline">
             <Icon icon="mdi:format-wrap-inline" />
           </button>
-
-          <input
-            type="number"
-            className="ce-radius"
-            title="Border radius px"
-            min={0}
-            max={60}
-            value={parseInt(local.borderRadius || "0")}
-            onChange={(e) => update("borderRadius", `${e.target.value}px`)}
-          />
         </div>
 
-        {/* right side: Save / Close */}
-        <div className="ce-group ce-right">
-          <button className="ce-btn secondary" onClick={() => { closeAllModals(); onClose?.(); }} title="Cancel">
-            <Icon icon="mdi:close" />
+                {/* Save/close */}
+        <div style={{ display: "flex", gap: 8 }}>
+          <button
+            className="ce-btn secondary"
+            onClick={() => {
+              closeAllModals();
+              onClose?.();
+            }}
+            title="Cancel"
+          >
+            <Icon icon="mdi:close" width={18} />
           </button>
           <button className="ce-btn primary" onClick={handleSave} title="Save">
-            <Icon icon="mdi:content-save" />
+            <Icon icon="mdi:content-save" width={18} />
           </button>
         </div>
       </div>
-
-      {/* Live preview (compact) 
-      <div className="ce-preview" style={{
-        background: local.background || "#fff",
-        color: local.color || "#2E3A59",
-        fontFamily: local.fontFamily,
-        fontWeight: local.fontWeight,
-        fontStyle: local.fontStyle,
-        borderRadius: local.borderRadius || "0px",
-        textShadow: local.textShadow || "none",
-      }}>
-         <div className="ce-preview-inner" style={{ flexDirection: local.layoutMode === "inline" ? "row" : "column" }}>
-          <div className="ce-preview-title">Total DVDs</div>
-          <div className="ce-preview-value">{formatPreviewValue(4581, local)}</div>
-        </div> 
-      </div>*/}
     </div>
   );
 }
