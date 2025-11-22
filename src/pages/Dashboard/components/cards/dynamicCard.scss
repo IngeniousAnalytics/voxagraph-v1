@@ -1,88 +1,91 @@
-.dynamic-card {
-  position: relative;
-  isolation: isolate;
-  z-index: 0;
-  transition: all 0.25s ease-in-out;
-  cursor: default;
-  overflow: visible; /* ✅ critical */
+/* src/pages/Dashboard/components/cards/dynamicCard.scss
+   Polished card and small edit-icon styles
+*/
 
-  .edit-zone {
-    will-change: transform;
+.dynamic-card {
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  color: #2e3a59;
+  position: relative;
+
+  .edit-icon {
     position: absolute;
-    top: 6px;
-    right: 6px;
-    display: flex;
+    top: 10px;
+    right: 10px;
+    z-index: 50;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 4px;
-    padding: 8px 10px;
-    min-width: 36px;
-    min-height: 36px;
-    background: rgba(255, 255, 255, 0.92);
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    width: 34px;
+    height: 34px;
     border-radius: 8px;
-    font-size: 12px;
-    color: #2E3A59;
-    cursor: pointer !important;
-    opacity: 0.9;
-    z-index: 9999 !important;
-    pointer-events: auto !important;
-    user-select: none;
-    transform: scale(1);
-    transform-origin: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition:
-      all 0.15s ease;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 6px 18px rgba(20, 24, 32, 0.06);
+    border: 1px solid rgba(20, 24, 32, 0.06);
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+
+    svg {
+      color: #3b465f;
+      width: 18px;
+      height: 18px;
+    }
 
     &:hover {
-      background: rgba(255, 255, 255, 0.98);
-      opacity: 1;
-      transform: scale(1.08);
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-      border-color: rgba(0, 0, 0, 0.2);
-    }
-
-    &:active {
-      transform: scale(1.0);
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(20, 24, 32, 0.08);
       background: rgba(255, 255, 255, 1);
-    }
-
-    svg, path {
-      pointer-events: none !important;
-    }
-
-    span {
-      pointer-events: none;
-      user-select: none;
-      color: #fff;
-    }
-
-    &:not(:hover) span {
-      opacity: 0;
-      width: 0;
-      overflow: hidden;
-    }
-
-    &::before {
-      content: "";
-      position: absolute;
-      inset: -8px;
-      z-index: -1;
-      pointer-events: auto;
     }
   }
 }
 
-.modal-draggable-body {
-  position: relative !important;
-  will-change: transform;
+/* Figma-style panel container (the popover dropdown area) */
+.figma-panel-container {
+  padding: 0 !important;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
-.draggable-modal-content {
-  position: absolute !important;
-  top: 0;
-  left: 0;
-  will-change: transform;
-  z-index: 999999 !important;
+/* Panel itself — 420px vertical inspector look */
+.figma-panel {
+  width: 420px;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 12px 40px rgba(20, 24, 32, 0.12);
+  overflow: visible; /* S2: no inner scroll by default — keep content compact */
+  /* subtle border, not thick gray */
+  border: 1px solid rgba(20, 24, 32, 0.06);
+}
+
+/* Make sure popover dropdown's inner area is flush */
+.figma-panel .card-editor-root {
+  padding: 0;
+  margin: 0;
+}
+
+/* Ensure the panel has subtle separation, not a thick line */
+.figma-panel .ce-ribbon {
+  background: linear-gradient(180deg, #fafbfc, #ffffff);
+  border-bottom: 1px solid rgba(20, 24, 32, 0.06); /* very thin */
+  height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  gap: 8px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* Remove heavy gray divider */
+.ce-divider {
+  display: none;
+}
+
+/* small responsive safeguard */
+@media (max-width: 480px) {
+  .figma-panel {
+    width: 320px;
+    max-width: calc(100vw - 24px);
+  }
 }
