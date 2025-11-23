@@ -38,6 +38,90 @@
   }
 }
 
+/* Invisible resize handles for custom resizer (placed inside each card) */
+.resize-handle {
+  position: absolute;
+  background: transparent;
+  pointer-events: auto;
+}
+
+/* Edge handles (thinner but full height/width) */
+.resize-handle--left,
+.resize-handle--right {
+  top: 0;
+  bottom: 0;
+  width: 12px;
+}
+.resize-handle--left {
+  left: 0;
+  cursor: ew-resize;
+}
+.resize-handle--right {
+  right: 0;
+  cursor: ew-resize;
+}
+
+.resize-handle--top,
+.resize-handle--bottom {
+  left: 0;
+  right: 0;
+  height: 12px;
+}
+.resize-handle--top {
+  top: 0;
+  cursor: ns-resize;
+}
+.resize-handle--bottom {
+  bottom: 0;
+  cursor: ns-resize;
+}
+
+/* Corner handles (small squares) */
+.resize-handle--top-left,
+.resize-handle--top-right,
+.resize-handle--bottom-left,
+.resize-handle--bottom-right {
+  width: 12px;
+  height: 12px;
+}
+.resize-handle--top-left {
+  top: 0;
+  left: 0;
+  /* hide top-left handle — opt-in corners only (avoid visible stray icon) */
+  display: none;
+}
+.resize-handle--top-right {
+  top: 0;
+  right: 0;
+  cursor: nesw-resize !important; /* diagonal */
+}
+.resize-handle--bottom-left {
+  bottom: 0;
+  left: 0;
+  cursor: nesw-resize !important;
+}
+.resize-handle--bottom-right {
+  bottom: 0;
+  right: 0;
+  cursor: nwse-resize !important;
+}
+
+/* Ensure handles receive pointer events and show cursor even if children overlay */
+.resize-handle {
+  pointer-events: auto !important;
+  z-index: 100000 !important;
+  cursor: default !important;
+}
+
+/* force specific cursors on edge handles with higher specificity */
+.resize-handle--left { cursor: ew-resize !important; }
+.resize-handle--right { cursor: ew-resize !important; }
+.resize-handle--top { cursor: ns-resize !important; }
+.resize-handle--bottom { cursor: ns-resize !important; }
+.resize-handle--top-right { cursor: nesw-resize !important; }
+.resize-handle--bottom-left { cursor: nesw-resize !important; }
+.resize-handle--bottom-right { cursor: nwse-resize !important; }
+
 /* Figma-style panel container (the popover dropdown area) */
 .figma-panel-container {
   padding: 0 !important;

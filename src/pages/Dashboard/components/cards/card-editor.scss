@@ -1,13 +1,13 @@
 /* --- GENERAL --- */
 .card-editor-root {
-  width: 420px;
+  width: 340px;
   background: #fff;
-  border-radius: 12px;
-  padding: 14px 16px;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+  border-radius: 8px;
+  padding: 8px 10px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.06);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 /* Title row */
@@ -27,23 +27,23 @@
 
 /* --- SECOND ROW COMPACT --- */
 .ce-row.compact {
-  margin-top: -6px;      /* Removes vertical gap */
+  margin-top: -4px;      /* Removes vertical gap */
   gap: 6px !important;   /* Tight spacing */
 }
 
 /* Buttons / Icons */
 .ce-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  border: 1px solid #e5e7eb;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid #eef2f6;
   background: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
 
-  transition: 0.15s ease;
+  transition: 0.12s ease;
 }
 
 .ce-btn:hover {
@@ -58,28 +58,28 @@
 /* Input small */
 .ce-size,
 .ce-radius {
-  width: 48px;
-  height: 32px;
-  border-radius: 8px;
-  border: 1px solid #e5e7eb;
+  width: 44px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid #eef2f6;
   padding: 0 6px;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .ce-select {
-  height: 32px;
-  padding: 0 8px;
-  border-radius: 8px;
-  border: 1px solid #e5e7eb;
-  font-size: 13px;
+  height: 28px;
+  padding: 0 6px;
+  border-radius: 6px;
+  border: 1px solid #eef2f6;
+  font-size: 12px;
 }
 
 /* Color pickers */
 .ce-color {
-  width: 30px;
-  height: 30px;
-  border-radius: 6px;
-  border: 1px solid #d1d5db;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid #dfe3e8;
   padding: 0;
 }
 
@@ -91,4 +91,50 @@
   opacity: 1 !important;
   visibility: visible !important;
   fill: currentColor !important;
+}
+
+/* -----------------------------
+   Optional: make Mantine Card sections resizable
+   Use the class `mantine-Card-section` or add
+   `custom-resizable` to opt-in:
+     <div className="mantine-Card-section custom-resizable">...
+   Native CSS resize is used (bottom-right handle).
+   For finer control / snapping, we can add a JS resizer using
+   `react-rnd` or `react-resizable` later.
+   ----------------------------- */
+/* Opt-in resizable Mantine Card sections: only when `custom-resizable` is present */
+.mantine-Card-section.custom-resizable {
+  /* Enable native resize handle (bottom-right) */
+  resize: both;
+  overflow: auto; /* required for resize to work */
+
+  /* sensible constraints so layout doesn't break */
+  min-width: 160px;
+  min-height: 100px;
+  max-width: 100%;
+  max-height: 720px;
+
+  /* subtle visual affordance for the handle area */
+  box-sizing: border-box;
+}
+
+/* Optional: make the resize handle more visible on hover */
+.mantine-Card-section.custom-resizable:hover {
+  outline: 1px dashed rgba(0,0,0,0.06);
+}
+
+/* Ensure editor controls remain interactive when parent is resizable */
+.card-editor-root .ce-btn,
+.card-editor-root .ce-select,
+.card-editor-root .ce-size,
+.card-editor-root .ce-radius,
+.card-editor-root .ce-color,
+.card-editor-root .ce-iconwrap {
+  pointer-events: auto !important;
+  z-index: 2000;
+}
+
+/* In case the resizable container adds an overlay, force children to be clickable */
+.mantine-Card-section.custom-resizable * {
+  pointer-events: auto !important;
 }
