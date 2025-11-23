@@ -1,10 +1,11 @@
 // src/pages/Dashboard/components/cards/DynamicCard.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import { Popover } from "@mantine/core";
 import { ICardData } from "../../../../types/cards";
 import { IGraph } from "../../../../types";
 import CardStyleEditor from "./CardStyleEditor";
+import attachResizable from "./resizer";
 import "./dynamicCard.scss";
 
 /**
@@ -64,6 +65,13 @@ const DynamicCard: React.FC<DynamicCardProps> = ({ inputData, setGraphs, code })
       ? displayValue
       : "—";
 
+  useEffect(() => {
+    const el = document.getElementById(`card-${code}`);
+    if (!el) return;
+    const cleanup = attachResizable(el);
+    return () => cleanup();
+  }, [code]);
+
   return (
     <div
       id={`card-${code}`}
@@ -79,10 +87,11 @@ const DynamicCard: React.FC<DynamicCardProps> = ({ inputData, setGraphs, code })
         fontFamily,
         display: "flex",
         flexDirection: "column",
+        /* For a column layout: justifyContent controls vertical alignment, alignItems controls horizontal */
         justifyContent:
-          alignX === "left" ? "flex-start" : alignX === "right" ? "flex-end" : "center",
-        alignItems:
           alignY === "top" ? "flex-start" : alignY === "bottom" ? "flex-end" : "center",
+        alignItems:
+          alignX === "left" ? "flex-start" : alignX === "right" ? "flex-end" : "center",
         textAlign: alignX as any,
         height: "100%",
         position: "relative",
@@ -155,12 +164,14 @@ const DynamicCard: React.FC<DynamicCardProps> = ({ inputData, setGraphs, code })
             <CardStyleEditor
               design={currentDesign}
               onChange={(d) => {
+                console.log('DynamicCard: onChange', d);
                 setCurrentDesign(d);
                 if (code && setGraphs) {
                   setGraphs((prev) => prev.map((g) => (g.code === code ? { ...g, design: d } : g)));
                 }
               }}
               onSave={(d) => {
+                console.log('DynamicCard: onSave', d);
                 setCurrentDesign(d);
                 if (code && setGraphs) {
                   setGraphs((prev) => prev.map((g) => (g.code === code ? { ...g, design: d } : g)));
@@ -178,3 +189,5 @@ const DynamicCard: React.FC<DynamicCardProps> = ({ inputData, setGraphs, code })
 };
 
 export default DynamicCard;
+
+

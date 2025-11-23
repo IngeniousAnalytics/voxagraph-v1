@@ -256,13 +256,40 @@ export default function CardStyleEditor({ design = {}, onChange, onSave, onClose
 
           <div style={{ width: 12 }} />
 
-          <button className={`ce-btn ${local.alignY === "top" ? "active" : ""}`} onClick={() => setAlignY("top")} title="Align top">
+          <button
+            type="button"
+            className={`ce-btn ${local.alignY === "top" ? "active" : ""}`}
+            onClick={(e) => {
+              e.stopPropagation();
+              console.log('CardStyleEditor: align top clicked');
+              setAlignY("top");
+            }}
+            title="Align top"
+          >
             <Icon icon="mdi:align-vertical-top" />
           </button>
-          <button className={`ce-btn ${local.alignY === "middle" ? "active" : ""}`} onClick={() => setAlignY("middle")} title="Align middle">
+          <button
+            type="button"
+            className={`ce-btn ${local.alignY === "middle" ? "active" : ""}`}
+            onClick={(e) => {
+              e.stopPropagation();
+              console.log('CardStyleEditor: align middle clicked');
+              setAlignY("middle");
+            }}
+            title="Align middle"
+          >
             <Icon icon="mdi:align-vertical-center" />
           </button>
-          <button className={`ce-btn ${local.alignY === "bottom" ? "active" : ""}`} onClick={() => setAlignY("bottom")} title="Align bottom">
+          <button
+            type="button"
+            className={`ce-btn ${local.alignY === "bottom" ? "active" : ""}`}
+            onClick={(e) => {
+              e.stopPropagation();
+              console.log('CardStyleEditor: align bottom clicked');
+              setAlignY("bottom");
+            }}
+            title="Align bottom"
+          >
             <Icon icon="mdi:align-vertical-bottom" />
           </button>
         </div>
