@@ -14,7 +14,7 @@ import './index.scss';
 import ChangeUserPassword from './components/ChangeUserPassword';
 import ChangeConnectionPassword from './components/ChangeConnectionPassword';
 import ChangeToLiveDb from './components/ChangeToLiveDb';
-//import BrandWatermark from './components/BrandWatermark';
+import BrandWatermark from './components/BrandWatermark';
 
 //const theme = createTheme({});
 
@@ -74,7 +74,7 @@ export function App() {
 
   const isPublished = window.location.hash.startsWith('#/published');
   const publishedParams = getPublishedParams();
-  const [defaultColor, onChange] = useState('');
+  const [defaultColor, setDefaultColor] = useState('');
 
   useEffect(() => {
     if (isPublished && publishedParams) {
@@ -86,11 +86,12 @@ export function App() {
     }
   }, [isPublished, publishedParams, fetchTemplateById]);
 
+  // Fix: Only update dashboard color when color actually changes and is not empty
   useEffect(() => {
     if (defaultColor) {
       handleDashColor(defaultColor);
     }
-  }, [defaultColor, handleDashColor]);
+  }, [defaultColor]); // Remove handleDashColor from dependencies to prevent loop
 
   // ResizeObserver error handler - logs helpful info when the error occurs
   useEffect(() => {
@@ -117,6 +118,11 @@ export function App() {
     window.addEventListener('error', handleError);
     return () => window.removeEventListener('error', handleError);
   }, []);
+
+  // Create a stable onChange handler for the color picker
+  const handleColorChange = (color: string) => {
+    setDefaultColor(color);
+  };
 
   return (
 
@@ -161,6 +167,7 @@ export function App() {
                 collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
               }}
               padding="md"
+              className={desktopOpened ? 'navbar-open' : 'navbar-closed'} // Add class based on state
             >
               <ETopbar
                 mobileOp={mobileOpened}
@@ -200,7 +207,15 @@ export function App() {
                 setDashboardId={setDashboardId}
               />
               {/* <AppShell.Main style={{ background: graphs[0]?.dashColor }}> */}
-                <AppShell.Main className="dashboard-main">
+                <AppShell.Main 
+                  className="dashboard-main"
+                  style={{ 
+                    backgroundColor: graphs[0]?.dashColor || '#f9fafb',
+                    backgroundImage: graphs[0]?.dashColor 
+                      ? '#f9fafb' 
+                      : 'linear-gradient(to right, rgba(0, 0, 0, 0.12) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 0, 0, 0.06) 1px, transparent 1px)'
+                  }}
+                >
                 {graphs?.length > 0 ? (
                   <Dashboard
                     graphs={graphs}
@@ -232,12 +247,35 @@ export function App() {
                     className="color-picker"
                     onClick={() => setShowPicker(!showPicker)}
                   >
-                    <IoColorPaletteOutline size={30} />
+                    {/* Colorful Palette Icon */}
+                    <svg
+                      width="30"
+                      height="30"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z"
+                        fill="url(#colorfulGradient)"
+                      />
+                      <circle cx="8" cy="10" r="2" fill="#FF5252" />
+                      <circle cx="12" cy="8" r="2" fill="#4CAF50" />
+                      <circle cx="16" cy="10" r="2" fill="#2196F3" />
+                      <circle cx="9" cy="15" r="2" fill="#FF9800" />
+                      <circle cx="15" cy="15" r="2" fill="#9C27B0" />
+                      <defs>
+                        <linearGradient id="colorfulGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#FFE0B2" />
+                          <stop offset="100%" stopColor="#E1BEE7" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
                   </div>
                 )}
                 {/* Mount watermark outside the grid wrapper */}
               </AppShell.Main>
-              {/* <BrandWatermark /> */}
+              <BrandWatermark />
             </AppShell>
           )}
 
@@ -246,7 +284,7 @@ export function App() {
               show={showPicker}
               setShow={setShowPicker}
               value={defaultColor}
-              onChange={onChange}
+              onChange={handleColorChange}
             />
           )}
 

@@ -23,11 +23,15 @@ const Dashboard: React.FC<IDashboard> = ({
   const [charCode, setChartCode] = useState<number>(0);
   const [isEditing, setIsEditing] = useState(false);
 
+  // Grid sizing constants (px per grid unit) - Changed to 5px for smooth resizing
+  const COL_PX = 5;
+  const ROW_PX = 5; // matches `rowHeight` passed to RGL below
+
   const generateLayout = () => {
     return graphs.map((chart) => {
-      const baseRows = Math.ceil((chart.height ?? 0) / 100);
+      const baseRows = Math.ceil((chart.height ?? 0) / ROW_PX);
       const rowCountForText = chart.type === "text" ? baseRows / 2 : baseRows;
-      const colCount = chart.width ? Math.ceil(chart.width / 100) : 4;
+      const colCount = chart.width ? Math.ceil(chart.width / COL_PX) : 4;
 
       return {
         i: chart.code.toString(),
@@ -35,12 +39,13 @@ const Dashboard: React.FC<IDashboard> = ({
         y: chart.y || 0,
         w: colCount,
         h: rowCountForText,
-        minW: 2,
-        minH: 2,
+        minW: 2, // 2 * 5px = 10px minimum width
+        minH: 2, // 2 * 5px = 10px minimum height
         isResizable: !window.location.hash.startsWith("#/published"),
       };
     });
   };
+  
   const handleDragStop = (
     layout: any,
     oldItem: any,
@@ -49,7 +54,12 @@ const Dashboard: React.FC<IDashboard> = ({
     _e: any,
     _element: any
   ) => {
-    onUpdatePosition(Number(newItem.i), newItem.x, newItem.y, newItem.h, newItem.w);
+    // Convert grid units to pixels for persistence
+    const pxWidth = newItem.w * COL_PX;
+    const pxHeight = newItem.h * ROW_PX;
+    onUpdatePosition(Number(newItem.i), newItem.x, newItem.y, pxHeight, pxWidth);
+    // also notify onResize consumers of the pixel dimensions
+    onResize(Number(newItem.i), pxWidth, pxHeight);
   };
 
   const handleResizeStop = (
@@ -60,9 +70,10 @@ const Dashboard: React.FC<IDashboard> = ({
     _e: any,
     _element: any
   ) => {
-    const newWidthPx = newItem.w * 100;
-    const newHeightPx = newItem.h * 100;
-    onUpdatePosition(Number(newItem.i), newItem.x, newItem.y, newItem.h, newItem.w);
+    const newWidthPx = newItem.w * COL_PX;
+    const newHeightPx = newItem.h * ROW_PX;
+    // Persist pixel sizes to graphs so DraggableChart receives updated props
+    onUpdatePosition(Number(newItem.i), newItem.x, newItem.y, newHeightPx, newWidthPx);
     onResize(Number(newItem.i), newWidthPx, newHeightPx);
   };
 
@@ -73,8 +84,14 @@ const Dashboard: React.FC<IDashboard> = ({
         className="layout"
         layouts={{ lg: generateLayout() }}
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-        cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-        rowHeight={95}
+        cols={{ 
+          lg: 240,  // 1200px / 5px = 240 columns
+          md: 200,  // 996px / 5px ≈ 200 columns
+          sm: 154,  // 768px / 5px ≈ 154 columns
+          xs: 96,   // 480px / 5px = 96 columns
+          xxs: 2    // Keep minimal for very small screens
+        }}
+        rowHeight={ROW_PX}
         margin={[3, 3]}
         measureBeforeMount={false}
         onDragStop={handleDragStop}
@@ -84,9 +101,9 @@ const Dashboard: React.FC<IDashboard> = ({
         draggableCancel=".no-drag, .no-drag-download-icon, .action-wrappers, .text-toolbar, .no-drag-bold, .no-drag-italic, .no-drag-color, .text-area, .text-display, .rotation-control, .search-modal, .edit-zone, .edit-zone-button, .dynamic-card, button"
       >
         {graphs.map((chart) => {
-          const baseRows = Math.ceil((chart.height ?? 0) / 100);
+          const baseRows = Math.ceil((chart.height ?? 0) / ROW_PX);
           const rowCountForText = chart.type === "text" ? baseRows / 2 : baseRows;
-          const colCount = chart.width ? Math.ceil(chart.width / 100) : 4;
+          const colCount = chart.width ? Math.ceil(chart.width / COL_PX) : 4;
           
           return (
             <div
