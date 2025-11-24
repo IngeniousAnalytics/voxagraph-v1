@@ -209,15 +209,15 @@ export function ETopbar({
             </div>
           </div>
 
-          {/* Center: title */}
-          <div className="etopbar__title">
-            <Text component="h2" className="etopbar__titleText" title={dashboardId?.dashboard_name}>
-              {dashboardId?.dashboard_name}
-            </Text>
-          </div>
-
-          {/* Right actions */}
+          {/* Right actions - includes title */}
           <div className="etopbar__right">
+            {/* Title moved here */}
+            <div className="etopbar__title">
+              <Text component="h2" className="etopbar__titleText" title={dashboardId?.dashboard_name}>
+                {dashboardId?.dashboard_name}
+              </Text>
+            </div>
+
             { I_PERMIT.i_save_or_update ? (
               <Group gap="xs" className="etopbar__cta">
                 <Tooltip label={templateID ? "Update Dashboard" : "Save Dashboard"} withArrow>
@@ -250,6 +250,7 @@ export function ETopbar({
             <Divider orientation="vertical" className="etopbar__divider" />
 
             <div className="etopbar__dbinfo" title={getPermissions()?.I_CONNECT_WITH?.name}>
+              <LuDatabaseZap size={18} className="etopbar__dbicon" />
               <span className="etopbar__dbpill">{I_CONNECT_WITH?.name}</span>
             </div>
 
