@@ -65,7 +65,10 @@ const DraggableChart: React.FC<IDraggableChart> = ({
   const [showPicker, setShowPicker] = useState<boolean>(false);
   const { I_PERMIT, I_CONNECT_WITH } = getPermissions();
   const [isChartTitleChange, setIsChartTitleChange] = useState(false);
-
+  
+  // Constants for chart sizing adjustments
+const CHART_HEADER_HEIGHT = 60; // Accounts for card padding/header
+const CHART_WIDTH_OFFSET = 100; // Additional width buffer (or u
   // Redux selector not currently used but kept for future extensions
   useAppSelector((state: unknown) => state);
 
@@ -241,7 +244,7 @@ const DraggableChart: React.FC<IDraggableChart> = ({
       case 'text':
         return (
           <TitleChart
-            minHeight={height - 60}
+            minHeight={height - CHART_HEADER_HEIGHT}
             inputData={data}
             setGraphs={setGraphs}
             code={code}
@@ -257,8 +260,8 @@ const DraggableChart: React.FC<IDraggableChart> = ({
           <ChartWidget
             type={type}
             variant={variant}
-            width={width + 100}
-            height={height - 60}
+            width={width + CHART_WIDTH_OFFSET} 
+            height={height - CHART_HEADER_HEIGHT}
             inputData={data}
             setGraphs={setGraphs}
             code={code}

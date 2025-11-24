@@ -1,6 +1,5 @@
 .brand-watermark {
-  background: color-mix(in srgb, #0b1220 78%, transparent);
-
+  background: transparent !important;
 
   small {
     color: #eceff2;
@@ -11,8 +10,7 @@
 }
 
 :root[data-mantine-color-scheme='light'] .brand-watermark {
-  background: rgba(255, 255, 255, .92);
-  border-color: rgba(2, 6, 23, .08);
+  background: transparent !important;
 
   small { color: #0f172a; }
 }
