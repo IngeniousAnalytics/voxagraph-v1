@@ -1,24 +1,29 @@
-/* Design refresh for ETopbar — visuals only, no functionality changes */
+/* Professional Design Refresh for ETopbar */
 
-.header, /* legacy selector kept (if used elsewhere) */
+.header,
 .etopbar {
-  --etopbar-height: 64px;
-  --etopbar-bg: linear-gradient(180deg, rgba(28,31,36,0.85) 0%, rgba(28,31,36,0.78) 100%);
-  --etopbar-border: rgba(255,255,255,0.08);
-  --etopbar-shadow: 0 4px 14px rgba(0,0,0,0.18);
-  --text-muted: rgba(255,255,255,0.72);
+  --etopbar-height: 70px;
+  --etopbar-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  --etopbar-border: rgba(255, 255, 255, 0.1);
+  --etopbar-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --text-muted: rgba(255, 255, 255, 0.85);
+  --text-primary: #ffffff;
 
   height: var(--etopbar-height);
   background: var(--etopbar-bg);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid var(--etopbar-border);
   box-shadow: var(--etopbar-shadow);
   position: sticky;
   top: 0;
   z-index: 30;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   .mantine-Group-root.etopbar__inner {
-    gap: 12px;
+    gap: 16px;
+    padding: 0 20px;
+    height: 100%;
   }
 }
 
@@ -26,30 +31,37 @@
 .etopbar__left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
+  min-width: 0;
 }
 
 .etopbar__toggle {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 
   .ghost-icon-btn {
     display: grid;
     place-items: center;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border-radius: 10px;
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     color: var(--text-muted);
-    transition: all .18s ease;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
 
     &:hover {
-      background: rgba(255,255,255,0.06);
-      color: #fff;
-      border-color: rgba(255,255,255,0.16);
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-primary);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active {
+      transform: translateY(0);
     }
   }
 }
@@ -57,45 +69,74 @@
 .etopbar__brand {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  padding: 4px 0;
 
   .etopbar__beta {
-    transform: translateY(-2px);
-    font-weight: 500;
-    letter-spacing: .2px;
+    transform: translateY(-1px);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: #1e293b;
+    box-shadow: 0 2px 4px rgba(251, 191, 36, 0.3);
   }
 }
 
-/* Center title */
+/* Center title - Now inside etopbar__right */
 .etopbar__title {
-  min-width: 0; /* truncation */
-  text-align: center;
+  flex: 0 1 auto;
+  min-width: 0;
+  text-align: right; // Right align
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; // Right align content
+  // Removed margin-right: auto since we want right alignment
 
   .etopbar__titleText {
-    color: #fff;
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: .2px;
-    line-height: 1.2;
-    max-width: 520px;
+    color: #d97706; // Dark orange color (or use #ea580c, #cc5500, #c2410c)
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    line-height: 1.3;
+    max-width: 400px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
 }
 
-/* Right cluster */
+/* Right cluster - Updated to accommodate title */
 .etopbar__right {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  min-width: 0;
+  flex: 1; // Allow it to grow and take available space
+  justify-content: flex-end; // Align items to the right
 }
 
 .etopbar__cta {
   .mantine-Button-root.primary-cta {
-    border-radius: 10px;
-    padding-inline: 10px;
-    height: 36px;
+    border-radius: 8px;
+    padding-inline: 14px;
+    height: 38px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
 
     .mantine-Button-label {
       display: grid;
@@ -106,87 +147,153 @@
   }
 
   .mantine-Button-root {
-    border-radius: 10px;
-    height: 36px;
+    border-radius: 8px;
+    height: 38px;
+    transition: all 0.2s ease;
   }
 }
 
 .etopbar__divider {
-  height: 22px;
-  border-color: rgba(255,255,255,0.08);
-  margin-inline: 4px;
+  height: 28px;
+  border-color: rgba(255, 255, 255, 0.12);
+  margin-inline: 8px;
+  opacity: 0.6;
 }
 
-/* Connected DB label */
+/* Connected DB label - Match profile styling */
 .etopbar__dbinfo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px 6px 6px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: default;
+  height: 48px;
+  min-width: fit-content;
+  max-width: 280px;
+
+  .etopbar__dbicon {
+    color: var(--text-muted);
+    flex-shrink: 0;
+    transition: color 0.2s ease;
+  }
+
   .etopbar__dbpill {
     display: inline-flex;
     align-items: center;
-    max-width: 220px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1px;
+    color: var(--text-primary);
+    max-width: 240px;
+    // Remove any background/border from pill since parent handles it
+    background: none;
+    border: none;
+    padding: 0;
+  }
 
-    padding: 6px 10px;
-    border-radius: 999px;
-    font-size: 12px;
-    color: #cbd5e1;
-    background: rgba(148,163,184,0.15);
-    border: 1px solid rgba(148,163,184,0.22);
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    .etopbar__dbicon {
+      color: var(--text-primary);
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
   }
 }
 
-/* Profile button */
+/* Profile button - Ensure matching dimensions */
 .etopbar__profile {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 4px 8px;
-  border-radius: 12px;
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.08);
+  gap: 10px;
+  padding: 6px 12px 6px 6px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--text-muted);
-  transition: all .18s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
+  height: 48px;
+  min-width: fit-content;
+
+  .mantine-Avatar-root {
+    flex-shrink: 0;
+  }
 
   &:hover {
-    background: rgba(255,255,255,0.06);
-    color: #fff;
-    border-color: rgba(255,255,255,0.16);
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  &:active {
+    transform: translateY(0);
   }
 }
 
 .etopbar__username {
-  color: #0b0b0b;
+  color: var(--text-primary);
   font-weight: 600;
   font-size: 13px;
+  letter-spacing: 0.1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
 }
 
 /* Dropdown */
 .etopbar__menu {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+
   .mantine-Menu-item {
     font-size: 13px;
-    padding: 8px 10px;
+    padding: 10px 14px;
+    transition: all 0.15s ease;
+    border-radius: 6px;
+    margin: 2px 4px;
 
     &:hover {
-      background: rgba(0,0,0,0.04);
+      background: rgba(0, 0, 0, 0.06);
+      transform: translateX(2px);
     }
   }
 }
 
 .etopbar__themeLabel {
   text-align: center;
-  padding: 8px 0 10px;
+  padding: 12px 0 8px;
 }
 
 .themeToggle {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  padding: 4px 0;
 
   small {
     color: #64748b;
     font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.3px;
   }
 }
 
@@ -196,25 +303,77 @@
   .etopbar__divider { display: none; }
   .etopbar__dbinfo { display: none; }
   .etopbar__username { display: none; }
-  .etopbar__profile { padding: 4px; }
+  .etopbar__profile { padding: 6px; }
+  
+  .etopbar__inner {
+    padding: 0 12px !important;
+    gap: 8px !important;
+  }
 }
 
 /* Light theme adjustments */
 :root[data-mantine-color-scheme='light'] {
   .etopbar {
-    --etopbar-bg: #ffffff;
-    --etopbar-border: rgba(2,6,23,0.08);
-    --text-muted: #334155;
-    box-shadow: 0 4px 12px rgba(2,6,23,0.08);
+    --etopbar-bg: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    --etopbar-border: rgba(2, 6, 23, 0.08);
+    --text-muted: #64748b;
+    --text-primary: #0f172a;
+    box-shadow: 0 1px 3px rgba(2, 6, 23, 0.08), 0 1px 2px rgba(2, 6, 23, 0.06);
 
-    .etopbar__titleText { color: #0f172a; }
-    .etopbar__profile { border-color: rgba(2,6,23,0.08); color: #334155;
-      &:hover { background: rgba(2,6,23,0.035); color: #0f172a; border-color: rgba(2,6,23,0.14); }
+    .etopbar__titleText {
+      color: #d97706; // Dark orange for light theme too (or adjust if needed)
+      text-shadow: none;
     }
-    .etopbar__dbpill {
-      color: #0f172a;
-      background: rgba(15,23,42,0.05);
-      border-color: rgba(15,23,42,0.12);
+
+    // Match both dbinfo and profile in light theme
+    .etopbar__dbinfo {
+      background: rgba(15, 23, 42, 0.04);
+      border-color: rgba(2, 6, 23, 0.1);
+      color: var(--text-muted);
+
+      .etopbar__dbicon {
+        color: var(--text-muted);
+      }
+
+      .etopbar__dbpill {
+        color: var(--text-primary);
+        background: none;
+        border: none;
+        padding: 0;
+      }
+
+      &:hover {
+        background: rgba(15, 23, 42, 0.08);
+        border-color: rgba(2, 6, 23, 0.15);
+
+        .etopbar__dbicon {
+          color: var(--text-primary);
+        }
+      }
+    }
+
+    .etopbar__profile {
+      background: rgba(15, 23, 42, 0.04);
+      border-color: rgba(2, 6, 23, 0.1);
+      color: var(--text-muted);
+
+      &:hover {
+        background: rgba(15, 23, 42, 0.08);
+        color: var(--text-primary);
+        border-color: rgba(2, 6, 23, 0.15);
+      }
+    }
+
+    .ghost-icon-btn {
+      background: rgba(15, 23, 42, 0.04);
+      border-color: rgba(2, 6, 23, 0.1);
+      color: var(--text-muted);
+
+      &:hover {
+        background: rgba(15, 23, 42, 0.08);
+        color: var(--text-primary);
+        border-color: rgba(2, 6, 23, 0.15);
+      }
     }
   }
 }
