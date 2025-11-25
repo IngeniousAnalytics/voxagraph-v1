@@ -267,8 +267,16 @@ const useApp = () => {
       setGraphs(temp);
       dispatch(setLoader(false));
       for (const graph of temp) {
+        // Skip refresh for text charts (TitleChart) - they don't need SQL execution
+        if (graph?.type === 'text') {
+          continue;
+        }
         const code = graph?.code;
         const query = graph?.data?.query;
+        // Also skip if there's no query
+        if (!query) {
+          continue;
+        }
         await handleRefreshData(
           code,
           query,

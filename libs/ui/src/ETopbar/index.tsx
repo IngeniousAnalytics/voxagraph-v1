@@ -105,17 +105,23 @@ export function ETopbar({
     const payload = {
       Action: isUpdate ? 'dhb0002' : 'dhb0001',
       Data: graphs.map((each) => {
-        const graphCopy = { ...each, data: { ...each.data, plot: [] } };
+        // Ensure title is always a string, never undefined or null
+        const title = each.data?.title || '';
+        // For text charts (TitleChart), set question and query same as title
+        const isTextChart = each.type === 'text';
+        const sql_query = isTextChart ? title : (each.data?.query || '');
+        const question = isTextChart ? title : (each.data?.questions || '');
+        const graphCopy = { ...each, data: { ...each.data, plot: [], title, query: sql_query, questions: question } };
         const baseData = {
           graph_properties: JSON.stringify(graphCopy),
           dashboard_name: template_name,
-          graph_name: each.type,
-          graph_code: each.code,
-          graph_id: each.id,
-          title: each.data.title,
-          sql_query: each.data.query,
-          question: each.data.questions,
-          db_id: I_CONNECT_WITH?.db_id,
+          graph_name: each.type || '',
+          graph_code: each.code || 0,
+          graph_id: each.id || null,
+          title: title,
+          sql_query: sql_query,
+          question: question,
+          db_id: I_CONNECT_WITH?.db_id || null,
           database_name: '',
         };
         if (isUpdate) {
@@ -138,17 +144,24 @@ export function ETopbar({
       }),
     };
 
-    const response = await handleUserActions(payload);
-    if (response?.data?.status === 'success') {
+    try {
+      const response = await handleUserActions(payload);
+      if (response?.data?.status === 'success') {
+        dispatch(setLoader(false));
+        if (!isUpdate) setGraphs([]);
+        ENotify(
+          'success',
+          `Template ${isUpdate ? 'updated' : 'saved'} successfully.`
+        );
+      } else {
+        dispatch(setLoader(false));
+        ENotify('warning', response?.data?.message || 'Something went wrong please try again.');
+      }
+    } catch (error: any) {
       dispatch(setLoader(false));
-      if (!isUpdate) setGraphs([]);
-      ENotify(
-        'success',
-        `Template ${isUpdate ? 'updated' : 'saved'} successfully.`
-      );
-    } else {
-      dispatch(setLoader(false));
-      ENotify('warning', 'Something went wrong please try again.');
+      console.error('Error saving dashboard:', error);
+      const errorMessage = error?.response?.data?.message || error?.message || 'Failed to save dashboard. Please check the console for details.';
+      ENotify('warning', errorMessage);
     }
   };
 

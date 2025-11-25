@@ -247,16 +247,30 @@
 }
 
 .enavbar__more {
-  opacity: 0.6;
-  color: #64748b;
+  opacity: 1 !important; // Ensure it's visible
+  color: #f97316 !important; // Orange color with !important
   transition: all 0.2s ease;
   padding: 4px;
   border-radius: 4px;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  
+  // Ensure SVG inherits the color
+  svg {
+    fill: currentColor !important;
+    stroke: currentColor !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
   
   &:hover {
-    opacity: 1;
-    color: #0ea5e9;
-    background: rgba(14, 165, 233, 0.1);
+    opacity: 1 !important;
+    color: #ea580c !important; // Darker orange on hover
+    background: rgba(249, 115, 22, 0.15) !important; // Light orange background
   }
 }
 
@@ -351,11 +365,11 @@
   .enavbar__template {
     background: rgba(14, 165, 233, 0.1);
     border-color: rgba(14, 165, 233, 0.25);
-    color: #e0f2fe;
+    color: #e19823;
     
     &:hover {
       background: linear-gradient(135deg, rgba(14, 165, 233, 0.2) 0%, rgba(56, 189, 248, 0.15) 100%);
-      border-color: rgba(14, 165, 233, 0.4);
+      border-color: rgba(3, 15, 21, 0.4);
     }
     
     input {
@@ -366,11 +380,18 @@
   }
 
   .enavbar__more {
-    color: #94a3b8;
+    color: #e76d0a !important; // Lighter orange for dark theme
+    opacity: 2 !important;
+    
+    svg {
+      fill: currentColor !important;
+      stroke: currentColor !important;
+    }
     
     &:hover {
-      color: #7dd3fc;
-      background: rgba(14, 165, 233, 0.2);
+      color: #f97316 !important; // Brighter orange on hover
+      background:  rgba(14, 165, 233, 0.1) !important;
+      opacity: 2 !important;
     }
   }
 }
