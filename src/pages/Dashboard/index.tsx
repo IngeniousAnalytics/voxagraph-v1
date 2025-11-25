@@ -30,7 +30,8 @@ const Dashboard: React.FC<IDashboard> = ({
   const generateLayout = () => {
     return graphs.map((chart) => {
       const baseRows = Math.ceil((chart.height ?? 0) / ROW_PX);
-      const rowCountForText = chart.type === "text" ? baseRows / 2 : baseRows;
+      // Remove the division by 2 for text charts to enable smooth 5px resizing
+      const rowCountForText = baseRows; // Changed from: chart.type === "text" ? baseRows / 2 : baseRows
       const colCount = chart.width ? Math.ceil(chart.width / COL_PX) : 4;
 
       return {
@@ -56,7 +57,7 @@ const Dashboard: React.FC<IDashboard> = ({
   ) => {
     // Convert grid units to pixels for persistence
     const pxWidth = newItem.w * COL_PX;
-    const pxHeight = newItem.h * ROW_PX;
+    const pxHeight = newItem.h * ROW_PX; // Already in full grid units, no need to multiply by 2
     onUpdatePosition(Number(newItem.i), newItem.x, newItem.y, pxHeight, pxWidth);
     // also notify onResize consumers of the pixel dimensions
     onResize(Number(newItem.i), pxWidth, pxHeight);
@@ -71,7 +72,7 @@ const Dashboard: React.FC<IDashboard> = ({
     _element: any
   ) => {
     const newWidthPx = newItem.w * COL_PX;
-    const newHeightPx = newItem.h * ROW_PX;
+    const newHeightPx = newItem.h * ROW_PX; // Already in full grid units
     // Persist pixel sizes to graphs so DraggableChart receives updated props
     onUpdatePosition(Number(newItem.i), newItem.x, newItem.y, newHeightPx, newWidthPx);
     onResize(Number(newItem.i), newWidthPx, newHeightPx);
@@ -102,7 +103,8 @@ const Dashboard: React.FC<IDashboard> = ({
       >
         {graphs.map((chart) => {
           const baseRows = Math.ceil((chart.height ?? 0) / ROW_PX);
-          const rowCountForText = chart.type === "text" ? baseRows / 2 : baseRows;
+          // Remove the division by 2 for text charts
+          const rowCountForText = baseRows; // Changed from: chart.type === "text" ? baseRows / 2 : baseRows
           const colCount = chart.width ? Math.ceil(chart.width / COL_PX) : 4;
           
           return (

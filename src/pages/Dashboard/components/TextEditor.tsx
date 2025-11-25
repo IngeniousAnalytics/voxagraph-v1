@@ -59,7 +59,6 @@ const TextEditor = ({
   const [textShadow, setTextShadow] = useState<string>(inputData?.textShadow || '0 1px 2px rgba(0,0,0,0.25)');
 
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const boxRef = useRef<HTMLDivElement>(null);
 
   const updateGraphStyle = (key: string, value: any) => {
     setGraphs((prev: IGraph[]) =>
@@ -187,14 +186,9 @@ const TextEditor = ({
 
   /** 🧠 Effects */
   useEffect(() => {
-    setEditableText(inputData?.title);
+    const text = inputData?.title || '';
+    setEditableText(text);
   }, [inputData]);
-
-  useEffect(() => {
-    if (isChartTitleChange && boxRef.current) {
-      boxRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-  }, [isChartTitleChange]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -220,6 +214,9 @@ const TextEditor = ({
     padding: '8px 16px',
     display: 'inline-block',
     transition: 'all 0.3s ease',
+    direction: 'ltr',
+    unicodeBidi: 'bidi-override' as any, // Changed to bidi-override for stronger enforcement
+    textAlign: 'left',
   };
 
   return (
@@ -346,19 +343,6 @@ const TextEditor = ({
 </Tooltip>
 
 </div>
-
-
-          <div ref={boxRef} className="vg-textedit--textbox">
-            <textarea
-              value={editableText}
-              autoFocus
-              onChange={(e) => handleTextChange(e.target.value)}
-              onMouseDown={(e) => e.stopPropagation()}
-              onTouchStart={(e) => e.stopPropagation()}
-              className="text-area"
-            />
-            {/* <div className="text-display" style={textStyle}>{editableText}</div> */}
-          </div>
         </div>
       )}
     </>
