@@ -5,254 +5,373 @@
    - No bleed into the topbar or main content.
 */
 
-/* Base look (applies in both themes) */
+/* Icon-Oriented ENavbar Redesign with Sky Blue Theme */
+
+/* Base navbar styling */
 .enavbar {
-  background: #ffffff;
-  border-right: 1px solid rgba(2, 6, 23, 0.08);
-  box-shadow: 2px 0 12px rgba(2, 6, 23, 0.04);
-  position: unset;         /* do NOT override Mantine's fixed positioning */
+  background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-right: 1px solid rgba(14, 165, 233, 0.15);
+  box-shadow: 2px 0 12px rgba(14, 165, 233, 0.08);
+  position: unset;
   z-index: 12;
 }
 
-/* 🔒 Keep the navbar fixed on the left rail under the header */
 .mantine-AppShell-navbar.enavbar {
   position: fixed !important;
   top: var(--app-shell-header-offset, 0rem);
   bottom: var(--app-shell-footer-offset, 0rem);
-  inset-inline-start: 0;                       /* logical 'left' */
-  width: var(--app-shell-navbar-width);        /* Mantine computes this */
+  inset-inline-start: 0;
+  width: var(--app-shell-navbar-width);
   display: flex;
   flex-direction: column;
-  overflow: hidden;                            /* internal scroll only */
+  overflow: hidden;
 }
 
-/* Sticky tabs header stays inside navbar */
+/* Sticky tabs header */
 .enavbar__stickyHeader {
   position: sticky;
   top: 0;
   z-index: 1;
-  background: inherit;
-  padding: 6px 0;
-  margin: 0;                                   /* avoid collapsing margins */
+  background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%);
+  padding: 10px 8px;
+  margin: 0;
   flex: 0 0 auto;
+  border-bottom: 1px solid rgba(14, 165, 233, 0.1);
 }
 
-/* Scrollable section that flexes correctly */
+/* Scrollable section */
 .enavbar__scroll {
   flex: 1 1 auto !important;
-  min-height: 0 !important;                    /* KEY: prevents extra height */
-  overflow: hidden;                            /* ScrollArea manages scroll */
-}
-
-/* Tabs */
-.enavbar__tabs {
-  margin: 2px 0 4px;
-  .mantine-Tabs-tab {
-    border-radius: 10px;
-    font-weight: 600;
-    letter-spacing: .2px;
-    padding: 6px 10px;
-  }
-  .mantine-Tabs-tab[data-active='true'] {
-    background: #0ea5e91a;
-    color: #0ea5e9;
-    box-shadow: 0 0 0 1px #0ea5e933 inset;
-  }
-}
-
-/* Chart groups */
-.enavbar__group.mantine-NavLink-root {
-  background: rgba(2, 6, 23, 0.02);
-  border: 1px solid rgba(2, 6, 23, 0.08);
-  border-radius: 12px;
-  margin-bottom: 10px;
+  min-height: 0 !important;
   overflow: hidden;
-
-  .mantine-NavLink-label {
-    color: #0f172a;
-    font-weight: 700;
-    font-size: 13px;
-  }
-
-  &[data-opened='true'] {
-    box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.25) inset;
-    background: linear-gradient(180deg, rgba(99, 102, 241, 0.08), rgba(2, 6, 23, 0.04));
-  }
 }
 
-/* Leaf items */
-.enavbar__item.mantine-NavLink-root {
-  background: transparent;
-  margin: 4px 8px;
-  border-radius: 10px;
-  padding: 2px;
-
-  .mantine-NavLink-label {
-    color: #0f172a;
+/* Icon-focused tabs */
+.enavbar__tabs {
+  margin: 0;
+  gap: 4px;
+  
+  .mantine-Tabs-tab {
+    border-radius: 8px;
     font-weight: 600;
-    font-size: 12.5px;
+    letter-spacing: 0.1px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: #64748b;
+    transition: all 0.2s ease;
+    min-width: auto;
+    
+    &:hover {
+      background: rgba(14, 165, 233, 0.08);
+      color: #0ea5e9;
+    }
   }
-  .mantine-NavLink-leftSection {
-    width: 18px;
-    display: grid;
-    place-items: center;
-    opacity: .9;
+  
+  .mantine-Tabs-tab[data-active='true'] {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(14, 165, 233, 0.3);
+    font-weight: 700;
   }
-
-  &:hover { background: rgba(2, 6, 23, 0.04); }
-  &.is-highlighted { background: #22d3ee1a; outline: 1px solid #22d3ee40; }
 }
 
-/* Search input */
+/* Group wrapper - Contains title and box */
+.enavbar__group-wrapper {
+  margin-bottom: 12px;
+  width: 95%;
+  position: relative;
+}
+
+/* Header - Title positioned on border */
+.enavbar__group-header {
+  position: absolute;
+  top: -13px; // Position on the border line
+  left: 8px; // Offset from left edge
+  z-index: 1;
+  padding: 0;
+  margin: 0;
+}
+
+/* Title styling - On the border line */
+.enavbar__group-title {
+  color: #7697cb; // Dark gray
+  font-weight: 500;
+  font-size: 10px;
+  text-transform: none;
+  letter-spacing: 0;
+  line-height: 1.4;
+  margin: 0;
+  padding: 0 6px; // Padding to create space around text
+  display: inline-block;
+  background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%); // Match navbar background
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Chart groups - Bordered box panel */
+.enavbar__group {
+  background: #fafafa; // Light off-white like attachment
+  border: 1px solid #e5e7eb; // Light gray border
+  border-radius: 8px; // Rounded corners
+  padding: 12px 10px;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+  width: 100%;
+  min-height: 60px; // Minimum height for empty box
+  position: relative; // For absolute positioning of title
+
+  &:hover {
+    border-color: #d1d5db;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+}
+
+/* Remove the old border line pseudo-element */
+.enavbar__group-header::after {
+  display: none;
+}
+
+.enavbar__group-children {
+  display: grid;
+  grid-template-columns: repeat(3, 36px);
+  justify-content: start;
+  column-gap: 0px !important;
+  row-gap: 2px !important;
+  gap: 2px;
+  width: 100%;
+}
+
+/* Icon-only items - Compact Power BI style */
+.enavbar__item-icon {
+  aspect-ratio: 1;
+  width: 32px !important;
+  height: 32px !important;
+  padding: 2px !important;
+  margin: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #5b85e8;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(14, 165, 233, 0.12);
+  cursor: grab;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: rgba(14, 165, 233, 0.12);
+    border-color: rgba(14, 165, 233, 0.25);
+    transform: scale(1.08);
+    box-shadow: 0 2px 6px rgba(14, 165, 233, 0.15);
+    color: #0284c7;
+  }
+
+  &:active {
+    cursor: grabbing;
+    transform: scale(1);
+  }
+
+  &.is-highlighted {
+    background: rgba(14, 165, 233, 0.18);
+    border-color: rgba(14, 165, 233, 0.35);
+    box-shadow: 0 1px 4px rgba(14, 165, 233, 0.2);
+    color: #0284c7;
+  }
+
+  svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+/* Search input - Sky blue theme */
 .enavbar input[type='text'] {
-  background: rgba(2, 6, 23, 0.02);
-  border-color: rgba(2, 6, 23, 0.12);
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  border-radius: 8px;
   color: #0f172a;
-  &::placeholder { color: #64748b; }
-  &:focus { border-color: #0ea5e9; box-shadow: 0 0 0 1px #0ea5e966 inset; }
+  padding: 8px 12px;
+  font-size: 12px;
+  transition: all 0.2s ease;
+  
+  &::placeholder {
+    color: #94a3b8;
+    font-size: 11px;
+  }
+  
+  &:focus {
+    border-color: #0ea5e9;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+    background: #ffffff;
+    outline: none;
+  }
 }
 
-/* Template rows */
+/* Template rows - Icon-focused */
 .enavbar__template {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
   color: #0f172a;
-  padding: 8px 10px;
-  margin-bottom: 8px;
-  border-radius: 12px;
-  background: rgba(2, 6, 23, 0.03);
-  border: 1px solid rgba(2, 6, 23, 0.08);
-  transition: transform .12s ease, background .12s ease, border-color .12s ease;
+  padding: 10px 12px;
+  margin-bottom: 6px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(14, 165, 233, 0.15);
+  transition: all 0.2s ease;
   cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
 
-  &:hover { background: rgba(2, 6, 23, 0.06); border-color: rgba(2, 6, 23, 0.16); transform: translateY(-1px); }
+  &:hover {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(56, 189, 248, 0.08) 100%);
+    border-color: rgba(14, 165, 233, 0.3);
+    transform: translateX(2px);
+    box-shadow: 0 2px 8px rgba(14, 165, 233, 0.15);
+  }
 
   input {
-    background: rgba(2, 6, 23, 0.02);
-    border-color: rgba(2, 6, 23, 0.12);
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(14, 165, 233, 0.3);
+    border-radius: 8px;
     color: #0f172a;
-    height: 30px;
+    height: 32px;
+    font-size: 12px;
+    padding: 6px 10px;
+    
+    &:focus {
+      border-color: #0ea5e9;
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+    }
   }
 }
 
-.enavbar__more { opacity: .7; &:hover { opacity: 1; } }
+.enavbar__more {
+  opacity: 0.6;
+  color: #64748b;
+  transition: all 0.2s ease;
+  padding: 4px;
+  border-radius: 4px;
+  
+  &:hover {
+    opacity: 1;
+    color: #0ea5e9;
+    background: rgba(14, 165, 233, 0.1);
+  }
+}
 
-/* ────────────────────────────────────────────────────────────── */
-/* ────────────────────────────────────────────────────────────── */
-/* Dark theme (high-contrast, better alignment, smoother hover) */
+/* Dark theme adjustments */
 :root[data-mantine-color-scheme='dark'] .enavbar {
-  background: linear-gradient(180deg, #0f172a 0%, #0a0f1a 100%);
-  border-right: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(180deg, #0c4a6e 0%, #075985 100%);
+  border-right: 1px solid rgba(14, 165, 233, 0.2);
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
 
-  /* Tabs */
+  .enavbar__stickyHeader {
+    background: linear-gradient(180deg, #075985 0%, #0c4a6e 100%);
+    border-bottom: 1px solid rgba(14, 165, 233, 0.2);
+  }
+
   .enavbar__tabs .mantine-Tabs-tab {
-    color: #cbd5e1;                            /* default text */
-    font-weight: 600;
-    &:hover { color: #f1f5f9; }
+    color: #cbd5e1;
+    
+    &:hover {
+      background: rgba(14, 165, 233, 0.2);
+      color: #7dd3fc;
+    }
   }
+  
   .enavbar__tabs .mantine-Tabs-tab[data-active='true'] {
-    background: rgba(34, 197, 94, 0.1);
-    color: #22c55e;
-    box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.4) inset;
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(14, 165, 233, 0.4);
   }
 
-  /* Group headers */
-  .enavbar__group.mantine-NavLink-root {
-    background: rgba(255, 255, 255, 0.03);
-    border-color: rgba(255, 255, 255, 0.06);
-    margin-bottom: 8px;
-    border-radius: 10px;
-
-    .mantine-NavLink-label {
-      color: #e2e8f0;                          /* brightened */
-      font-weight: 700;
-      font-size: 13px;
-      line-height: 1.2;                        /* tightened vertical alignment */
-      padding-top: 1px;
-    }
-
-    &[data-opened='true'] {
-      background: linear-gradient(
-        180deg,
-        rgba(99, 102, 241, 0.18),
-        rgba(17, 24, 39, 0.12)
-      );
-      box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.25) inset;
-    }
-  }
-
-  /* Child items */
-  .enavbar__item.mantine-NavLink-root {
-    margin: 4px 8px;
-    border-radius: 8px;
-    padding: 3px 6px;
-
-    .mantine-NavLink-label {
-      color: #cbd5e1;
-      font-size: 13px;
-      line-height: 1.4;
-      transform: translateY(-0.5px);           /* optical alignment fix */
-    }
-    .mantine-NavLink-leftSection {
-      width: 18px;
-      display: grid;
-      place-items: center;
-      opacity: 0.85;
-    }
+  .enavbar__group {
+    background: rgba(14, 165, 233, 0.08);
+    border-color: rgba(14, 165, 233, 0.2);
+    padding: 6px 8px;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.06);
-      .mantine-NavLink-label { color: #f1f5f9; }
+      background: rgba(14, 165, 233, 0.12);
+      border-color: rgba(14, 165, 233, 0.3);
+    }
+  }
+
+  .enavbar__group-title {
+    color: #d1d5db; // Lighter gray for dark theme
+    background: linear-gradient(180deg, #0c4a6e 0%, #075985 100%); // Match dark navbar background
+  }
+
+
+
+  .enavbar__group-children {
+    row-gap: 2px !important;
+    column-gap: 2px !important;
+    gap: 2px;
+  }
+
+  .enavbar__item-icon {
+    background: rgba(14, 165, 233, 0.08);
+    border-color: rgba(14, 165, 233, 0.2);
+
+    &:hover {
+      background: rgba(14, 165, 233, 0.15);
+      border-color: rgba(14, 165, 233, 0.3);
+      color: #38bdf8;
     }
 
     &.is-highlighted {
-      background: rgba(34, 197, 94, 0.18);
-      outline: 1px solid rgba(34, 197, 94, 0.4);
-      .mantine-NavLink-label { color: #22c55e; }
+      background: rgba(14, 165, 233, 0.22);
+      border-color: rgba(14, 165, 233, 0.4);
+      color: #38bdf8;
+    }
+    
+    svg {
+      width: 16px;
+      height: 16px;
     }
   }
 
-  /* Search input */
   input[type='text'] {
-    background: rgba(15, 23, 42, 0.7);
-    border-color: rgba(148, 163, 184, 0.3);
+    background: rgba(15, 23, 42, 0.6);
+    border-color: rgba(14, 165, 233, 0.3);
     color: #f1f5f9;
-    height: 34px;
-    &::placeholder { color: #64748b; }
+    
+    &::placeholder {
+      color: #64748b;
+    }
+    
     &:focus {
-      border-color: #22c55e;
-      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.4) inset;
+      border-color: #0ea5e9;
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+      background: rgba(15, 23, 42, 0.8);
     }
   }
 
-  /* Template items */
   .enavbar__template {
-    background: rgba(31, 41, 55, 0.6);
-    border-color: rgba(255, 255, 255, 0.05);
-    padding: 8px 10px;
-    border-radius: 10px;
-    transition: background 0.15s ease, transform 0.1s ease;
-    .mantine-NavLink-label { line-height: 1.2; }
+    background: rgba(14, 165, 233, 0.1);
+    border-color: rgba(14, 165, 233, 0.25);
+    color: #e0f2fe;
+    
     &:hover {
-      background: rgba(55, 65, 81, 0.8);
-      border-color: rgba(255, 255, 255, 0.12);
-      transform: translateY(-1px);
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.2) 0%, rgba(56, 189, 248, 0.15) 100%);
+      border-color: rgba(14, 165, 233, 0.4);
     }
+    
     input {
       background: rgba(15, 23, 42, 0.7);
-      border-color: rgba(148, 163, 184, 0.3);
+      border-color: rgba(14, 165, 233, 0.3);
       color: #f1f5f9;
     }
   }
 
-  /* Three-dot icon */
   .enavbar__more {
-    opacity: 0.7;
-    color: #cbd5e1;
-    &:hover { opacity: 1; color: #22c55e; }
+    color: #94a3b8;
+    
+    &:hover {
+      color: #7dd3fc;
+      background: rgba(14, 165, 233, 0.2);
+    }
   }
 }
 

@@ -141,54 +141,47 @@ export function ENavbar({
                 <Space h={12} />
 
                 {(searchQuery ? filteredNavItems : NAV_ITEM).map((menu, index) => {
-                  const isAutoOpen = searchQuery ? true : openedIndex === index;
                   return (
-                    <NavLink
-                      key={index}
-                      className="enavbar__group"
-                      label={menu.title}
-                      childrenOffset={28}
-                      onClick={() => handleToggle(index)}
-                      opened={isAutoOpen}
-                      disabled={!I_PERMIT.i_chart}
-                    >
-                      {menu.charts.map((submenu, subIndex) => {
-                        const shouldHighlight = isMatch(submenu.label);
+                    <div key={index} className="enavbar__group-wrapper">
+                      {/* Title above the box */}
+                      <div className="enavbar__group-header">
+                        <span className="enavbar__group-title">{menu.title}</span>
+                      </div>
+                      
+                      {/* Bordered box panel containing icons */}
+                      <div className="enavbar__group">
+                        <div className="enavbar__group-children">
+                          {menu.charts.map((submenu, subIndex) => {
+                            const shouldHighlight = isMatch(submenu.label);
 
-                        // const dragData = JSON.stringify({
-                        //   graphType: submenu.type,
-                        //   graphId: submenu.id,
-                        //   variant: submenu.variant,
-                        // });
+                            const dragData = JSON.stringify({
+                              graphType: submenu.type,
+                              graphId: submenu.id,
+                              variant: submenu.variant,
+                              layoutType: submenu.layoutType || "card"
+                            });
 
-                        const dragData = JSON.stringify({
-                        graphType: submenu.type,
-                        graphId: submenu.id,
-                        variant: submenu.variant,
-                        layoutType: submenu.layoutType || "card" // e.g., default layout type
-                      });
-                                              
-
-                        return (
-                          <Tooltip key={subIndex} label={submenu.label} withArrow>
-                            <NavLink
-                              draggable
-                              onDragStart={(e) => {
-                                if (activeTab === 'charts') {
-                                  e.dataTransfer.setData('text/plain', dragData);
-                                } else {
-                                  e.preventDefault();
-                                }
-                              }}
-                              className={`enavbar__item ${shouldHighlight ? 'is-highlighted' : ''}`}
-                              label={submenu.label}
-                              leftSection={<submenu.icon />}
-                              childrenOffset={28}
-                            />
-                          </Tooltip>
-                        );
-                      })}
-                    </NavLink>
+                            return (
+                              <Tooltip key={subIndex} label={submenu.label} withArrow position="right">
+                                <div
+                                  draggable
+                                  onDragStart={(e) => {
+                                    if (activeTab === 'charts') {
+                                      e.dataTransfer.setData('text/plain', dragData);
+                                    } else {
+                                      e.preventDefault();
+                                    }
+                                  }}
+                                  className={`enavbar__item-icon ${shouldHighlight ? 'is-highlighted' : ''}`}
+                                >
+                                  <submenu.icon size={24} />
+                                </div>
+                              </Tooltip>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
                   );
                 })}
               </>
