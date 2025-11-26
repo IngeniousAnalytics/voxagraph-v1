@@ -129,10 +129,11 @@
     background: #e2e8f0;
     outline: none;
     -webkit-appearance: none;
+    appearance: none;
     
-    &::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
+      &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
       width: 14px;
       height: 14px;
       border-radius: 50%;
@@ -155,6 +156,76 @@
       cursor: pointer;
       border: none;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  // Font size input - standard number input control
+  &.font-size-control {
+    .font-size-input {
+      width: 60px;
+      height: 32px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      background: #ffffff;
+      border-radius: 6px;
+      padding: 4px 8px 4px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #334155;
+      outline: none;
+      transition: all 0.2s ease;
+      text-align: left;
+      -moz-appearance: textfield; // Keep native spinner in Firefox
+      appearance: textfield; // Standard property
+
+      // Show native spinner buttons (up/down arrows)
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: inner-spin-button; // Show spinner in Chrome/Safari
+        appearance: inner-spin-button; // Standard property
+        opacity: 1;
+        height: 20px;
+        cursor: pointer;
+      }
+
+      &:hover {
+        border-color: rgba(14, 165, 233, 0.3);
+      }
+
+      &:focus {
+        border-color: #0ea5e9;
+        box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.1);
+        background: #ffffff;
+      }
+
+      // Style the spinner buttons on hover
+      &:hover::-webkit-inner-spin-button {
+        opacity: 1;
+      }
+    }
+  }
+
+  // Font family select dropdown
+  .font-family-select {
+    min-width: 120px;
+    height: 32px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #334155;
+    outline: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+
+    &:hover {
+      border-color: rgba(14, 165, 233, 0.3);
+    }
+
+    &:focus {
+      border-color: #0ea5e9;
+      box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.1);
     }
   }
 
@@ -227,6 +298,25 @@
         background: #0ea5e9;
       }
     }
+
+    // Font size control dark theme
+    &.font-size-control {
+      .font-size-input {
+        background: #0f172a;
+        border-color: rgba(255, 255, 255, 0.1);
+        color: #cbd5e1;
+
+        &:hover {
+          border-color: rgba(14, 165, 233, 0.3);
+        }
+
+        &:focus {
+          border-color: #0ea5e9;
+          box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.2);
+          background: #0f172a;
+        }
+      }
+    }
     
     select {
       background: #0f172a;
@@ -235,6 +325,27 @@
       
       &:hover {
         background: #1e293b;
+        border-color: rgba(14, 165, 233, 0.3);
+      }
+
+      &:focus {
+        border-color: #0ea5e9;
+        box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.2);
+      }
+    }
+
+    .font-family-select {
+      background: #0f172a;
+      border-color: rgba(255, 255, 255, 0.1);
+      color: #cbd5e1;
+
+      &:hover {
+        border-color: rgba(14, 165, 233, 0.3);
+      }
+
+      &:focus {
+        border-color: #0ea5e9;
+        box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.2);
       }
     }
   }

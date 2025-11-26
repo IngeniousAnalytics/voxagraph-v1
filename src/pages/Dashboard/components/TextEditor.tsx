@@ -225,11 +225,31 @@ const TextEditor = ({
         <div className="vg-textedit" ref={wrapperRef}>
 <div className="text-toolbar">
 
-  <div className="tool-item" title="Font Size">
+  <div className="tool-item font-size-control" title="Font Size">
     <Type size={16} />
-    <input type="range" min={5} max={80} value={fontSize}
-      onChange={(e) => handleFontSize(Number(e.target.value))} />
-    <span>{fontSize}px</span>
+    <input
+      type="number"
+      min={5}
+      max={80}
+      step={1}
+      value={fontSize}
+      onChange={(e) => {
+        const val = Number(e.target.value);
+        if (!isNaN(val) && val >= 5 && val <= 80) {
+          handleFontSize(val);
+        }
+      }}
+      onBlur={(e) => {
+        const val = Number(e.target.value);
+        if (isNaN(val) || val < 5) {
+          handleFontSize(5);
+        } else if (val > 80) {
+          handleFontSize(80);
+        }
+      }}
+      className="font-size-input"
+      aria-label="Font size"
+    />
   </div>
 
   {/* Text Shadow */}
@@ -245,32 +265,25 @@ const TextEditor = ({
   </div>
 
   {/* Font Family */}
-  <div className="font-dropdown">
-    <Tooltip label="Font Family" withArrow>
-      <button type="button"
-        className="font-dropdown-btn"
-        onClick={(e) => {
-          e.stopPropagation();
-          const el = e.currentTarget.nextElementSibling as HTMLElement;
-          if (el) el.classList.toggle('show');
-        }}>
-        {fontFamily}
-      </button>
-    </Tooltip>
-    <div className="font-dropdown-content">
+  <div className="tool-item" title="Font Family">
+    <Type size={16} />
+    <select
+      value={fontFamily}
+      onChange={(e) => {
+        const f = e.target.value;
+        setFontFamily(f);
+        updateGraphStyle('fontFamily', f);
+        applyStyleToCard('font-family', f);
+      }}
+      className="font-family-select"
+      style={{ fontFamily: fontFamily }}
+    >
       {FONT_FAMILIES.map((f) => (
-        <div key={f} className="font-option" style={{ fontFamily: f }}
-          onClick={() => {
-            setFontFamily(f);
-            updateGraphStyle('fontFamily', f);
-            applyStyleToCard('font-family', f);
-            const list = document.querySelector('.font-dropdown-content.show');
-            if (list) list.classList.remove('show');
-          }}>
+        <option key={f} value={f} style={{ fontFamily: f }}>
           {f}
-        </div>
+        </option>
       ))}
-    </div>
+    </select>
   </div>
 
   {/* Horizontal Align */}

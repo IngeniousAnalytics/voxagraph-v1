@@ -69,8 +69,7 @@ const DraggableChart: React.FC<IDraggableChart> = ({
   // Constants for chart sizing adjustments
 const CHART_HEADER_HEIGHT = 60; // Accounts for card padding/header
 const CHART_WIDTH_OFFSET = 100; // Additional width buffer (or u
-  // Redux selector not currently used but kept for future extensions
-  useAppSelector((state: unknown) => state);
+  // Redux selector removed - was causing unnecessary re-renders by returning entire state
 
   const handleLoadJson = async (values: unknown) => {
   // start loader & close the search box
