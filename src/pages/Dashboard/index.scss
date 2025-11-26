@@ -216,3 +216,60 @@ display: flex;
   pointer-events: none !important;
 }
 
+/* Reduce padding and center content in grid items */
+.react-grid-item {
+  .mantine-Card-root {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 2px 8px !important; /* Minimal padding to reduce wasted space */
+  }
+
+  .mantine-Card-section {
+    /* Header section with actions - minimal padding, ensure buttons visible */
+    &[data-first-section="true"] {
+      padding-top: 17px !important;
+      padding-bottom: 5px !important;
+      flex-shrink: 0; /* Don't compress header */
+      min-height: 28px; /* Compact but ensures icons are visible */
+      
+      .mantine-Group-root {
+        min-height: 24px; /* Ensure action icons have space */
+      }
+    }
+    
+    /* Chart content section - center vertically with minimal padding */
+    &:last-child {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-top: 0px !important;
+      padding-bottom: 0px !important;
+      overflow: hidden; /* Prevent content overflow */
+    }
+  }
+
+  /* Ensure action buttons are always visible and clickable */
+  .action-wrappers {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    z-index: 10;
+    position: relative;
+    
+    svg {
+      flex-shrink: 0; /* Prevent icon compression */
+    }
+  }
+
+  /* Remove extra spacing from ECharts container */
+  .echarts-for-react,
+  .no-drag-graph {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
