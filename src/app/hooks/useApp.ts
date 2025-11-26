@@ -108,7 +108,6 @@ const useApp = () => {
     }
   };
 
-  console.log('graphs', graphs);
   const handleUpdatePosition = (
     code: number,
     newX: number,
@@ -298,20 +297,39 @@ const useApp = () => {
   };
 
   const handleChartColor = (code: number, color: string) => {
-    setGraphs((prevGraphs) =>
-      prevGraphs.map((graph) =>
+    // Only update graphs if chartColor actually changed for the specific graph
+    setGraphs((prevGraphs) => {
+      const targetGraph = prevGraphs.find((graph) => graph.code === code);
+      
+      // If graph not found or color hasn't changed, return previous graphs to prevent re-render
+      if (!targetGraph || targetGraph.chartColor === color) {
+        return prevGraphs;
+      }
+      
+      // Otherwise, update the specific graph with new color
+      return prevGraphs.map((graph) =>
         graph.code === code ? { ...graph, chartColor: color } : graph
-      )
-    );
+      );
+    });
   };
 
   const handleDashColor = (color: string) => {
-    setGraphs((prevGraphs) =>
-      prevGraphs.map((graph) => ({
+    // Only update graphs if dashColor actually changed for any graph
+    setGraphs((prevGraphs) => {
+      // Check if any graph's dashColor is different from the new color
+      const needsUpdate = prevGraphs.some((graph) => graph.dashColor !== color);
+      
+      // If no update needed, return previous graphs to prevent re-render
+      if (!needsUpdate) {
+        return prevGraphs;
+      }
+      
+      // Otherwise, update all graphs with new color
+      return prevGraphs.map((graph) => ({
         ...graph,
         dashColor: color,
-      }))
-    );
+      }));
+    });
   };
 
   const handleDBConnection = async (values: any) => {

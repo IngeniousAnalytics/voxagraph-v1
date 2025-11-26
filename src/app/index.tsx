@@ -1,5 +1,5 @@
 // src/app/index.tsx
-import {  useEffect, useState } from 'react';
+import {  useEffect, useState, useRef } from 'react';
 import { AppShell, MantineProvider } from '@mantine/core';
 import { ETopbar, ENavbar, ELoading, EColorPicker } from '@ai-dashboard/ui';
 import { Notifications } from '@mantine/notifications';
@@ -75,6 +75,10 @@ export function App() {
   const isPublished = window.location.hash.startsWith('#/published');
   const publishedParams = getPublishedParams();
   const [defaultColor, setDefaultColor] = useState('');
+  
+  // Use refs to track previous values and prevent unnecessary updates
+  const isInternalUpdateRef = useRef(false);
+  const prevColorRef = useRef<string>('');
 
   useEffect(() => {
     if (isPublished && publishedParams) {
@@ -87,9 +91,24 @@ export function App() {
   }, [isPublished, publishedParams, fetchTemplateById]);
 
   // Fix: Only update dashboard color when color actually changes and is not empty
+  // Apply same logic as chart color to prevent infinite loops
   useEffect(() => {
-    if (defaultColor) {
+    // Skip if this is an internal update to prevent loops
+    if (isInternalUpdateRef.current) {
+      isInternalUpdateRef.current = false;
+      prevColorRef.current = defaultColor;
+      return;
+    }
+
+    // Skip if color hasn't actually changed
+    if (prevColorRef.current === defaultColor) {
+      return;
+    }
+
+    // Only update if color is not empty and actually different
+    if (defaultColor && defaultColor !== prevColorRef.current) {
       handleDashColor(defaultColor);
+      prevColorRef.current = defaultColor;
     }
   }, [defaultColor]); // Remove handleDashColor from dependencies to prevent loop
 
@@ -120,8 +139,13 @@ export function App() {
   }, []);
 
   // Create a stable onChange handler for the color picker
+  // Apply same logic as chart color to prevent infinite loops
   const handleColorChange = (color: string) => {
-    setDefaultColor(color);
+    // Only update if color actually changed
+    if (color !== defaultColor) {
+      isInternalUpdateRef.current = false; // This is an external update from user
+      setDefaultColor(color);
+    }
   };
 
   return (
