@@ -1,101 +1,362 @@
-/* ===========================
-   USE CASES PAGE STYLES
-   =========================== */
+/* ==========================================
+   Modern Use Cases Page Design
+   AI Dashboard Theme
+   ========================================== */
 
 .use-cases-page {
-  background: #fff;
-  color: #1c1c40;
-  font-family: "Inter", sans-serif;
+  min-height: 100vh;
+  background: #ffffff;
 }
 
 /* Hero Section */
 .use-cases-hero {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  color: #fff;
-  padding: clamp(70px, 10vw, 120px) 20px;
+  position: relative;
+  padding: 100px 0 80px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  overflow: hidden;
+}
+
+.use-cases-hero .hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+}
+
+.use-cases-hero .hero-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+}
+
+.use-cases-hero .hero-content {
+  position: relative;
+  z-index: 1;
   text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.use-cases-hero .hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #667eea;
+  margin-bottom: 24px;
 }
 
 .use-cases-hero h1 {
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 700;
-  margin-bottom: 1rem;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: #0f172a;
+  margin-bottom: 24px;
+}
+
+.use-cases-hero .gradient-text {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .use-cases-hero p {
-  font-size: clamp(1rem, 2.5vw, 1.25rem);
-  max-width: 750px;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  color: #64748b;
+  line-height: 1.7;
+  max-width: 700px;
   margin: 0 auto;
-  opacity: 0.95;
-  line-height: 1.6;
+}
+
+/* Section Header */
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+  padding: 0 20px;
 }
 
 .section-header h2 {
-  font-size: clamp(1.75rem, 4vw, 2.25rem);
-  font-weight: 600;
-  margin: 0 0 1rem;
-  padding: 10px;
-  color: #1c1c40;
+  font-weight: 800;
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  color: #0f172a;
+  margin-bottom: 16px;
 }
 
 .section-header p {
-  color: #666;
-  max-width: 600px;
+  color: #64748b;
+  font-size: clamp(1rem, 1.2vw, 1.125rem);
+  max-width: 650px;
   margin: 0 auto;
   line-height: 1.6;
+}
+
+/* Use Cases Section */
+.use-cases-section {
+  padding: 100px 0;
+  background: #ffffff;
+}
+
+.use-cases-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.use-case-card {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 20px;
+  padding: 40px 32px;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.use-case-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.use-case-card:hover::before {
+  transform: scaleX(1);
+}
+
+.use-case-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(102, 126, 234, 0.15);
+  border-color: rgba(102, 126, 234, 0.2);
+}
+
+.use-case-icon {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 24px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.icon-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.use-case-image {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+.icon-badge {
+  position: absolute;
+  bottom: -8px;
+  right: -8px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 3px solid #ffffff;
+  transition: all 0.3s ease;
+}
+
+.use-case-card:hover .use-case-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.use-case-card:hover .icon-badge {
+  transform: scale(1.15);
+}
+
+.use-case-card h3 {
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+  color: #0f172a;
+}
+
+.use-case-card p {
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.use-case-accent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.use-case-card:hover .use-case-accent {
+  transform: scaleX(1);
 }
 
 /* CTA Section */
 .use-cases-cta {
-  background: #f9fafb;
+  padding: 100px 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.use-cases-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+}
+
+.use-cases-cta .cta-content {
   text-align: center;
-  padding: clamp(60px, 8vw, 100px) 20px;
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .use-cases-cta h2 {
-  font-size: clamp(1.75rem, 4vw, 2.25rem);
-  color: #1c1c40;
-  margin-bottom: 1rem;
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 16px;
 }
 
 .use-cases-cta p {
-  color: #555;
-  font-size: 1.1rem;
-  max-width: 650px;
-  margin: 0 auto 2rem;
-  line-height: 1.6;
+  font-size: clamp(1rem, 1.2vw, 1.125rem);
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 32px;
 }
 
-.use-cases-cta .cta-buttons {
+.cta-buttons {
   display: flex;
-  justify-content: center;
   gap: 16px;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
-.use-cases-cta .btn {
-  padding: 14px 32px;
-  border-radius: 6px;
-  text-decoration: none;
+.btn-primary-large {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  background: #ffffff;
+  color: #667eea;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
   font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary-large:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.btn-secondary-large {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  background: transparent;
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
   transition: all 0.3s ease;
 }
 
-.use-cases-cta .btn-primary {
-  background: #059669;
-  color: #fff;
+.btn-secondary-large:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-3px);
 }
 
-.use-cases-cta .btn-primary:hover {
-  background: #047857;
+/* Responsive */
+@media (max-width: 991px) {
+  .use-cases-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
 }
 
-.use-cases-cta .btn-outline-secondary {
-  border: 2px solid #059669;
-  color: #059669;
-}
+@media (max-width: 767px) {
+  .use-cases-hero {
+    padding: 80px 0 60px;
+  }
 
-.use-cases-cta .btn-outline-secondary:hover {
-  background: #059669;
-  color: #fff;
+  .use-cases-section {
+    padding: 60px 0;
+  }
+
+  .use-cases-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .use-case-card {
+    padding: 32px 24px;
+  }
+
+  .use-cases-cta {
+    padding: 60px 0;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-primary-large,
+  .btn-secondary-large {
+    width: 100%;
+    justify-content: center;
+  }
 }

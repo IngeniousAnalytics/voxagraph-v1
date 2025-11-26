@@ -5,14 +5,12 @@ import { Modal, Button } from "@mantine/core";
 import AppLayout from "../../components/layout/AppLayout";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./home.css";
+import { Sparkles, Zap, BarChart3, Database, ArrowRight, Play, CheckCircle2, MessageSquare, Eye, Code } from "lucide-react";
 
 // image imports
 import heroImg from "../../assets/images/hero.png";
 import testimonial1 from "../../assets/images/icons/scalable.svg";
 import testimonial2 from "../../assets/images/icons/no-it.svg";
-
-// video import
-
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -27,196 +25,233 @@ const Home: React.FC = () => {
     <AppLayout>
       {/* ---------- Hero Section ---------- */}
       <section className="home-hero">
-        <div className="container py-5">
+        <div className="hero-background">
+          <div className="hero-gradient"></div>
+          <div className="hero-pattern"></div>
+        </div>
+        <div className="container">
           <div className="row align-items-center">
-            <div className="col-lg-6">
-              <h1 className="hero-title">AI Dashbaord Insights with Human Confidence</h1>
+            <div className="col-lg-6 hero-content">
+              <div className="hero-badge">
+                <Sparkles size={16} />
+                <span>AI-Powered Dashboard Platform</span>
+              </div>
+              <h1 className="hero-title">
+                Transform <span className="gradient-text">Natural Language</span> into Dynamic Dashboards
+              </h1>
               <p className="hero-sub">
-                The intelligent dashboard that combines AI power with human
-                oversight for reliable decision-making.
+                Simply describe what you want to see, and our AI instantly converts your questions into beautiful, interactive dashboards. No coding. No complexity. Just insights.
               </p>
-                    <div className="hero-buttons">
-                    <button
-                      className="btn btn-contact"
-                      onClick={() => navigate("/login?mode=registration")}
-                    >
-                      Try Now
-                    </button>
-
-                    <button
-                      className="btn btn-contact"
-                      onClick={() => setOpened(true)}
-                    >
-                      Demo Video
-                    </button>
-
-                    <button
-                      className="btn btn-contact"
-                      onClick={() => navigate("/contact")}
-                    >
-                      Contact Us
-                    </button>
+              <div className="hero-features">
+                <div className="hero-feature-item feature-nlp">
+                  <div className="feature-icon-wrapper">
+                    <MessageSquare size={20} />
                   </div>
-
-
-
+                  <span>NLP to SQL Conversion</span>
+                  <div className="feature-glow"></div>
+                </div>
+                <div className="hero-feature-item feature-realtime">
+                  <div className="feature-icon-wrapper">
+                    <Eye size={20} />
+                  </div>
+                  <span>Real-time Visualizations</span>
+                  <div className="feature-glow"></div>
+                </div>
+                <div className="hero-feature-item feature-code">
+                  <div className="feature-icon-wrapper">
+                    <Code size={20} />
+                  </div>
+                  <span>Zero Code Required</span>
+                  <div className="feature-glow"></div>
+                </div>
+              </div>
+              <div className="hero-buttons">
+                <button
+                  className="btn btn-primary"
+                  onClick={() => navigate("/login?mode=registration")}
+                >
+                  Get Started Free
+                  <ArrowRight size={18} />
+                </button>
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => setOpened(true)}
+                >
+                  <Play size={18} />
+                  Watch Demo
+                </button>
+              </div>
             </div>
 
-            <div className="col-lg-6 text-center">
-              <img
-                src={heroImg}
-                alt="Voxagraph dashboard preview"
-                className="img-fluid hero-image"
-              />
+            <div className="col-lg-6 hero-image-wrapper">
+              <div className="hero-image-container">
+                <img
+                  src={heroImg}
+                  alt="AI Dashboard preview - Transform Natural Language into Dynamic Dashboards"
+                  className="hero-image"
+                  loading="eager"
+                />
+                <div className="hero-image-glow"></div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-    {/* ---------- Modern Large Video Modal ---------- */}
-    {/* ---------- Modern Large YouTube Video Modal ---------- */}
-<Modal
-  opened={opened}
-  onClose={() => setOpened(false)}
-  centered
-  withCloseButton={true}
-  size="xl"
-  overlayProps={{ opacity: 0.7, blur: 6 }}
-  styles={{
-    content: {
-      background: "rgba(0,0,0,0.85)",
-      borderRadius: "14px",
-      boxShadow: "0 8px 40px rgba(0,0,0,0.4)",
-      padding: "0",
-      overflow: "hidden",
-      width: "80vw",
-      maxWidth: "1000px",
-    },
-    body: { padding: 0 },
-  }}
->
-  <div className="video-modal-container">
-    <div className="youtube-wrapper">
-     <iframe
-       width="100%"
-       height="540"
-        src="https://www.youtube.com/embed/Cn3X_gGFn5I?si=sQR90xcvpCpRWrwJ"
-        title="VoxaGraph Demo Video"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowFullScreen
-  style={{
-    border: "none",
-    borderRadius: "10px",
-  }}
-></iframe>
-    </div>
-
-    <div className="video-footer">
-      <button
-        className="btn btn-outline-light"
-        onClick={() => setOpened(false)}
+      {/* ---------- Video Modal ---------- */}
+      <Modal
+        opened={opened}
+        onClose={() => setOpened(false)}
+        centered
+        withCloseButton={true}
+        size="xl"
+        overlayProps={{ opacity: 0.7, blur: 6 }}
+        styles={{
+          content: {
+            background: "rgba(0,0,0,0.85)",
+            borderRadius: "14px",
+            boxShadow: "0 8px 40px rgba(0,0,0,0.4)",
+            padding: "0",
+            overflow: "hidden",
+            width: "80vw",
+            maxWidth: "1000px",
+          },
+          body: { padding: 0 },
+        }}
       >
-        Close
-      </button>
-    </div>
-  </div>
-</Modal>
+        <div className="video-modal-container">
+          <div className="youtube-wrapper">
+            <iframe
+              width="100%"
+              height="540"
+              src="https://www.youtube.com/embed/Cn3X_gGFn5I?si=sQR90xcvpCpRWrwJ"
+              title="VoxaGraph Demo Video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              style={{
+                border: "none",
+                borderRadius: "10px",
+              }}
+            ></iframe>
+          </div>
+          <div className="video-footer">
+            <button
+              className="btn btn-outline-light"
+              onClick={() => setOpened(false)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </Modal>
 
-
+      {/* ---------- How It Works Section ---------- */}
+      <section className="how-it-works">
+        <div className="container">
+          <div className="section-header">
+            <h2>How It Works</h2>
+            <p>From question to dashboard in seconds</p>
+          </div>
+          <div className="steps-container">
+            <div className="step-item">
+              <div className="step-icon">
+                <Zap size={32} />
+              </div>
+              <h3>1. Ask in Natural Language</h3>
+              <p>Simply type your question: "Show me sales by region" or "What are the top products this month?"</p>
+            </div>
+            <div className="step-arrow">
+              <ArrowRight size={24} />
+            </div>
+            <div className="step-item">
+              <div className="step-icon">
+                <Database size={32} />
+              </div>
+              <h3>2. AI Converts to SQL</h3>
+              <p>Our advanced NLP engine understands your intent and generates optimized SQL queries automatically.</p>
+            </div>
+            <div className="step-arrow">
+              <ArrowRight size={24} />
+            </div>
+            <div className="step-item">
+              <div className="step-icon">
+                <BarChart3 size={32} />
+              </div>
+              <h3>3. Instant Dashboard</h3>
+              <p>Beautiful, interactive visualizations appear instantly. Customize, share, and iterate with ease.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ---------- Features Section ---------- */}
       <section className="features" id="features">
         <div className="container">
-          <div className="section-header text-center mb-5">
-            <h2>Why Choose Voxagraph AI Dashboard</h2>
+          <div className="section-header">
+            <h2>Why Choose AI Dashboard</h2>
             <p>
-              Powerful analytics combined with human verification for
-              trustworthy insights.
+              Powerful AI capabilities combined with intuitive design for instant insights
             </p>
           </div>
 
-          <div className="features-grid futuristic">
-            <div className="feature-card futuristic">
+          <div className="features-grid">
+            <div className="feature-card">
               <div className="feature-icon">
-                <img
-                  src="/assets/images/icons/human-loop.svg"
-                  alt="Human-in-the-Loop"
-                />
+                <Sparkles size={32} />
               </div>
-              <h3>Human-in-the-Loop Confirmation</h3>
+              <h3>AI-Powered NLP</h3>
               <p>
-                Our AI never works alone – gain confidence through human
-                verification for critical decisions.
+                Advanced natural language processing converts your questions into accurate SQL queries instantly.
               </p>
             </div>
 
-            <div className="feature-card futuristic">
+            <div className="feature-card">
               <div className="feature-icon">
-                <img
-                  src="/assets/images/icons/real-time.svg"
-                  alt="Real-Time Visualizations"
-                />
+                <Zap size={32} />
               </div>
               <h3>Real-Time Visualizations</h3>
               <p>
-                See insights as they happen with accurate cost projections and
-                interactive data exploration.
+                See insights as they happen with interactive charts, graphs, and data tables that update automatically.
               </p>
             </div>
 
-            <div className="feature-card futuristic">
+            <div className="feature-card">
               <div className="feature-icon">
-                <img
-                  src="/assets/images/icons/scalable.svg"
-                  alt="Enterprise Scalability"
-                />
+                <Database size={32} />
               </div>
-              <h3>Enterprise-Grade Scalability</h3>
+              <h3>Multi-Database Support</h3>
               <p>
-                Handles your largest databases with ease while maintaining
-                performance and reliability.
+                Connect to MySQL, PostgreSQL, SQL Server, and more. One platform, unlimited data sources.
               </p>
             </div>
 
-            <div className="feature-card futuristic">
+            <div className="feature-card">
               <div className="feature-icon">
-                <img
-                  src="/assets/images/icons/reliable.svg"
-                  alt="Proven Reliability"
-                />
+                <BarChart3 size={32} />
               </div>
-              <h3>Proven Reliability</h3>
+              <h3>Zero Code Required</h3>
               <p>
-                Benchmark-tested against real-world scenarios with continuous
-                performance monitoring.
+                No SQL knowledge needed. No developers required. Just ask questions and get answers visually.
               </p>
             </div>
 
-            <div className="feature-card futuristic">
+            <div className="feature-card">
               <div className="feature-icon">
-                <img
-                  src="/assets/images/icons/cost-efficiency.svg"
-                  alt="Cost Efficiency"
-                />
+                <CheckCircle2 size={32} />
               </div>
-              <h3>Cost Efficiency</h3>
+              <h3>90% Cost Reduction</h3>
               <p>
-                Dashboard development costs reduced by <strong>90%</strong> – no
-                front-end or back-end developers needed for analytics setup.
+                Eliminate the need for front-end and back-end developers. Build dashboards in minutes, not months.
               </p>
             </div>
 
-            <div className="feature-card futuristic">
+            <div className="feature-card">
               <div className="feature-icon">
-                <img
-                  src="/assets/images/icons/no-it.svg"
-                  alt="No IT Dependencies"
-                />
+                <Zap size={32} />
               </div>
-              <h3>No IT Dependencies</h3>
+              <h3>Enterprise Scalability</h3>
               <p>
-                Management teams can directly create, manage, and analyze
-                dashboards – eliminating reliance on intermediate IT resources.
+                Handles your largest databases with ease while maintaining performance and reliability at scale.
               </p>
             </div>
           </div>
@@ -224,51 +259,48 @@ const Home: React.FC = () => {
       </section>
 
       {/* ---------- Testimonials ---------- */}
-      <section id="testimonials" className="py-5 bg-light">
+      <section id="testimonials" className="testimonials">
         <div className="container">
-          <div className="row text-center mb-4">
-            <div className="col">
-              <h3>What Teams Say</h3>
-            </div>
+          <div className="section-header">
+            <h2>What Teams Say</h2>
+            <p>Join thousands of teams transforming their data workflows</p>
           </div>
 
           <div className="row g-4">
             <div className="col-md-6">
-              <div className="testimonial p-4 h-100">
-                <div className="d-flex align-items-center mb-3">
+              <div className="testimonial">
+                <div className="testimonial-header">
                   <img
                     src={testimonial1}
                     alt="Ravi K"
-                    className="testimonial-avatar me-3"
+                    className="testimonial-avatar"
                   />
                   <div>
                     <strong>Ravi K.</strong>
-                    <div className="text-muted">Head of Data</div>
+                    <div className="testimonial-role">Head of Data</div>
                   </div>
                 </div>
                 <p>
-                  "We replaced multiple tools with Voxagraph — the multi-db
-                  connector and role system is rock-solid."
+                  "We replaced multiple tools with Voxagraph — the multi-db connector and role system is rock-solid. The NLP to SQL conversion is incredibly accurate."
                 </p>
               </div>
             </div>
 
             <div className="col-md-6">
-              <div className="testimonial p-4 h-100">
-                <div className="d-flex align-items-center mb-3">
+              <div className="testimonial">
+                <div className="testimonial-header">
                   <img
                     src={testimonial2}
                     alt="Maya S"
-                    className="testimonial-avatar me-3"
+                    className="testimonial-avatar"
                   />
                   <div>
                     <strong>Maya S.</strong>
-                    <div className="text-muted">Product Manager</div>
+                    <div className="testimonial-role">Product Manager</div>
                   </div>
                 </div>
                 <p>
-                  "Great onboarding and the payment/plan UI was straightforward
-                  to plug in."
+                  "Great onboarding and the payment/plan UI was straightforward to plug in. Our team can now create dashboards without waiting for developers."
                 </p>
               </div>
             </div>
@@ -277,24 +309,23 @@ const Home: React.FC = () => {
       </section>
 
       {/* ---------- CTA Section ---------- */}
-      {/* <section
-        id="contact"
-        className="cta-section py-5 text-white"
-        style={{ backgroundColor: "#172b4d" }}
-      >
-        <div className="container text-center">
-          <h4>Ready to get started?</h4>
-          <p className="mb-4">
-            Sign up and connect your first database in minutes.
-          </p>
-          <button
-            className="btn btn-light"
-            onClick={() => navigate("/signup")}
-          >
-            Start Free
-          </button>
+      <section className="cta-section">
+        <div className="container">
+          <div className="cta-content">
+            <h2>Ready to Transform Your Data?</h2>
+            <p>
+              Start building dashboards with natural language today. No credit card required.
+            </p>
+            <button
+              className="btn btn-cta"
+              onClick={() => navigate("/login?mode=registration")}
+            >
+              Get Started Free
+              <ArrowRight size={20} />
+            </button>
+          </div>
         </div>
-      </section> */}
+      </section>
     </AppLayout>
   );
 };

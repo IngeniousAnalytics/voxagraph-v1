@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AppLayout from "../../components/layout/AppLayout";
+import { Check, ChevronDown, ChevronUp, Sparkles, ArrowRight, Upload } from "lucide-react";
 import "./pricing.css";
 
 const Pricing: React.FC = () => {
+  const navigate = useNavigate();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleFAQ = (index: number) => {
@@ -35,14 +38,23 @@ const Pricing: React.FC = () => {
   return (
     <AppLayout>
       <main className="pricing-page">
-        {/* Hero */}
+        {/* Hero Section */}
         <section className="pricing-hero">
+          <div className="hero-background">
+            <div className="hero-gradient"></div>
+          </div>
           <div className="container">
-            <h1>Simple, Transparent Pricing</h1>
-            <p>
-              Choose the plan that fits your needs. Start with a free demo or go
-              pro for advanced analytics and enterprise features.
-            </p>
+            <div className="hero-content">
+              <div className="hero-badge">
+                <Sparkles size={16} />
+                <span>Simple Pricing</span>
+              </div>
+              <h1>Choose the Plan That <span className="gradient-text">Fits Your Needs</span></h1>
+              <p>
+                Start with a free demo or go pro for advanced analytics and enterprise features.
+                All plans include our AI-powered NLP to SQL conversion.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -50,16 +62,17 @@ const Pricing: React.FC = () => {
         <section className="pricing-tiers">
           <div className="container">
             <div className="tiers-container">
-              {/* Free Tier */}
+              {/* Demo Tier */}
               <div className="pricing-tier">
                 <div className="tier-header">
                   <div className="tier-name">Demo</div>
-                  <div className="tier-price">₹0</div>
-                  <div className="tier-period">Limited</div>
+                  <div className="tier-price">
+                    <span className="price-amount">₹0</span>
+                  </div>
+                  <div className="tier-period">Free Forever</div>
                 </div>
                 <div className="tier-description">
-                  Try our basic features with sample data or upload your own
-                  CSV/Excel files.
+                  Try our basic features with sample data or upload your own CSV/Excel files.
                 </div>
                 <div className="tier-features">
                   {[
@@ -70,33 +83,31 @@ const Pricing: React.FC = () => {
                     "Community support",
                   ].map((f, i) => (
                     <div className="feature-item" key={i}>
-                      <span className="feature-icon">✓</span>
+                      <Check size={20} className="feature-check" />
                       <span>{f}</span>
                     </div>
                   ))}
                 </div>
                 <button
                   className="tier-cta secondary-cta"
-                  onClick={() =>
-                    (window.location.href = "/login?mode=registration")
-                  }
+                  onClick={() => navigate("/login?mode=registration")}
                 >
                   Try Demo
                 </button>
               </div>
 
               {/* Enterprise Tier */}
-              <div className="pricing-tier">
+              <div className="pricing-tier featured">
+                <div className="popular-badge">Most Popular</div>
                 <div className="tier-header">
                   <div className="tier-name">Enterprise</div>
-                  <div className="tier-price">Custom</div>
-                  <div className="tier-period">
-                    Perpetual License (Base)
+                  <div className="tier-price">
+                    <span className="price-amount">Custom</span>
                   </div>
+                  <div className="tier-period">Perpetual License</div>
                 </div>
                 <div className="tier-description">
-                  For organizations needing unlimited scale, sharing, and
-                  enterprise-grade features.
+                  For organizations needing unlimited scale, sharing, and enterprise-grade features.
                 </div>
                 <div className="tier-features">
                   {[
@@ -109,17 +120,14 @@ const Pricing: React.FC = () => {
                     "Dedicated account manager",
                   ].map((f, i) => (
                     <div className="feature-item" key={i}>
-                      <span className="feature-icon">✓</span>
+                      <Check size={20} className="feature-check" />
                       <span>{f}</span>
                     </div>
                   ))}
                 </div>
                 <button
-                  className="tier-cta secondary-cta"
-                  onClick={() =>
-                    (window.location.href =
-                      "mailto:info@ingeniousanalytics.com?subject=Enterprise Plan Inquiry")
-                  }
+                  className="tier-cta primary-cta"
+                  onClick={() => window.location.href = "mailto:info@ingeniousanalytics.com?subject=Enterprise Plan Inquiry"}
                 >
                   Contact Sales
                 </button>
@@ -130,59 +138,39 @@ const Pricing: React.FC = () => {
 
         {/* Demo Section */}
         <section className="demo-section">
-          <div className="container demo-container">
-            <div className="demo-content">
-              <h2>Try Before You Buy</h2>
-              <p>
-                Upload your CSV or Excel file and see how Voxagraph transforms
-                your data into actionable insights with beautiful
-                visualizations.
-              </p>
-              <ul>
-                <li>No credit card required</li>
-                <li>Processes files up to 10MB</li>
-                <li>Export your visualizations</li>
-                <li>Test all chart types</li>
-              </ul>
-            </div>
-            <div className="demo-box">
-              <div
-                className="upload-area"
-                onClick={() =>
-                  (window.location.href = "/login?mode=registration")
-                }
-              >
-                <div className="upload-icon">📊</div>
-                <h3>Upload Your Data</h3>
-                <p>Drag & drop your CSV or Excel file here</p>
-                <p
-                  style={{
-                    color: "var(--dark-gray)",
-                    margin: "10px 0",
-                  }}
-                >
-                  or
+          <div className="container">
+            <div className="demo-container">
+              <div className="demo-content">
+                <h2>Try Before You Buy</h2>
+                <p>
+                  Upload your CSV or Excel file and see how AI Dashboard transforms
+                  your data into actionable insights with beautiful visualizations.
                 </p>
-                <button className="secondary-cta">Browse Files</button>
+                <ul>
+                  <li>No credit card required</li>
+                  <li>Processes files up to 10MB</li>
+                  <li>Export your visualizations</li>
+                  <li>Test all chart types</li>
+                </ul>
               </div>
-              <p
-                style={{
-                  fontSize: "0.875rem",
-                  color: "var(--dark-gray)",
-                  marginTop: "12px",
-                }}
-              >
-                By uploading, you agree to our{" "}
-                <a
-                  href="/privacy"
-                  style={{
-                    color: "var(--electric-blue)",
-                    textDecoration: "underline",
-                  }}
+              <div className="demo-box">
+                <div
+                  className="upload-area"
+                  onClick={() => navigate("/login?mode=registration")}
                 >
-                  Privacy Policy
-                </a>
-              </p>
+                  <div className="upload-icon">
+                    <Upload size={48} />
+                  </div>
+                  <h3>Upload Your Data</h3>
+                  <p>Drag & drop your CSV or Excel file here</p>
+                  <p className="upload-or">or</p>
+                  <button className="upload-btn">Browse Files</button>
+                </div>
+                <p className="upload-note">
+                  By uploading, you agree to our{" "}
+                  <a href="/privacy">Privacy Policy</a>
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -190,26 +178,26 @@ const Pricing: React.FC = () => {
         {/* FAQ Section */}
         <section className="faq-section">
           <div className="container">
-            <h2>Frequently Asked Questions</h2>
-            {faqs.map((faq, i) => (
-              <div key={i} className="faq-item">
-                <div
-                  className="faq-question"
-                  onClick={() => toggleFAQ(i)}
-                  style={{
-                    background: openIndex === i ? "rgba(59,130,246,0.05)" : "",
-                  }}
-                >
-                  <span>{faq.q}</span>
-                  <span>{openIndex === i ? "−" : "+"}</span>
+            <div className="section-header">
+              <h2>Frequently Asked Questions</h2>
+              <p>Everything you need to know about our pricing and plans</p>
+            </div>
+            <div className="faq-container">
+              {faqs.map((faq, i) => (
+                <div key={i} className="faq-item">
+                  <div
+                    className="faq-question"
+                    onClick={() => toggleFAQ(i)}
+                  >
+                    <span>{faq.q}</span>
+                    {openIndex === i ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  </div>
+                  <div className={`faq-answer ${openIndex === i ? "active" : ""}`}>
+                    <p>{faq.a}</p>
+                  </div>
                 </div>
-                <div
-                  className={`faq-answer ${openIndex === i ? "active" : ""}`}
-                >
-                  <p>{faq.a}</p>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </section>
       </main>

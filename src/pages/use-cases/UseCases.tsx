@@ -1,5 +1,7 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import AppLayout from "../../components/layout/AppLayout";
+import { GraduationCap, Heart, DollarSign, Building2, Factory, ShoppingBag, ArrowRight } from "lucide-react";
 import "./use-cases.css";
 import "../features/features.css";
 
@@ -11,36 +13,50 @@ import manufacturingIcon from "../../assets/images/icons/manufacturing.svg";
 import retailIcon from "../../assets/images/icons/retail.svg";
 
 const UseCases: React.FC = () => {
+  const navigate = useNavigate();
+
   const useCases = [
     {
-      icon: educationIcon,
+      icon: GraduationCap,
+      image: educationIcon,
       title: "Education Analytics",
-      desc: "Empower universities and institutes to visualize student performance, attendance, and progress metrics in real-time.",
+      desc: "Empower universities and institutes to visualize student performance, attendance, and progress metrics in real-time with AI-powered dashboards.",
+      color: "#667eea",
     },
     {
-      icon: healthcareIcon,
+      icon: Heart,
+      image: healthcareIcon,
       title: "Healthcare Insights",
-      desc: "Track patient trends, optimize hospital resources, and improve healthcare outcomes with AI-powered dashboards.",
+      desc: "Track patient trends, optimize hospital resources, and improve healthcare outcomes with intelligent data visualization and predictive analytics.",
+      color: "#f093fb",
     },
     {
-      icon: financeIcon,
+      icon: DollarSign,
+      image: financeIcon,
       title: "Finance & Auditing",
-      desc: "Streamline expense monitoring, detect anomalies, and automate financial reporting securely.",
+      desc: "Streamline expense monitoring, detect anomalies, and automate financial reporting securely with real-time dashboards and alerts.",
+      color: "#4facfe",
     },
     {
-      icon: governmentIcon,
+      icon: Building2,
+      image: governmentIcon,
       title: "Government Data Transparency",
-      desc: "Provide public dashboards for policy tracking, budget utilization, and impact assessments.",
+      desc: "Provide public dashboards for policy tracking, budget utilization, and impact assessments with transparent, accessible data visualization.",
+      color: "#764ba2",
     },
     {
-      icon: manufacturingIcon,
+      icon: Factory,
+      image: manufacturingIcon,
       title: "Manufacturing & Supply Chain",
-      desc: "Monitor production, logistics, and inventory efficiency across multiple facilities in real-time.",
+      desc: "Monitor production, logistics, and inventory efficiency across multiple facilities in real-time with integrated analytics dashboards.",
+      color: "#00f2fe",
     },
     {
-      icon: retailIcon,
+      icon: ShoppingBag,
+      image: retailIcon,
       title: "Retail & E-Commerce",
-      desc: "Analyze sales trends, customer behavior, and optimize inventory with predictive analytics.",
+      desc: "Analyze sales trends, customer behavior, and optimize inventory with predictive analytics and dynamic business intelligence.",
+      color: "#f093fb",
     },
   ];
 
@@ -49,55 +65,79 @@ const UseCases: React.FC = () => {
       <main className="use-cases-page">
         {/* Hero Section */}
         <section className="use-cases-hero">
-          <div className="container">
-            <h1>Voxagraph Use Cases</h1>
-            <p>
-              Discover how Voxagraph AI Dashboard empowers industries to make
-              better data-driven decisions with actionable intelligence.
-            </p>
+          <div className="hero-background">
+            <div className="hero-gradient"></div>
           </div>
-        </section>
-
-        {/* Use Case Cards */}
-        <section className="use-cases">
           <div className="container">
-            <div className="section-header">
-              <h2>Real-world Applications</h2>
+            <div className="hero-content">
+              <div className="hero-badge">
+                <Building2 size={16} />
+                <span>Industry Applications</span>
+              </div>
+              <h1>Transform Your Industry with <span className="gradient-text">AI Dashboards</span></h1>
               <p>
-                From education to finance, see how Voxagraph helps transform
-                industries with smart analytics.
+                Discover how organizations across industries leverage AI-powered analytics to make better,
+                data-driven decisions with actionable intelligence.
               </p>
             </div>
+          </div>
+        </section>
 
-            <div className="features-grid futuristic">
-              {useCases.map((u, i) => (
-                <div key={i} className="feature-card futuristic">
-                  <div className="feature-icon">
-                    <img src={u.icon} alt={u.title} />
+        {/* Use Cases Grid */}
+        <section className="use-cases-section">
+          <div className="container">
+            <div className="section-header">
+              <h2>Real-World Applications</h2>
+              <p>From education to finance, see how AI Dashboard helps transform industries with smart analytics</p>
+            </div>
+
+            <div className="use-cases-grid">
+              {useCases.map((useCase, i) => {
+                const IconComponent = useCase.icon;
+                return (
+                  <div key={i} className="use-case-card">
+                    <div className="use-case-icon" style={{ background: `${useCase.color}15` }}>
+                      <div className="icon-container">
+                        <img src={useCase.image} alt={useCase.title} className="use-case-image" />
+                        <div className="icon-badge" style={{ background: useCase.color }}>
+                          <IconComponent size={20} color="#ffffff" />
+                        </div>
+                      </div>
+                    </div>
+                    <h3>{useCase.title}</h3>
+                    <p>{useCase.desc}</p>
+                    <div className="use-case-accent" style={{ background: useCase.color }}></div>
                   </div>
-                  <h3>{u.title}</h3>
-                  <p>{u.desc}</p>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
 
-        {/* CTA */}
+        {/* CTA Section */}
         <section className="use-cases-cta">
           <div className="container">
-            <h2>Ready to Build with Voxagraph?</h2>
-            <p>
-              Join organizations using Voxagraph for smarter, faster, and safer
-              decision-making.
-            </p>
-            <div className="cta-buttons">
-              <a href="/login?mode=registration" className="btn btn-primary">
-                Get Started
-              </a>
-              <a href="/features" className="btn btn-outline-secondary">
-                Explore Features
-              </a>
+            <div className="cta-content">
+              <h2>Ready to Transform Your Industry?</h2>
+              <p>
+                Join organizations using AI Dashboard for smarter, faster, and safer decision-making.
+                Start building your custom dashboards today.
+              </p>
+              <div className="cta-buttons">
+                <button
+                  className="btn-primary-large"
+                  onClick={() => navigate("/login?mode=registration")}
+                >
+                  Get Started Free
+                  <ArrowRight size={20} />
+                </button>
+                <button
+                  className="btn-secondary-large"
+                  onClick={() => navigate("/features")}
+                >
+                  Explore Features
+                </button>
+              </div>
             </div>
           </div>
         </section>
