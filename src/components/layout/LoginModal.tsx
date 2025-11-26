@@ -35,13 +35,15 @@ export function LoginModal({ opened, onClose, handleConnect }: LoginModalProps) 
       opened={opened}
       onClose={onClose}
       title={<span style={{ fontWeight: 'bold', fontSize: '18px' }}>{mode === 'signin' ? 'Sign In' : 'Registration'}</span>}
-      centered={false}
+      centered={true}
       size="lg"
       radius="lg"
+      zIndex={10001}
       styles={{
         overlay: { position: 'fixed', top: 0, left: 0 },
-        inner: { display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-start', paddingTop: '20px', paddingRight: '20px' },
-        content: { fontWeight: 500, width: '100%', maxWidth: '500px' },
+        // Let Mantine handle centering; remove custom side placement
+        content: { fontWeight: 500, width: '100%', maxWidth: '600px' },
+        body: { padding: '16px 24px' },
         title: { fontWeight: 'bold', fontSize: '18px' },
       }}
     >
