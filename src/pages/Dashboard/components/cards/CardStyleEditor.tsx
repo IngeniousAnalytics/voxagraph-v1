@@ -25,6 +25,8 @@ export interface CardDesign {
   alignX?: "left" | "center" | "right";
   alignY?: "top" | "middle" | "bottom";
   layoutMode?: "stacked" | "inline";
+  width?: number;
+  height?: number;
 }
 
 interface Props {
@@ -91,13 +93,11 @@ export default function CardStyleEditor({ design = {}, onChange, onSave, onClose
 
   // ---- Drag handlers (ribbon is the handle) ----
   const handleMouseDown = (e: React.MouseEvent) => {
-    // Don't start drag if clicking interactive element
+    // Don't start drag if clicking interactive element or inside one
     const target = e.target as HTMLElement;
-    const tagName = target.tagName.toLowerCase();
-    const isInteractive = ["button", "input", "select", "label", "a", "svg", "path"].includes(tagName);
-    const hasClickableClass = !!target.closest(".ce-btn, .ce-select, .ce-size, .ce-color, .ce-iconwrap, .ce-radius");
-
-    if (isInteractive || hasClickableClass) {
+    
+    // Check if clicking on or inside a button
+    if (target.closest("button, .ce-btn, .ce-select, .ce-size, .ce-color, .ce-iconwrap, .ce-radius, input, select, label, a")) {
       return;
     }
 

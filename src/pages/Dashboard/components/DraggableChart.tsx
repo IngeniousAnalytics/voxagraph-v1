@@ -229,6 +229,7 @@ const CHART_WIDTH_OFFSET = 100; // Additional width buffer (or u
         );
       case "metric":
       case "summary":
+        // Use variant to determine layout: "metric" uses DynamicCard, "chart" uses different layout
         return (
           <DynamicCard
             inputData={data}
@@ -285,7 +286,7 @@ const CHART_WIDTH_OFFSET = 100; // Additional width buffer (or u
   useEffect(() => {
     // Only show search for new charts that have no plot data yet
     const hasNoData = !data?.plot || data.plot.length === 0;
-    const isChartType = activeTab === 'charts' && type !== 'text' && type !== 'card' && type !== 'metric' && type !== 'summary';
+    const isChartType = activeTab === 'charts' && type !== 'text';
     
     if (isChartType && !isPublished && hasNoData) {
       setShowSearch(true);

@@ -306,14 +306,14 @@ export const NAV_ITEM: INavItems[] = [
       {
         id: 104,
         label: "Metric Card",
-        type: "card",
-        layoutType: "card",
+        type: "metric",
+        layoutType: "metric",
         icon: MdViewCarousel,
       },
       {
         id: 105,
         label: "Summary Card",
-        type: "card",
+        type: "summary",
         layoutType: "summary",
         icon: MdViewCarousel,
       },

@@ -92,13 +92,12 @@ const DynamicCard: React.FC<DynamicCardProps> = ({ inputData, setGraphs, code })
           alignY === "top" ? "flex-start" : alignY === "bottom" ? "flex-end" : "center",
         alignItems:
           alignX === "left" ? "flex-start" : alignX === "right" ? "flex-end" : "center",
-        textAlign: alignX as any,
-        height: "100%",
+        height: "60%",
         position: "relative",
         minHeight: 80,
       }}
     >
-      <div style={{ width: "100%" }}>
+      <div >
         <h3
           style={{
             color,
@@ -167,14 +166,22 @@ const DynamicCard: React.FC<DynamicCardProps> = ({ inputData, setGraphs, code })
                 console.log('DynamicCard: onChange', d);
                 setCurrentDesign(d);
                 if (code && setGraphs) {
-                  setGraphs((prev) => prev.map((g) => (g.code === code ? { ...g, design: d } : g)));
+                  setGraphs((prev) => prev.map((g) => 
+                    g.code === code 
+                      ? { ...g, data: { ...g.data, design: d } } 
+                      : g
+                  ));
                 }
               }}
               onSave={(d) => {
                 console.log('DynamicCard: onSave', d);
                 setCurrentDesign(d);
                 if (code && setGraphs) {
-                  setGraphs((prev) => prev.map((g) => (g.code === code ? { ...g, design: d } : g)));
+                  setGraphs((prev) => prev.map((g) => 
+                    g.code === code 
+                      ? { ...g, data: { ...g.data, design: d } } 
+                      : g
+                  ));
                 }
                 localStorage.setItem(localKey, JSON.stringify(d));
                 setOpened(false);
