@@ -177,9 +177,13 @@
   max-width: 280px;
 
   .etopbar__dbicon {
-    color: var(--text-muted);
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #ffffff;
+    padding: 8px;
+    border-radius: 50%;
     flex-shrink: 0;
-    transition: color 0.2s ease;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
   }
 
   .etopbar__dbpill {
@@ -206,7 +210,9 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 
     .etopbar__dbicon {
-      color: var(--text-primary);
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.5);
+      transform: scale(1.05);
     }
   }
 
@@ -232,6 +238,10 @@
 
   .mantine-Avatar-root {
     flex-shrink: 0;
+    border: 2px solid transparent;
+    background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+    transition: all 0.2s ease;
   }
 
   &:hover {
@@ -240,6 +250,11 @@
     border-color: rgba(255, 255, 255, 0.2);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    .mantine-Avatar-root {
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.5);
+      transform: scale(1.05);
+    }
   }
 
   &:active {
@@ -332,7 +347,9 @@
       color: var(--text-muted);
 
       .etopbar__dbicon {
-        color: var(--text-muted);
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: #ffffff;
+        box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
       }
 
       .etopbar__dbpill {
@@ -347,7 +364,9 @@
         border-color: rgba(2, 6, 23, 0.15);
 
         .etopbar__dbicon {
-          color: var(--text-primary);
+          background: linear-gradient(135deg, #059669 0%, #047857 100%);
+          box-shadow: 0 4px 12px rgba(16, 185, 129, 0.5);
+          transform: scale(1.05);
         }
       }
     }
@@ -357,10 +376,20 @@
       border-color: rgba(2, 6, 23, 0.1);
       color: var(--text-muted);
 
+      .mantine-Avatar-root {
+        background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+        box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+      }
+
       &:hover {
         background: rgba(15, 23, 42, 0.08);
         color: var(--text-primary);
         border-color: rgba(2, 6, 23, 0.15);
+
+        .mantine-Avatar-root {
+          box-shadow: 0 4px 12px rgba(139, 92, 246, 0.5);
+          transform: scale(1.05);
+        }
       }
     }
 

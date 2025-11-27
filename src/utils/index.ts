@@ -165,12 +165,10 @@ export const parseChartData = (
 };
 
 export const getPublishedParams = () => {
-  const hash = window.location.hash;
-  const queryStart = hash.indexOf('?');
-  if (queryStart === -1) return null;
-
-  const queryString = hash.substring(queryStart + 1);
-  const params = new URLSearchParams(queryString);
+  const params = new URLSearchParams(window.location.search);
+  
+  // Check if this is a published dashboard
+  if (params.get('published') !== 'true') return null;
 
   return {
     id: params.get('id'),

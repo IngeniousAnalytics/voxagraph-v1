@@ -1,11 +1,13 @@
 import { INavItems } from 'src/types';
 import { RiBarChartFill, RiDonutChartFill } from 'react-icons/ri';
+import { FcGenealogy, FcPieChart } from "react-icons/fc";
 import {
   GiPieSlice,
   GiNetworkBars,
   GiRadarDish,
   GiBarbecue,
 } from 'react-icons/gi';
+import { PiCardsBold, PiMicrosoftExcelLogoDuotone  } from "react-icons/pi";
 import {
   FaChartBar,
   FaChartArea,
@@ -14,6 +16,7 @@ import {
   FaTree,
   FaLifeRing,
   FaRegCircle,
+  FaHeading ,
 } from 'react-icons/fa';
 import {
   MdShowChart,
@@ -161,7 +164,7 @@ export const NAV_ITEM: INavItems[] = [
         type: 'pie',
         label: 'Rose Pie Chart',
         variant: 'rose_pie',
-        icon: GiPieSlice,
+        icon: FcPieChart,
         roseType: 'radius',
       },
       {
@@ -238,7 +241,7 @@ export const NAV_ITEM: INavItems[] = [
         type: 'treemap',
         label: 'Treemap',
         variant: 'treemap',
-        icon: MdViewModule,
+        icon: FcGenealogy,
       },
     ],
   },
@@ -291,36 +294,36 @@ export const NAV_ITEM: INavItems[] = [
         id: 101,
         type: 'table',
         label: 'Table/Grid Chart',
-        icon: MdGridOn,
+        icon: PiMicrosoftExcelLogoDuotone,
       },
       {
         id: 102,
         type: 'card',
         label: 'Card',
         layoutType: "card",
+        icon: PiCardsBold,
+      },
+      {
+        id: 104,
+        label: "Metric Card",
+        type: "card",
+        layoutType: "card",
         icon: MdViewCarousel,
       },
-      // {
-      //   id: 104,
-      //   label: "Metric Card",
-      //   type: "card",
-      //   layoutType: "card",
-      //   icon: MdViewCarousel,
-      // },
-      // {
-      //   id: 105,
-      //   label: "Summary Card",
-      //   type: "card",
-      //   layoutType: "summary",
-      //   icon: MdViewCarousel,
-      // },
+      {
+        id: 105,
+        label: "Summary Card",
+        type: "card",
+        layoutType: "summary",
+        icon: MdViewCarousel,
+      },
 
 
        {
         id: 103,
         type: 'text',
         label: 'Hearder',
-        icon: MdGridOn,
+        icon: FaHeading,
       },
 
     ],

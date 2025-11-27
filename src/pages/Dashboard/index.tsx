@@ -97,8 +97,8 @@ const Dashboard: React.FC<IDashboard> = ({
         measureBeforeMount={false}
         onDragStop={handleDragStop}
         onResizeStop={handleResizeStop}
-        isDraggable={!window.location.hash.startsWith("#/published")}
-        isResizable={!window.location.hash.startsWith("#/published")}
+        isDraggable={new URLSearchParams(window.location.search).get('published') !== 'true'}
+        isResizable={new URLSearchParams(window.location.search).get('published') !== 'true'}
         draggableCancel=".no-drag, .no-drag-download-icon, .action-wrappers, .text-toolbar, .no-drag-bold, .no-drag-italic, .no-drag-color, .text-area, .text-display, .rotation-control, .search-modal, .edit-zone, .edit-zone-button, .dynamic-card, button"
       >
         {graphs.map((chart) => {
