@@ -64,7 +64,7 @@
   width: calc(100% - 210px) !important;
   height: calc(100vh - 70px) !important;
   z-index: 0 !important;
-  overflow: auto !important;
+  overflow: visible !important;
   transition: margin-left 0.3s ease, width 0.3s ease;
 }
 

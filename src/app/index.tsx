@@ -72,16 +72,18 @@ export function App() {
     setDashboardId,
   } = useApp();
 
-  const isPublished = window.location.hash.startsWith('#/published');
+  const isPublished = new URLSearchParams(window.location.search).get('published') === 'true';
   const publishedParams = getPublishedParams();
   const [defaultColor, setDefaultColor] = useState('');
   
   // Use refs to track previous values and prevent unnecessary updates
   const isInternalUpdateRef = useRef(false);
   const prevColorRef = useRef<string>('');
+  const hasLoadedPublished = useRef(false);
 
   useEffect(() => {
-    if (isPublished && publishedParams) {
+    if (isPublished && publishedParams && !hasLoadedPublished.current) {
+      hasLoadedPublished.current = true;
       fetchTemplateById(
         Number(publishedParams.id),
         String(publishedParams.name),

@@ -105,9 +105,25 @@ export function ENavbar({
   };
 
   const handlePublish = (name: string, id: number) => {
-    const shareableURL = `${window.location.origin}/#/published?name=${name}&id=${id}&db_id=${I_CONNECT_WITH?.db_id}&user_id=${userInfo?.user_id}`;
-    ENotify('success', 'Dashboard published!');
-    setTimeout(() => window.open(shareableURL), 500);
+    const dbId = I_CONNECT_WITH?.db_id;
+    const userId = userInfo?.user_id;
+    
+    if (!dbId || !userId) {
+      ENotify('warning', 'Missing database or user information. Please ensure you are connected.');
+      return;
+    }
+    
+    // Use React Router path instead of hash-based routing
+    const shareableURL = `${window.location.origin}/dashboard?published=true&name=${encodeURIComponent(name)}&id=${id}&db_id=${dbId}&user_id=${userId}`;
+    
+    // Copy to clipboard
+    navigator.clipboard.writeText(shareableURL).then(() => {
+      ENotify('success', 'Dashboard published! URL copied to clipboard.');
+    }).catch(() => {
+      ENotify('success', 'Dashboard published!');
+    });
+    
+    setTimeout(() => window.open(shareableURL, '_blank'), 500);
   };
 
   return (

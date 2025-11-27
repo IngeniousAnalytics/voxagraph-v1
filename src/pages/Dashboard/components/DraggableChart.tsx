@@ -5,6 +5,7 @@ import React, {
   useState,
 } from 'react';
 import ChartWidget from './ChartWidget';
+import CardWidget from './CardWidget';
 import DynamicCard from './cards/DynamicCard';
 import SearchQuestion from './SearchQuestion';
 import AddQuery from './AddQuery';
@@ -58,7 +59,7 @@ const DraggableChart: React.FC<IDraggableChart> = ({
 }) => {
   const dispatch = useAppDispatch();
   const [, { toggle }] = useDisclosure();
-  const isPublished = window.location.hash.startsWith('#/published');
+  const isPublished = new URLSearchParams(window.location.search).get('published') === 'true';
   const [defaultColor, onChange] = useState('');
   const [showSearch, setShowSearch] = useState(false);
   const [showQuery, setShowQuery] = useState(false);
@@ -215,10 +216,17 @@ const CHART_WIDTH_OFFSET = 100; // Additional width buffer (or u
   const renderItem = () => {
     switch (type) {
       case 'card':
-        // Card rendering disabled - keeping for future use
-        // return <CardWidget inputData={data} type={type} ...
-        // Fallthrough to default
-        // eslint-disable-next-line no-fallthrough
+        return (
+          <CardWidget
+            inputData={data}
+            type={type}
+            setGraphs={setGraphs}
+            code={code}
+            isChartTitleChange={isChartTitleChange}
+            setIsChartTitleChange={setIsChartTitleChange}
+            defaultColor={chartColor}
+          />
+        );
       case "metric":
       case "summary":
         return (
@@ -273,13 +281,16 @@ const CHART_WIDTH_OFFSET = 100; // Additional width buffer (or u
     }
   };
 
+  // Auto-open search question only for newly dragged charts (empty data)
   useEffect(() => {
-    if (activeTab === 'charts' && !isPublished && type !== 'text') {
+    // Only show search for new charts that have no plot data yet
+    const hasNoData = !data?.plot || data.plot.length === 0;
+    const isChartType = activeTab === 'charts' && type !== 'text' && type !== 'card' && type !== 'metric' && type !== 'summary';
+    
+    if (isChartType && !isPublished && hasNoData) {
       setShowSearch(true);
-    } else {
-      setShowSearch(false);
     }
-  }, [activeTab, isPublished, type]);
+  }, []); // Empty dependency array - only run once on mount
 
   useEffect(() => {
     if (defaultColor) {

@@ -28,6 +28,7 @@ import { CiLight } from 'react-icons/ci';
 import { MdDarkMode } from 'react-icons/md';
 import { ENotify } from '../ENotify';
 import { FaAngleRight } from 'react-icons/fa';
+import { HiMiniCircleStack } from 'react-icons/hi2';
 import { LuDatabaseZap } from 'react-icons/lu';
 import AddTemplate from './components/AddTemplate';
 import FileUploadModal from './components/FileUploadModal';
@@ -231,7 +232,7 @@ export function ETopbar({
               </Text>
             </div>
 
-            { I_PERMIT.i_save_or_update ? (
+            { I_PERMIT.i_save_or_update && graphs.length > 0 ? (
               <Group gap="xs" className="etopbar__cta">
                 <Tooltip label={templateID ? "Update Dashboard" : "Save Dashboard"} withArrow>
                   <Button
@@ -263,7 +264,7 @@ export function ETopbar({
             <Divider orientation="vertical" className="etopbar__divider" />
 
             <div className="etopbar__dbinfo" title={getPermissions()?.I_CONNECT_WITH?.name}>
-              <LuDatabaseZap size={18} className="etopbar__dbicon" />
+              <HiMiniCircleStack size={40} className="etopbar__dbicon" />
               <span className="etopbar__dbpill">{I_CONNECT_WITH?.name}</span>
             </div>
 

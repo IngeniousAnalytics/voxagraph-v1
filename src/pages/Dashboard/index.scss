@@ -173,6 +173,13 @@ display: flex;
   position: relative !important;
   z-index: 1 !important;
   pointer-events: auto !important;
+  
+  .edit-icon {
+    position: absolute !important;
+    z-index: 100 !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
 }
 
 /* Edit-zone must be above everything */
