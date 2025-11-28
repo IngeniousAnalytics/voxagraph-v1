@@ -54,7 +54,7 @@
   width: 0 !important;
 }
 
-/* Main Content: Starts below header, with left margin for navbar */
+/* M ain Content: Starts below header, with left margin for navbar */
 .mantine-AppShell-main.dashboard-main {
   position: relative !important;
   margin-top: 70px !important;
@@ -62,9 +62,10 @@
   padding-top: 0 !important;
   padding-left: 0 !important;
   width: calc(100% - 210px) !important;
-  height: calc(100vh - 70px) !important;
+  min-height: calc(100vh - 70px) !important;
   z-index: 0 !important;
-  overflow: visible !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
   transition: margin-left 0.3s ease, width 0.3s ease;
 }
 
@@ -80,14 +81,14 @@
   width: calc(100% - var(--app-shell-navbar-width, 210px)) !important;
 }
 
-.dashboard-main {
+.dashboard-main{
   background-size: 5px 5px;
   background-image:
     linear-gradient(to right, rgba(0, 0, 0, 0.12) 0.5px, transparent 0.5px),
     linear-gradient(to bottom, rgba(0, 0, 0, 0.12) 0.5px, transparent 0.5px);
   background-position: 0 0;
   background-repeat: repeat;
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   position: relative;
   z-index: 0;
