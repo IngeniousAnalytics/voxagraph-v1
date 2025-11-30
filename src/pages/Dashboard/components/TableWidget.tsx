@@ -1131,7 +1131,15 @@ const TableWidget = ({
   const bodyOuterRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="table-wrapper">
+    <div
+      className="table-wrapper"
+      style={{
+        padding: 10,
+        boxSizing: 'border-box',
+        width: '100%',
+        height: '100%'
+      }}
+    >
       {/* header title & controls */}
       <div className="table-header" style={{ flexDirection: 'column' }}>
         <div

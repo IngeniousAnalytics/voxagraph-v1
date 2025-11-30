@@ -314,7 +314,7 @@
 }
 
 .btn-secondary-large:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(210, 187, 15, 0.1);
   border-color: rgba(255, 255, 255, 0.5);
   transform: translateY(-3px);
 }

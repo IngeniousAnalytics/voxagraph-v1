@@ -286,12 +286,14 @@ const CHART_WIDTH_OFFSET = 100; // Additional width buffer (or u
   useEffect(() => {
     // Only show search for new charts that have no plot data yet
     const hasNoData = !data?.plot || data.plot.length === 0;
-    const isChartType = activeTab === 'charts' && type !== 'text';
-    
-    if (isChartType && !isPublished && hasNoData) {
+    // Enable for charts and card widgets; exclude text/metric/summary
+    const isEligibleType = type !== 'text' && type !== 'metric' && type !== 'summary';
+    const isChartsTab = activeTab === 'charts';
+
+    if (isChartsTab && isEligibleType && !isPublished && hasNoData) {
       setShowSearch(true);
     }
-  }, []); // Empty dependency array - only run once on mount
+  }, []); // run once on mount after drag-add
 
   useEffect(() => {
     if (defaultColor) {
