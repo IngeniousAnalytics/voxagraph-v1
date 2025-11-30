@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import { IDashboard } from "../../types";
 import DraggableChart from "./components/DraggableChart";
@@ -22,6 +22,7 @@ const Dashboard: React.FC<IDashboard> = ({
 }) => {
   const [charCode, setChartCode] = useState<number>(0);
   const [isEditing, setIsEditing] = useState(false);
+  const hasRefreshedPublished = useRef(false);
 
   // Grid sizing constants (px per grid unit) - Changed to 5px for smooth resizing
   const COL_PX = 5;
@@ -77,6 +78,26 @@ const Dashboard: React.FC<IDashboard> = ({
     onUpdatePosition(Number(newItem.i), newItem.x, newItem.y, newHeightPx, newWidthPx);
     onResize(Number(newItem.i), newWidthPx, newHeightPx);
   };
+
+  // One-time full refresh when viewing a published dashboard
+  useEffect(() => {
+    if (publishedParams && graphs.length > 0 && !hasRefreshedPublished.current) {
+      const { db, user_id } = publishedParams;
+      graphs.forEach(g => {
+        if (typeof g.code !== 'undefined') {
+          try {
+            onRefresh(
+              g.code,
+              (g.data && (g.data.query || g.data.questions)) || '',
+              db,
+              user_id
+            );
+          } catch {/* ignore individual refresh errors */}
+        }
+      });
+      hasRefreshedPublished.current = true;
+    }
+  }, [publishedParams, graphs, onRefresh]);
 
   return (
     <div className="ai-chart">
