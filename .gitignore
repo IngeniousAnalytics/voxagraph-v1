@@ -10,9 +10,12 @@ node_modules
 # Environment files
 .env
 
-# Public folder
-/public../assets/videos/*
-/src../assets/videos/*
+# Public/Source videos (ignore large binaries)
+public/assets/videos/*
+src/assets/videos/*
+*.mp4
+*.mov
+*.avi
 
 # Other files
 my_git_cmd.md
