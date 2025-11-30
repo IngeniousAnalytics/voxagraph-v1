@@ -122,16 +122,14 @@ const Home: React.FC = () => {
         <div className="video-modal-container">
           <div className="youtube-wrapper">
             <iframe
-              width="100%"
-              height="540"
-              src="https://www.youtube.com/embed/Cn3X_gGFn5I?si=sQR90xcvpCpRWrwJ"
-              title="VoxaGraph Demo Video"
+              width="560"
+              height="315"
+              src="https://www.youtube.com/embed/NaFsitmTpZY?si=pieBOKiBlwzB5Ryg"
+              title="YouTube video player"
+              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
               allowFullScreen
-              style={{
-                border: "none",
-                borderRadius: "10px",
-              }}
             ></iframe>
           </div>
           <div className="video-footer">

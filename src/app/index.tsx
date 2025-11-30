@@ -147,8 +147,78 @@ export function App() {
     if (color !== defaultColor) {
       isInternalUpdateRef.current = false; // This is an external update from user
       setDefaultColor(color);
+      try {
+        const hex = color.startsWith('#') ? color : `#${color}`;
+        window.history.replaceState(
+          null,
+          document.title,
+          `${window.location.pathname}${window.location.search}${hex}`
+        );
+      } catch {}
     }
   };
+
+  // Sync color picker visibility with URL hash (#color-picker or #rrggbb/#rgb)
+  const openColorPicker = () => {
+    setShowPicker(true);
+    try {
+      const hex = defaultColor && defaultColor.startsWith('#') ? defaultColor : defaultColor ? `#${defaultColor}` : '';
+      if (hex) {
+        window.history.replaceState(
+          null,
+          document.title,
+          `${window.location.pathname}${window.location.search}${hex}`
+        );
+      } else {
+        window.history.replaceState(
+          null,
+          document.title,
+          `${window.location.pathname}${window.location.search}#color-picker`
+        );
+      }
+    } catch {}
+  };
+
+  const closeColorPicker = () => {
+    setShowPicker(false);
+    try {
+      // Remove the hash without adding a trailing '#'
+      window.history.replaceState(
+        null,
+        document.title,
+        window.location.pathname + window.location.search
+      );
+    } catch {}
+  };
+
+  const toggleColorPicker = () => {
+    if (showPicker) closeColorPicker();
+    else openColorPicker();
+  };
+
+  // Initialize picker from hash on load and react to hash changes
+  useEffect(() => {
+    const applyHash = () => {
+      const h = window.location.hash;
+      if (!h) {
+        setShowPicker(false);
+        return;
+      }
+      if (h === '#color-picker') {
+        setShowPicker(true);
+        return;
+      }
+      const isHex = /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(h);
+      if (isHex) {
+        setShowPicker(true);
+        handleColorChange(h.toLowerCase());
+      }
+    };
+
+    applyHash();
+    window.addEventListener('hashchange', applyHash);
+    return () => window.removeEventListener('hashchange', applyHash);
+  }, []);
 
   return (
 
@@ -271,7 +341,7 @@ export function App() {
                 {graphs?.length > 0 && (
                   <div
                     className="color-picker"
-                    onClick={() => setShowPicker(!showPicker)}
+                    onClick={toggleColorPicker}
                   >
                     {/* Colorful Palette Icon */}
                     <svg
@@ -308,7 +378,21 @@ export function App() {
           {showPicker && (
             <EColorPicker
               show={showPicker}
-              setShow={setShowPicker}
+              setShow={(val: boolean | string) => {
+                if (typeof val === 'string') {
+                  const hex = val.startsWith('#') ? val : `#${val}`;
+                  const isHex = /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(hex);
+                  if (isHex) {
+                    handleColorChange(hex.toLowerCase());
+                    openColorPicker();
+                    return;
+                  }
+                  // Fallback: if invalid string, just toggle open
+                  openColorPicker();
+                  return;
+                }
+                return val ? openColorPicker() : closeColorPicker();
+              }}
               value={defaultColor}
               onChange={handleColorChange}
             />
