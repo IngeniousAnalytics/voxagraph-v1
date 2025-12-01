@@ -53,6 +53,7 @@ export const getPermissions = () => {
     i_ask_ai_question: getActions('ask_ai_question'),
     i_save_or_update: getActions('savetemplet'),
     i_chart_title_change: getActions('title_change'),
+    i_can_configure_llm: getActions('can_configure_llm'),
   };
 
   const I_CONNECT_WITH = getConnection();

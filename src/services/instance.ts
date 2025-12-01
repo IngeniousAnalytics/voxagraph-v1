@@ -10,7 +10,19 @@ const dashApiClient = axios.create({
 });
 
 // Function to get token from localStorage
-const getAuthToken = () => localStorage.getItem('authToken');
+const getAuthToken = () => {
+  const direct = localStorage.getItem('authToken');
+  if (direct) return direct;
+  try {
+    const raw = localStorage.getItem('userInfo');
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      // common fields: token, access_token, jwt
+      return parsed?.token || parsed?.access_token || parsed?.jwt || null;
+    }
+  } catch {}
+  return null;
+};
 // Function to add interceptors to a given client
 const addAuthInterceptor = (client: AxiosInstance) => {
   client.interceptors.request.use(

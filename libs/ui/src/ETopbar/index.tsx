@@ -32,6 +32,7 @@ import { HiMiniCircleStack } from 'react-icons/hi2';
 import { LuDatabaseZap } from 'react-icons/lu';
 import AddTemplate from './components/AddTemplate';
 import FileUploadModal from './components/FileUploadModal';
+import LLMConfigModal from './components/LLMConfigModal';
 
 import Logo from './../../../../src/assets/img/logo.svg';
 import { getPermissions } from 'src/permissions';
@@ -69,6 +70,7 @@ export function ETopbar({
   const [currentTime, setCurrentTime] = useState(moment());
   const [darkMode, setDarkMode] = useState(false);
   const [uploadOpen, setUploadOpen] = useState(false);
+  const [llmOpen, setLlmOpen] = useState(false);
 
   const toggleColorScheme = () => {
     setDarkMode((prev) => !prev);
@@ -292,13 +294,22 @@ export function ETopbar({
                 <Menu.Item leftSection={<RiLockPasswordLine size={16} />} onClick={handleShowChangePassword}>
                   Change Password
                 </Menu.Item>
-                <Menu.Item leftSection={<FaRegUserCircle size={16} />} onClick={() => setUploadOpen(true)}> File Upload</Menu.Item>
-                <Menu.Item leftSection={<RiLockPasswordLine size={16} />} onClick={handleShowChangeConnectionPassword}>
-                  Connect Updated Database Password
-                </Menu.Item>
-                <Menu.Item leftSection={<LuDatabaseZap size={16} />} onClick={() => setIsUpdateDB(true)}>
-                  Switch Database
-                </Menu.Item>
+                {I_PERMIT.i_upload_policy && (
+                  <Menu.Item leftSection={<FaRegUserCircle size={16} />} onClick={() => setUploadOpen(true)}> File Upload</Menu.Item>
+                )}
+                {I_PERMIT.i_can_configure_llm && (
+                  <Menu.Item leftSection={<FaRegUserCircle size={16} />} onClick={() => setLlmOpen(true)}> LLM Config</Menu.Item>
+                )}
+                {I_PERMIT.i_connect_db && (
+                  <Menu.Item leftSection={<RiLockPasswordLine size={16} />} onClick={handleShowChangeConnectionPassword}>
+                    Connect Updated Database Password
+                  </Menu.Item>
+                )}
+                {I_PERMIT.i_change_db && (
+                  <Menu.Item leftSection={<LuDatabaseZap size={16} />} onClick={() => setIsUpdateDB(true)}>
+                    Switch Database
+                  </Menu.Item>
+                )}
                 <Menu.Item onClick={handleLogout} leftSection={<RiLogoutCircleLine size={16} />}>
                   Logout
                 </Menu.Item>
@@ -325,6 +336,9 @@ export function ETopbar({
         </Group>
       </AppShell.Header>
       <FileUploadModal opened={uploadOpen} onClose={() => setUploadOpen(false)} />
+      {I_PERMIT.i_can_configure_llm && (
+        <LLMConfigModal opened={llmOpen} onClose={() => setLlmOpen(false)} />
+      )}
       {showTemplate && (
         <AddTemplate
           show={showTemplate}

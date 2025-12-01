@@ -59,6 +59,10 @@ export interface IETopbar {
   setIsUpdateDB: (x: boolean) => void;
   I_PERMIT: {
     i_save_or_update: boolean;
+    i_upload_policy: boolean;
+    i_connect_db: boolean;
+    i_change_db: boolean;
+    i_can_configure_llm: boolean;
   };
    handleShowChangePassword: () => void;
   handleShowChangeConnectionPassword: () => void;
