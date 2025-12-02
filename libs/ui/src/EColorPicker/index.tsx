@@ -1,4 +1,4 @@
-import { Button, ColorPicker, Modal, Text } from '@mantine/core';
+import { Button, ColorInput, ColorPicker, Modal, Text } from '@mantine/core';
 import './index.scss';
 
 interface IEColorPicker {
@@ -42,12 +42,22 @@ export const EColorPicker = ({
       closeOnClickOutside={false}
       withCloseButton={false}
     >
+      <ColorInput
+        value={value}
+        onChange={(v) => v && onChange(v)}
+        placeholder="#40e911"
+        format="hex"
+        size="sm"
+        withEyeDropper={false}
+        styles={{ input: { fontFamily: 'monospace' } }}
+        mb="sm"
+      />
       <ColorPicker
         fullWidth
         value={value}
         onChange={onChange}
         swatches={defaultColors}
-        format="rgba"
+        format="hex"
       />
 
       <div className="items-wrapper">

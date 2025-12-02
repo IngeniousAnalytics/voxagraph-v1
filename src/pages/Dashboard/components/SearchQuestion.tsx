@@ -45,7 +45,8 @@ const SearchQuestion = ({
       className="search-modal"
       title="Question to plot the graph/grid"
       opened={show}
-      withinPortal={false}
+      withinPortal={true}
+      zIndex={10000}
       onClose={() => {
         requestAnimationFrame(() => {
           setShow(false);

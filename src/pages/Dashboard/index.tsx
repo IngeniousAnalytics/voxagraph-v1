@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import { IDashboard } from "../../types";
 import DraggableChart from "./components/DraggableChart";
@@ -22,6 +22,32 @@ const Dashboard: React.FC<IDashboard> = ({
 }) => {
   const [charCode, setChartCode] = useState<number>(0);
   const [isEditing, setIsEditing] = useState(false);
+
+  // One-time auto refresh for published dashboards
+  const hasRefreshedPublished = useRef(false);
+  const isPublished = new URLSearchParams(window.location.search).get('published') === 'true';
+
+  useEffect(() => {
+    if (
+      isPublished &&
+      publishedParams &&
+      !hasRefreshedPublished.current &&
+      Array.isArray(graphs) &&
+      graphs.length > 0
+    ) {
+      hasRefreshedPublished.current = true;
+      const db = Number(publishedParams.db);
+      const user = Number(publishedParams.user_id);
+      graphs.forEach((g) => {
+        const q = g?.data?.query || '';
+        try {
+          onRefresh(g.code, q, db, user);
+        } catch (e) {
+          // no-op: keep published view resilient
+        }
+      });
+    }
+  }, [isPublished, publishedParams, graphs, onRefresh]);
 
   // Grid sizing constants (px per grid unit) - Changed to 5px for smooth resizing
   const COL_PX = 5;

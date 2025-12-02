@@ -285,7 +285,8 @@ const CHART_WIDTH_OFFSET = 100; // Additional width buffer (or u
   useEffect(() => {
     // Only show search for new charts that have no plot data yet
     const hasNoData = !data?.plot || data.plot.length === 0;
-    const isChartType = activeTab === 'charts' && type !== 'text' && type !== 'card' && type !== 'metric' && type !== 'summary';
+    // Eligible chart types: include 'card', exclude only text/metric/summary
+    const isChartType = activeTab === 'charts' && type !== 'text' && type !== 'metric' && type !== 'summary';
     
     if (isChartType && !isPublished && hasNoData) {
       setShowSearch(true);
