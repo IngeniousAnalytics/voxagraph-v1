@@ -19,7 +19,7 @@ a {
 /* ---------- Hero Section ---------- */
 .home-hero {
   position: relative;
-  min-height: 90vh;
+  min-height: 47vh;
   display: flex;
   align-items: center;
   padding: 120px 0 80px;

@@ -30,8 +30,8 @@ const Home: React.FC = () => {
           <div className="hero-pattern"></div>
         </div>
         <div className="container">
-          <div className="row align-items-center">
-            <div className="col-lg-6 hero-content">
+          <div className="row justify-content-center">
+            <div className="col-lg-10 hero-content">
               <div className="hero-badge">
                 <Sparkles size={16} />
                 <span>AI-Powered Dashboard Platform</span>
@@ -82,18 +82,6 @@ const Home: React.FC = () => {
                 </button>
               </div>
             </div>
-
-            <div className="col-lg-6 hero-image-wrapper">
-              <div className="hero-image-container">
-                <img
-                  src={heroImg}
-                  alt="AI Dashboard preview - Transform Natural Language into Dynamic Dashboards"
-                  className="hero-image"
-                  loading="eager"
-                />
-                <div className="hero-image-glow"></div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -124,7 +112,7 @@ const Home: React.FC = () => {
             <iframe
               width="100%"
               height="540"
-              src="https://www.youtube.com/embed/Cn3X_gGFn5I?si=sQR90xcvpCpRWrwJ"
+              src="https://www.youtube.com/embed/NaFsitmTpZY?si=3Th3LTLpw7CsWu8o"
               title="VoxaGraph Demo Video"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
